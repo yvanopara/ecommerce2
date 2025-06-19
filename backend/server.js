@@ -18,7 +18,7 @@ connectDB();
 connectCloudinary();
 
 // Middleware
-app.use(express.json()); // Parse incoming requests with JSON payloadstytytytrrtrt
+app.use(express.json()); // Parse incoming requests with JSON payloadstytytytrrtrttyt 
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 app.use(cors());
 
