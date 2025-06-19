@@ -1,0 +1,22 @@
+.cart-total-container {
+    width: 100%;
+  }
+  
+  .cart-total-title {
+    font-size: 1.5rem; /* équivalent à text-2xl */
+    margin-bottom: 1rem;
+  }
+  
+  .cart-total-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* équivalent à gap-2 */
+    font-size: 0.875rem; /* équivalent à text-sm */
+  }
+  
+  .cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  

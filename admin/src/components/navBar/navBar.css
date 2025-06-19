@@ -1,0 +1,29 @@
+.navBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8PX 4%;
+}
+.navBar .logo{
+    width: max(10%, 80px);
+}
+.navBar .profile{
+    width: 40px;
+}
+.button-login{
+    width: 30px;
+    border-radius: 20px;
+    background-color: rgba(255, 99, 71, 0.781);
+    width: 8vw;
+    padding: 8px;
+    cursor: pointer;
+    border-width: 0;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.616);
+}
+.button-login:hover{
+    width: 8.1vw;
+    color: tomato;
+    color: black;
+    padding: 10px;
+}

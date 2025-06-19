@@ -1,0 +1,11 @@
+.title {
+    display: inline-flex;
+    gap: 0.5rem; /* équivalent à gap-2 */
+
+    font-size: 1.75rem;
+  }
+  
+  .my-text {
+    color: #6b7280; /* text-gray-500 */
+  }
+ 

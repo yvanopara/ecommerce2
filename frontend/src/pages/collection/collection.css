@@ -1,0 +1,221 @@
+.collection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  @media (min-width: 640px) {
+    .collection {
+      flex-direction: row;
+      gap: 2.5rem;
+    }
+  }
+  
+  .filter-wrapper {
+    min-width: 15rem;
+  }
+  
+  .filter-title {
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.5rem;
+  }
+  
+  .category-filter {
+    margin-top: 1.5rem;
+    padding: 0.75rem 0 0.75rem 1.25rem;
+    border: 1px solid #d1d5db;
+  }
+  
+  .category-title {
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .category-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem; /* réduit l’espace vertical */
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: #6b7280; /* text-gray-500 pour plus de contraste */
+  }
+  
+  .category-options p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .checkbox {
+    width: 1rem;
+    height: 1rem;
+  }
+  .hidden {
+    display: none;
+  }
+  /* Pour l'icône */
+.dropdown-icon {
+    height: 1.5rem; /* équivalent à h-6 (ou h3 selon ton style) */
+    display: none;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 639px) {
+    .dropdown-icon {
+      display: inline-block;
+    }
+  }
+  
+  /* Rotation quand le filtre est actif */
+  .rotated {
+    transform: rotate(90deg);
+  }
+  
+
+  /* Partie droite */
+.right-side {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* En-tête avec le titre et le tri */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Titre de la collection */
+  .header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Sélecteur de tri */
+  .sort-select {
+    border: 2px solid #e5e7eb;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  /* Style du sélecteur au focus */
+  .sort-select:focus {
+    outline: none;
+    border-color: #2563eb; /* bleu clair */
+  }
+  
+  /* Grille de produits responsive */
+  .products-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  /* Carte produit */
+  .product-item-wrapper {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+  
+  /* Conteneur d'image parfaitement centré */
+  .product-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+  
+  .product-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Infos produit */
+  .product-info {
+    padding: 0.75rem;
+    text-align: center;
+  }
+  
+  .product-name {
+    font-size: 0.875rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.5rem;
+    line-height: 1.4;
+  }
+  
+  .product-price {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  /* Effets interactifs */
+  .product-item-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-item-wrapper:hover img {
+    transform: scale(1.03);
+  }
+  
+  /* Points de rupture responsive */
+  @media (min-width: 640px) {
+    .products-container {
+      gap: 1.2rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .products-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .product-image-container {
+      padding: 1rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .products-container {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .products-container {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  

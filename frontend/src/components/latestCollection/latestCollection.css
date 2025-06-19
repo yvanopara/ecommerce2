@@ -1,0 +1,57 @@
+/* latestCollection.css - Version optimisée */
+
+.latest-collections-container {
+  margin: 0.3rem auto;
+  max-width: 14 00px;
+  padding: 0 1rem;
+
+}
+
+.title-wrapper {
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.1rem;
+
+}
+
+.product-item-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+
+  
+}
+
+/* Points de rupture responsive */
+@media (min-width: 640px) {
+  .products-container {
+    gap: 0.2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .products-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .products-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .products-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

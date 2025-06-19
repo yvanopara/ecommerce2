@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: outfit;
+}
+body{
+  min-height: 100vh;
+  background-color: rgba(0, 54, 85, 0.158);
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+hr{
+  border: none;
+  height: 1px;
+  background-color: blueviolet;
+}
+.app-content{
+  display: flex;
+}
+select,input,textarea{
+  border:1px solid wheat;
+  outline: wheat;
+  border-radius: 4px;
+}
+.flex-col{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

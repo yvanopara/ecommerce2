@@ -1,0 +1,40 @@
+.search-container {
+    border-top: 1px solid #e5e7eb; /* Tailwind border-gray-200 */
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb; /* Tailwind bg-gray-50 */
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
+  .search-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #9ca3af; /* Tailwind border-gray-400 */
+    padding: 1rem 0.5rem;
+    margin: 0.2rem 0.75rem;
+    border-radius: 9999px; /* Full rounded */
+    width: 75%;
+    max-width: 400px;
+  }
+  
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    font-size: 0.875rem; /* text-sm */
+    padding: 0 0.5rem;
+  }
+  
+  .search-icon {
+    width: 1rem; /* w-4 */
+  }
+  
+  .close-icon {
+    display: inline;
+    width: 0.75rem; /* w-3 */
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
