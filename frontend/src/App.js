@@ -19,6 +19,7 @@ import Order from './pages/order/Order';
 import Login from './pages/login/Login';
 
 export const backendUrl = 'https://backend2-58eq.onrender.com'
+// export const backendUrl = 'http://localhost:5000'
 
 
 function App() {

@@ -13,33 +13,36 @@ export default function Login() {
     
     
     const onSubmitHandler = async(event) => {
-        event.preventDefault();
-        try {
-            if (currentSate === 'Creez Un Compte') {
-                const response = await axios.post(backendUrl + '/api/user/register',{name,email,password})
-                if (response.data.success) {
-                    setToken(response.data.token)
-                    localStorage.setItem('token',response.data.token)
-                    toast('Votre compte a ete cree avec Success !')
-                } else {
-                     toast.error(response.data.message)
-                }
+    event.preventDefault();
+    try {
+        if (currentSate.toLowerCase().includes('cree')) {
+            const response = await axios.post(backendUrl + '/api/user/register', { name, email, password });
+            if (response.data.success) {
+                setToken(response.data.token);
+                localStorage.setItem('token', response.data.token);
+                toast.success('Votre compte a été créé avec succès !');
             } else {
-                const response = await axios.post(backendUrl + '/api/user/login', {email,password})
-                if (response.data.success) {
-                    setToken(response.data.token)
-                    localStorage.setItem('token',response.data.token)
-                    toast('Connection Reussie !')
-                } else {
-                    toast.error(response.data.message)
-                }
-                
-                console.log(response.data)
+                toast.error(response.data.message);
             }
-        } catch (error) {
-            toast.error(error.message)
+        } else {
+            const response = await axios.post(backendUrl + '/api/user/login', { email, password });
+            if (response.data.success) {
+                setToken(response.data.token);
+                localStorage.setItem('token', response.data.token);
+                toast.success('Connexion réussie !');
+            } else {
+                toast.error(response.data.message);
+            }
         }
-    };
+    } catch (error) {
+        if (error.response?.data?.message) {
+            toast.error(error.response.data.message);
+        } else {
+            toast.error(error.message);
+        }
+    }
+};
+
 
     useEffect(()=>{
         if (token) {
