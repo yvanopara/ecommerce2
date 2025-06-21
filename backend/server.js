@@ -38,4 +38,7 @@ app.get('/', (req, res) => {
 // Start the server
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server started on http://localhost:${port}`);
+});app.get("/ping", (req, res) => {
+  res.send("pong");
 });
+
