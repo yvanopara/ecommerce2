@@ -18,7 +18,7 @@ import Order from './pages/order/Order';
 
 import Login from './pages/login/Login';
 
-export const backendUrl = 'https://backend2-58eq.onrender.com'
+export const backendUrl = 'ecommerce2-production-a5f7.up.railway.app'
 // export const backendUrl = 'http://localhost:5000'
 
 
