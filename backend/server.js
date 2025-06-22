@@ -9,6 +9,8 @@ import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import favoriteRoutes from './routes/favoriteRoutes.js';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // App configuration
 const app = express();
@@ -21,7 +23,25 @@ connectCloudinary();
 // Middleware
 app.use(express.json()); // Parse incoming requests with JSON payloadstytytytrrtrttyt dfdf
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
-app.use(cors());
+
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://ecommerce2-production-a5f7.up.railway.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
+
+
 
 // API endpoints
 app.use('/api/product', productRouter);
@@ -37,8 +57,6 @@ app.get('/', (req, res) => {
     res.send('API IS WORKING');
 });
 
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 // Ces lignes sont nécessaires avec ES modules
 const __filename = fileURLToPath(import.meta.url);
