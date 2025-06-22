@@ -7,6 +7,7 @@ import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import favoriteRoutes from './routes/favoriteRoutes.js';
 
 
 // App configuration
@@ -28,12 +29,29 @@ app.use('/api/product', productRouter);
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
  app.use('/api/order', orderRouter);
+ app.use('/api/favorites', favoriteRoutes);
 // app.use('/api/twilio', twilioRouter);
 
 // Default route
 app.get('/', (req, res) => {
     res.send('API IS WORKING');
 });
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Ces lignes sont nécessaires avec ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Servir les fichiers React buildés (frontend/build)
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Pour toutes les routes non reconnues (React gère le reste)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
+
 
 // Start the server
 app.listen(port, '0.0.0.0', () => {
