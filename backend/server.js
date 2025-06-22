@@ -9,8 +9,6 @@ import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import favoriteRoutes from './routes/favoriteRoutes.js';
 
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 // App configuration
 const app = express();
@@ -23,21 +21,7 @@ connectCloudinary();
 // Middleware
 app.use(express.json()); // Parse incoming requests with JSON payloadstytytytrrtrttyt dfdf
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
-
-
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://ecommerce2-production-a5f7.up.railway.app'
-];
-
-app.use(cors({
-  origin: '*', // Autorise tout (à restreindre plus tard en prod)
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
-
-
+app.use(cors());
 
 // API endpoints
 app.use('/api/product', productRouter);
@@ -52,20 +36,6 @@ app.use('/api/cart', cartRouter);
 app.get('/', (req, res) => {
     res.send('API IS WORKING');
 });
-
-
-// Ces lignes sont nécessaires avec ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Servir les fichiers React buildés (frontend/build)
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// Pour toutes les routes non reconnues (React gère le reste)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-});
-
 
 // Start the server
 app.listen(port, '0.0.0.0', () => {
