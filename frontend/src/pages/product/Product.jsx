@@ -8,22 +8,27 @@ import RelatedProduct from '../../components/relatedProducts/RelatedProduct'
 export default function Product() {
     const { productId } = useParams()
     const { products, currency, addToCart } = useContext(ShopContext)
-    const [productData, setProductData] = useState(null)
-    const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    const [productData, setProductData] = useState(false)
+    const [image, setImage] = useState('')
+    const [size, setSize] = useState(null)
     const [startX, setStartX] = useState(0)
     const [currentX, setCurrentX] = useState(0)
     const [isSwiping, setIsSwiping] = useState(false)
-    const [size, setSize] = useState(null)
     const imageTrackRef = useRef(null)
 
-    useEffect(() => {
-        if (products.length > 0) {
-            const product = products.find(item => item._id === productId)
-            if (product) {
-                setProductData(product)
-                setCurrentImageIndex(0)
+    const fetchProductData = () => {
+        products.map((item) => {
+            if (item._id === productId) {
+                setProductData(item)
+                setImage(item.image[0])
+                return null
             }
-        }
+        })
+    }
+
+    useEffect(() => {
+        fetchProductData()
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }, [products, productId])
 
     const handleTouchStart = (e) => {
@@ -55,32 +60,28 @@ export default function Product() {
     }
 
     const goToNextImage = () => {
-        setCurrentImageIndex(prev => 
-            (prev + 1) % productData.image.length
-        )
+        const currentIndex = productData.image.indexOf(image)
+        const nextIndex = (currentIndex + 1) % productData.image.length
+        setImage(productData.image[nextIndex])
     }
 
     const goToPrevImage = () => {
-        setCurrentImageIndex(prev => 
-            (prev - 1 + productData.image.length) % productData.image.length
-        )
-    }
-
-    const goToImage = (index) => {
-        setCurrentImageIndex(index)
+        const currentIndex = productData.image.indexOf(image)
+        const prevIndex = (currentIndex - 1 + productData.image.length) % productData.image.length
+        setImage(productData.image[prevIndex])
     }
 
     const calculateTransform = () => {
         if (!isSwiping) {
-            return `translateX(-${currentImageIndex * 100}%)`
+            return `translateX(-${productData.image.indexOf(image) * 100}%)`
         }
         
         const diff = currentX - startX
-        return `translateX(calc(-${currentImageIndex * 100}% + ${diff}px))`
+        return `translateX(calc(-${productData.image.indexOf(image) * 100}% + ${diff}px))`
     }
 
     if (!productData) {
-        return <div className="loading">Chargement...</div>
+        return <div style={{ opacity: '0' }}></div>
     }
 
     return (
@@ -91,9 +92,9 @@ export default function Product() {
                         {productData.image.map((item, index) => (
                             <img
                                 src={item}
-                                onClick={() => goToImage(index)}
+                                onClick={() => setImage(item)}
                                 key={index}
-                                className={`thumbnail ${index === currentImageIndex ? 'active-thumbnail' : ''}`}
+                                className={`thumbnail ${item === image ? 'active-thumbnail' : ''}`}
                                 alt={`Miniature ${index + 1}`}
                             />
                         ))}
@@ -117,7 +118,7 @@ export default function Product() {
                                 <div key={index} className='image-slide'>
                                     <img
                                         src={img}
-                                        className='main-image'
+                                        className={`main-image ${image === img ? 'active' : ''}`}
                                         alt={`Produit ${index + 1}`}
                                         draggable="false"
                                     />
@@ -129,15 +130,14 @@ export default function Product() {
                             {productData.image.map((_, index) => (
                                 <div 
                                     key={index}
-                                    className={`nav-dot ${currentImageIndex === index ? 'active-dot' : ''}`}
-                                    onClick={() => goToImage(index)}
+                                    className={`nav-dot ${image === productData.image[index] ? 'active-dot' : ''}`}
+                                    onClick={() => setImage(productData.image[index])}
                                 />
                             ))}
                         </div>
                     </div>
                 </div>
 
-                {/* VOTRE PARTIE PRODUCT-DETAILS ORIGINALE */}
                 <div className='product-details'>
                     <h1 className='product-name2'>{productData.name}</h1>
 

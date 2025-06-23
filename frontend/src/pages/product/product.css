@@ -1,49 +1,53 @@
 .product-container {
+    padding: 2rem;
+    border-top: 2px solid #eee;
+    animation: fadeIn 0.6s ease-in;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .product-main {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 2rem;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
     .product-main {
         flex-direction: row;
+        gap: 3rem;
     }
 }
 
 .product-images {
-    flex: 1;
     display: flex;
     flex-direction: column-reverse;
+    gap: 1rem;
+    margin-bottom: -30px;
 }
 
 .thumbnails {
     display: flex;
-    gap: 10px;
-    padding: 15px 0;
+    gap: 0.5rem;
     overflow-x: auto;
 }
 
 .thumbnail {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
+    border-radius: 0.5rem;
     border: 2px solid transparent;
-    border-radius: 5px;
+    transition: border 0.3s;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
-.thumbnail:hover {
-    border-color: #eee;
-}
-
-.thumbnail.active-thumbnail {
+.active-thumbnail {
     border-color: #ff6600;
 }
 
@@ -51,7 +55,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 1rem;
     touch-action: pan-y;
 }
 
@@ -74,9 +78,15 @@
 .main-image {
     width: 100%;
     height: auto;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
     user-select: none;
     -webkit-user-drag: none;
+}
+
+.main-image.active {
+    display: block;
 }
 
 .image-nav-dots {
@@ -104,7 +114,6 @@
     transform: scale(1.3);
 }
 
-/* VOTRE CSS ORIGINAL POUR PRODUCT-DETAILS */
 .product-details {
     flex: 1;
     background-color: #fff;
@@ -138,7 +147,8 @@
 .product-descriptionn {
     font-size: 1rem;
     line-height: 1.6;
-    color: #555;margin-top: -5px;
+    color: #555;
+    margin-top: -5px;
 }
 
 .product-sizes p {
@@ -191,18 +201,11 @@
     background-color: #222;
 }
 
-/* Animation pour le changement d'image */
-@keyframes fadeIn {
-    from { opacity: 0.8; }
-    to { opacity: 1; }
+@keyframes smoothAppear {
+    from { opacity: 0.8; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .main-image {
-    animation: fadeIn 0.4s ease-out;
-}
-
-.loading {
-    text-align: center;
-    padding: 50px;
-    font-size: 18px;
+    animation: smoothAppear 0.3s ease-out;
 }
