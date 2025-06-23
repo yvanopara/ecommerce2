@@ -27,10 +27,18 @@ export default function Product() {
     };
 
     // ✅ On remonte en haut quand un produit est chargé
-    useEffect(() => {
-        fetchProductData();
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // ← ajouté ici
-    }, [products, productId]);
+   useEffect(() => {
+    const item = products.find((item) => item._id === productId);
+    if (item) {
+        setProductData(item);
+        setImage(item.image[0]);
+        setSize(null); // pour réinitialiser la taille sélectionnée
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 0); // exécute le scroll juste après la mise à jour de l'état
+    }
+}, [products, productId]);
+
 
     const handleTouchStart = (e) => {
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
