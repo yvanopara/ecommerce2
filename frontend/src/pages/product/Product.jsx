@@ -8,7 +8,7 @@ import RelatedProduct from '../../components/relatedProducts/RelatedProduct';
 export default function Product() {
     const { productId } = useParams();
     const { products, currency, addToCart } = useContext(ShopContext);
-    const [productData, setProductData] = useState(false);
+    const [productData, setProductData] = useState(null);
     const [image, setImage] = useState('');
     const [size, setSize] = useState(null);
     const [startX, setStartX] = useState(0);
@@ -16,29 +16,20 @@ export default function Product() {
     const [isSwiping, setIsSwiping] = useState(false);
     const imageTrackRef = useRef(null);
 
-    const fetchProductData = () => {
-        products.map((item) => {
-            if (item._id === productId) {
-                setProductData(item);
-                setImage(item.image[0]);
-                return null;
-            }
-        });
-    };
-
-    // ✅ On remonte en haut quand un produit est chargé
-   useEffect(() => {
-    const item = products.find((item) => item._id === productId);
-    if (item) {
-        setProductData(item);
-        setImage(item.image[0]);
-        setSize(null); // pour réinitialiser la taille sélectionnée
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 0); // exécute le scroll juste après la mise à jour de l'état
-    }
-}, [products, productId]);
-
+    // 🧠 Utiliser find au lieu de map + setTimeout pour éviter blocage DOM
+    useEffect(() => {
+        setProductData(null); // reset state pour forcer le rechargement propre
+        const item = products.find((item) => item._id === productId);
+        if (item) {
+            setProductData(item);
+            setImage(item.image[0]);
+            setSize(null);
+            setIsSwiping(false); // Reset swipe pour éviter conflits
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 0);
+        }
+    }, [products, productId]);
 
     const handleTouchStart = (e) => {
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -81,6 +72,8 @@ export default function Product() {
     };
 
     const calculateTransform = () => {
+        if (!productData || !productData.image) return 'translateX(0%)';
+
         if (!isSwiping) {
             return `translateX(-${productData.image.indexOf(image) * 100}%)`;
         }
@@ -90,7 +83,7 @@ export default function Product() {
     };
 
     if (!productData) {
-        return <div style={{ opacity: '0' }}></div>;
+        return <div style={{ padding: '4rem', textAlign: 'center' }}>Chargement...</div>;
     }
 
     return (
@@ -117,7 +110,7 @@ export default function Product() {
                         onMouseMove={handleTouchMove}
                         onMouseUp={handleTouchEnd}
                         onMouseLeave={handleTouchEnd}>
-
+                        
                         <div
                             ref={imageTrackRef}
                             className={`image-track ${isSwiping ? 'swiping' : ''}`}
