@@ -9,7 +9,7 @@ import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
-import favoriteRoutes from './routes/favoriteRoutes.js';
+
 
 // Solution pour __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -37,7 +37,7 @@ app.use('/api/product', productRouter);
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
-app.use('/api/favorites', favoriteRoutes);
+
 
 // Health Check
 app.get('/ping', (req, res) => res.send('pong'));
