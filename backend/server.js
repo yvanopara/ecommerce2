@@ -20,8 +20,20 @@ connectDB();
 connectCloudinary();
 
 // Middlewares
+const allowedOrigins = [
+  'https://frontendv-wnur.onrender.com',
+  'http://localhost:3000'
+];
+
 app.use(cors({
-  origin: 'https://frontendv-wnur.onrender.com',
+  origin: function (origin, callback) {
+    // autorise les outils comme Postman (origin peut être undefined)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 

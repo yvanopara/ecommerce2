@@ -37,7 +37,7 @@ export default function Product() {
                                 onClick={() => setImage(item)}
                                 key={index}
                                 className={`thumbnail ${item === image ? 'active-thumbnail' : ''}`}
-                            /> 
+                            />
                         ))}
                     </div>
                     <div className='main-image-box'>
@@ -47,13 +47,13 @@ export default function Product() {
 
                 <div className='product-details'>
                     <h1 className='product-name2'>{productData.name}</h1>
-                    <div className='product-rating'>
+                    {/* <div className='product-rating'>
                         {[1, 2, 3, 4].map((_, i) => (
                             <img key={i} src={assets.star_icon} className='star-icon' alt='star' />
                         ))}
                         <img src={assets.star_dull_icon} className='star-icon' alt='star' />
                         <span className='rating-count'>(122)</span>
-                    </div>
+                    </div> */}
 
                     {/* 💰 Gérer prix : avec ou sans tailles */}
                     <div className='product-price'>
@@ -71,7 +71,7 @@ export default function Product() {
                     <p className='product-descriptionn'>{productData.description}</p>
 
                     {/* 👕 Choix de taille (s’il y en a) */}
-          --------------²²          {productData.sizes && productData.sizes.length > 0 && (
+                    {productData.sizes && productData.sizes.length > 0 && (
                         <div className='product-sizes'>
                             <p>Choisissez la taille :</p>
                             <div className='size-options'>
@@ -90,21 +90,21 @@ export default function Product() {
 
                     {/* 🛒 Bouton panier */}
                     <button
-  onClick={() => addToCart(productData._id, size?.size || 'unique')}
-  className='add-to-cart'
-  disabled={productData.sizes?.length > 0 && !size}
->
-  {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
-</button>
+                        onClick={() => addToCart(productData._id, size?.size || 'unique')}
+                        className='add-to-cart'
+                        disabled={productData.sizes?.length > 0 && !size}
+                    >
+                        {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
+                    </button>
 
-                    <div className='product-perks'>
+                    {/* <div className='product-perks'>
                         <p>✔️ 100% Original</p>
                         <p>✔️ Paiement à la livraison</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
-            <div className='product-description-section'>
+            {/* <div className='product-description-section'>
                 <div className='tabs'>
                     <span className='tab active-tab'>Description</span>
                     <span className='tab'>Avis (122)</span>
@@ -112,7 +112,7 @@ export default function Product() {
                 <div className='tab-content'>
                     <p>{productData.longDescription || 'Aucune description longue disponible.'}</p>
                 </div>
-            </div>
+            </div> */}
 
             <RelatedProduct category={productData.category} subCategory={productData.subCategory} />
         </div>

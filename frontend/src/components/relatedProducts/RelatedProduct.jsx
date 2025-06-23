@@ -18,20 +18,22 @@ export default function RelatedProduct({ category, subCategory }) {
     }, [products])
 
     return (
-        <div className='related-products-container'>
-            <div className='related-title'>
+        <div className="related-section">
+            <div className="related-title">
                 <Title text1={'PRODUIT'} text2={'SIMILAIR'} />
             </div>
 
-            <div className='related-grid'>
+            <div className="related-scroll-container">
                 {related.map((item, index) => (
-                    <ProductItems
-                        key={index}
-                        id={item._id}
-                        name={item.name}
-                        image={item.image}
-                        price={item.price}
-                    />
+                    <div className="related-product-card" key={index}>
+                        <ProductItems
+                       
+                            id={item._id}
+                            name={item.name}
+                            image={item.image}
+                            price={item.price}
+                        />
+                    </div>
                 ))}
             </div>
         </div>
