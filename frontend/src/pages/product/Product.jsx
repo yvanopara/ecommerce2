@@ -15,29 +15,48 @@ export default function Product() {
     const [touchStartX, setTouchStartX] = useState(null);
     const [touchEndX, setTouchEndX] = useState(null);
 
+    const [animating, setAnimating] = useState(false);
+    const [slideDirection, setSlideDirection] = useState('');
+
     const handleSwipe = () => {
-    if (!touchStartX || !touchEndX) return;
+        if (!touchStartX || !touchEndX || animating) return;
 
-    const distance = touchStartX - touchEndX;
+        const distance = touchStartX - touchEndX;
 
-    if (distance > 50) {
-        // Swipe gauche → image suivante
-        const currentIndex = productData.image.indexOf(image);
-        const nextIndex = (currentIndex + 1) % productData.image.length;
-        setImage(productData.image[nextIndex]);
-    }
+        if (distance > 50) {
+            // Swipe gauche → image suivante
+            slideTo('left');
+        } else if (distance < -50) {
+            // Swipe droite → image précédente
+            slideTo('right');
+        }
 
-    if (distance < -50) {
-        // Swipe droite → image précédente
-        const currentIndex = productData.image.indexOf(image);
-        const prevIndex = (currentIndex - 1 + productData.image.length) % productData.image.length;
-        setImage(productData.image[prevIndex]);
-    }
+        setTouchStartX(null);
+        setTouchEndX(null);
+    };
 
-    // Reset
-    setTouchStartX(null);
-    setTouchEndX(null);
-};
+    const slideTo = (direction) => {
+        setAnimating(true);
+        setSlideDirection(direction);
+
+        setTimeout(() => {
+            const currentIndex = productData.image.indexOf(image);
+            const total = productData.image.length;
+
+            if (direction === 'left') {
+                const nextIndex = (currentIndex + 1) % total;
+                setImage(productData.image[nextIndex]);
+            } else {
+                const prevIndex = (currentIndex - 1 + total) % total;
+                setImage(productData.image[prevIndex]);
+            }
+
+            // Revenir à slide-in
+            setSlideDirection('in');
+            setTimeout(() => setAnimating(false), 400); // durée de l’animation
+        }, 100);
+    };
+
 
     const fetchProductData = () => {
         products.map((item) => {
@@ -64,12 +83,21 @@ export default function Product() {
                 <div className='product-images'>
                     <div className='thumbnails'>
                         {productData.image.map((item, index) => (
-                            <img
-                                src={item}
-                                onClick={() => setImage(item)}
-                                key={index}
-                                className={`thumbnail ${item === image ? 'active-thumbnail' : ''}`}
-                            />
+                            <div className="image-slider"
+                                onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+                                onTouchMove={(e) => setTouchEndX(e.touches[0].clientX)}
+                                onTouchEnd={handleSwipe}
+                            >
+                                <img
+                                    src={image}
+                                    alt="Produit"
+                                    className={`slider-image ${slideDirection === 'left' ? 'slide-left' :
+                                            slideDirection === 'right' ? 'slide-right' :
+                                                'slide-in'
+                                        }`}
+                                />
+                            </div>
+
                         ))}
                     </div>
                     <div className='main-image-box'>
