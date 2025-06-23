@@ -12,6 +12,33 @@ export default function Product() {
     const [image, setImage] = useState('');
     const [size, setSize] = useState(null);
 
+    const [touchStartX, setTouchStartX] = useState(null);
+    const [touchEndX, setTouchEndX] = useState(null);
+
+    const handleSwipe = () => {
+    if (!touchStartX || !touchEndX) return;
+
+    const distance = touchStartX - touchEndX;
+
+    if (distance > 50) {
+        // Swipe gauche → image suivante
+        const currentIndex = productData.image.indexOf(image);
+        const nextIndex = (currentIndex + 1) % productData.image.length;
+        setImage(productData.image[nextIndex]);
+    }
+
+    if (distance < -50) {
+        // Swipe droite → image précédente
+        const currentIndex = productData.image.indexOf(image);
+        const prevIndex = (currentIndex - 1 + productData.image.length) % productData.image.length;
+        setImage(productData.image[prevIndex]);
+    }
+
+    // Reset
+    setTouchStartX(null);
+    setTouchEndX(null);
+};
+
     const fetchProductData = () => {
         products.map((item) => {
             if (item._id === productId) {
@@ -21,6 +48,11 @@ export default function Product() {
             }
         });
     };
+    useEffect(() => {
+        fetchProductData();
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // 👈 remonte la page
+    }, [products, productId]);
+
 
     useEffect(() => {
         fetchProductData();
@@ -41,7 +73,16 @@ export default function Product() {
                         ))}
                     </div>
                     <div className='main-image-box'>
-                        <img className='main-image' src={image} alt="Produit" />
+                        <img
+                            className='main-image'
+                            src={image}
+                            alt="Produit"
+                            onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+                            onTouchMove={(e) => setTouchEndX(e.touches[0].clientX)}
+                            onTouchEnd={() => handleSwipe()}
+                            style={{ cursor: 'grab' }}
+                        />
+
                     </div>
                 </div>
 
