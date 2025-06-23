@@ -11,33 +11,40 @@ export default function Product() {
     const [productData, setProductData] = useState(false);
     const [image, setImage] = useState('');
     const [size, setSize] = useState(null);
-
     const [touchStartX, setTouchStartX] = useState(null);
     const [touchEndX, setTouchEndX] = useState(null);
+    const [animationDirection, setAnimationDirection] = useState(null);
 
     const handleSwipe = () => {
-    if (!touchStartX || !touchEndX) return;
+        if (!touchStartX || !touchEndX) return;
 
-    const distance = touchStartX - touchEndX;
+        const distance = touchStartX - touchEndX;
 
-    if (distance > 50) {
-        // Swipe gauche → image suivante
-        const currentIndex = productData.image.indexOf(image);
-        const nextIndex = (currentIndex + 1) % productData.image.length;
-        setImage(productData.image[nextIndex]);
-    }
+        if (distance > 50) {
+            // Swipe gauche → image suivante
+            setAnimationDirection('slide-left');
+            setTimeout(() => {
+                const currentIndex = productData.image.indexOf(image);
+                const nextIndex = (currentIndex + 1) % productData.image.length;
+                setImage(productData.image[nextIndex]);
+                setAnimationDirection(null);
+            }, 300);
+        }
 
-    if (distance < -50) {
-        // Swipe droite → image précédente
-        const currentIndex = productData.image.indexOf(image);
-        const prevIndex = (currentIndex - 1 + productData.image.length) % productData.image.length;
-        setImage(productData.image[prevIndex]);
-    }
+        if (distance < -50) {
+            // Swipe droite → image précédente
+            setAnimationDirection('slide-right');
+            setTimeout(() => {
+                const currentIndex = productData.image.indexOf(image);
+                const prevIndex = (currentIndex - 1 + productData.image.length) % productData.image.length;
+                setImage(productData.image[prevIndex]);
+                setAnimationDirection(null);
+            }, 300);
+        }
 
-    // Reset
-    setTouchStartX(null);
-    setTouchEndX(null);
-};
+        setTouchStartX(null);
+        setTouchEndX(null);
+    };
 
     const fetchProductData = () => {
         products.map((item) => {
@@ -48,14 +55,10 @@ export default function Product() {
             }
         });
     };
-    useEffect(() => {
-        fetchProductData();
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // 👈 remonte la page
-    }, [products, productId]);
-
 
     useEffect(() => {
         fetchProductData();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [products, productId]);
 
     return productData ? (
@@ -74,29 +77,27 @@ export default function Product() {
                     </div>
                     <div className='main-image-box'>
                         <img
-                            className='main-image'
+                            className={`main-image ${animationDirection || ''}`}
                             src={image}
                             alt="Produit"
                             onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
                             onTouchMove={(e) => setTouchEndX(e.touches[0].clientX)}
-                            onTouchEnd={() => handleSwipe()}
+                            onTouchEnd={handleSwipe}
+                            onMouseDown={(e) => setTouchStartX(e.clientX)}
+                            onMouseMove={(e) => setTouchEndX(e.clientX)}
+                            onMouseUp={handleSwipe}
+                            onMouseLeave={() => {
+                                setTouchStartX(null);
+                                setTouchEndX(null);
+                            }}
                             style={{ cursor: 'grab' }}
                         />
-
                     </div>
                 </div>
 
                 <div className='product-details'>
                     <h1 className='product-name2'>{productData.name}</h1>
-                    {/* <div className='product-rating'>
-                        {[1, 2, 3, 4].map((_, i) => (
-                            <img key={i} src={assets.star_icon} className='star-icon' alt='star' />
-                        ))}
-                        <img src={assets.star_dull_icon} className='star-icon' alt='star' />
-                        <span className='rating-count'>(122)</span>
-                    </div> */}
 
-                    {/* 💰 Gérer prix : avec ou sans tailles */}
                     <div className='product-price'>
                         {productData.sizes && productData.sizes.length > 0 ? (
                             size ? (
@@ -111,7 +112,6 @@ export default function Product() {
 
                     <p className='product-descriptionn'>{productData.description}</p>
 
-                    {/* 👕 Choix de taille (s’il y en a) */}
                     {productData.sizes && productData.sizes.length > 0 && (
                         <div className='product-sizes'>
                             <p>Choisissez la taille :</p>
@@ -129,7 +129,6 @@ export default function Product() {
                         </div>
                     )}
 
-                    {/* 🛒 Bouton panier */}
                     <button
                         onClick={() => addToCart(productData._id, size?.size || 'unique')}
                         className='add-to-cart'
@@ -137,23 +136,8 @@ export default function Product() {
                     >
                         {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
                     </button>
-
-                    {/* <div className='product-perks'>
-                        <p>✔️ 100% Original</p>
-                        <p>✔️ Paiement à la livraison</p>
-                    </div> */}
                 </div>
             </div>
-
-            {/* <div className='product-description-section'>
-                <div className='tabs'>
-                    <span className='tab active-tab'>Description</span>
-                    <span className='tab'>Avis (122)</span>
-                </div>
-                <div className='tab-content'>
-                    <p>{productData.longDescription || 'Aucune description longue disponible.'}</p>
-                </div>
-            </div> */}
 
             <RelatedProduct category={productData.category} subCategory={productData.subCategory} />
         </div>
