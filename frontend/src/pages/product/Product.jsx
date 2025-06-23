@@ -28,16 +28,16 @@ export default function Product() {
 
     // ✅ On remonte en haut quand un produit est chargé
    useEffect(() => {
+    setProductData(false); // reset pour forcer React à réafficher tout proprement
     const item = products.find((item) => item._id === productId);
     if (item) {
         setProductData(item);
         setImage(item.image[0]);
-        setSize(null); // pour réinitialiser la taille sélectionnée
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 0); // exécute le scroll juste après la mise à jour de l'état
+        setSize(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }, [products, productId]);
+
 
 
     const handleTouchStart = (e) => {
