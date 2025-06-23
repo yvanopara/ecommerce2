@@ -24,8 +24,10 @@ connectCloudinary();
 
 // Middlewares
 app.use(cors({
-  origin: '*',
+  origin: 'https://frontendv-wnur.onrender.com',
+  credentials: true,
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
