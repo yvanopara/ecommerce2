@@ -11,55 +11,39 @@ export default function Product() {
     const [productData, setProductData] = useState(false);
     const [image, setImage] = useState('');
     const [size, setSize] = useState(null);
-    const [startX, setStartX] = useState(null);
-    const [currentX, setCurrentX] = useState(null);
-    const [isSwiping, setIsSwiping] = useState(false);
+    const [touchStart, setTouchStart] = useState(0);
+    const [touchEnd, setTouchEnd] = useState(0);
     const imageRef = useRef(null);
 
     const handleTouchStart = (e) => {
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        setStartX(clientX);
-        setCurrentX(clientX);
-        setIsSwiping(true);
-        if (imageRef.current) {
-            imageRef.current.style.transition = 'none';
-        }
+        setTouchStart(e.targetTouches[0].clientX);
     };
 
     const handleTouchMove = (e) => {
-        if (!isSwiping || startX === null) return;
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        setCurrentX(clientX);
+        setTouchEnd(e.targetTouches[0].clientX);
         
+        // Déplacement visuel pendant le swipe
         if (imageRef.current) {
-            const diff = clientX - startX;
-            imageRef.current.style.transform = `translateX(${diff}px)`;
+            const diff = touchStart - e.targetTouches[0].clientX;
+            imageRef.current.style.transform = `translateX(${-diff/3}px)`;
         }
     };
 
     const handleTouchEnd = () => {
-        if (!isSwiping || startX === null || currentX === null) {
-            setIsSwiping(false);
-            return;
-        }
-        
-        const diff = startX - currentX;
-        const threshold = window.innerWidth / 4;
-        
-        if (diff > threshold) {
+        if (touchStart - touchEnd > 75) {
+            // Swipe gauche
             goToNextImage();
-        } else if (diff < -threshold) {
+        }
+
+        if (touchStart - touchEnd < -75) {
+            // Swipe droite
             goToPrevImage();
         }
-        
+
+        // Réinitialiser la position
         if (imageRef.current) {
             imageRef.current.style.transform = 'translateX(0)';
-            imageRef.current.style.transition = 'transform 0.3s ease';
         }
-        
-        setIsSwiping(false);
-        setStartX(null);
-        setCurrentX(null);
     };
 
     const goToNextImage = () => {
@@ -106,17 +90,16 @@ export default function Product() {
                     <div className='main-image-box'
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
-                        onMouseDown={handleTouchStart}
-                        onMouseMove={handleTouchMove}
-                        onMouseUp={handleTouchEnd}
-                        onMouseLeave={handleTouchEnd}>
+                        onTouchEnd={handleTouchEnd}>
                         <img
                             ref={imageRef}
                             className='main-image'
                             src={image}
                             alt="Produit"
-                            style={{ cursor: 'grab' }}
+                            style={{ 
+                                transition: 'transform 0.2s ease-out',
+                                cursor: 'grab'
+                            }}
                         />
                     </div>
                 </div>

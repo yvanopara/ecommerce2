@@ -63,19 +63,17 @@
     width: 100%;
     border-radius: 1rem;
     box-shadow: 0 0 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
     will-change: transform;
     user-select: none;
-    -webkit-user-drag: none;
 }
 
-@keyframes slideIn {
-    0% { opacity: 0.5; transform: scale(0.98); }
+@keyframes smoothChange {
+    0% { opacity: 0.8; transform: scale(0.98); }
     100% { opacity: 1; transform: scale(1); }
 }
 
 .main-image {
-    animation: slideIn 0.3s ease-out;
+    animation: smoothChange 0.3s ease-out;
 }
 
 .product-details {
