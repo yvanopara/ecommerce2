@@ -16,18 +16,17 @@ export default function Product() {
     const [isSwiping, setIsSwiping] = useState(false);
     const imageTrackRef = useRef(null);
 
-    // 🧠 Utiliser find au lieu de map + setTimeout pour éviter blocage DOM
     useEffect(() => {
-        setProductData(null); // reset state pour forcer le rechargement propre
+        if (!productId || products.length === 0) return;
+
         const item = products.find((item) => item._id === productId);
+
         if (item) {
             setProductData(item);
-            setImage(item.image[0]);
+            setImage(Array.isArray(item.image) ? item.image[0] : item.image);
             setSize(null);
-            setIsSwiping(false); // Reset swipe pour éviter conflits
-            setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 0);
+            setIsSwiping(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }, [products, productId]);
 
@@ -87,10 +86,10 @@ export default function Product() {
     }
 
     return (
-        <div className='product-container'>
-            <div className='product-main'>
-                <div className='product-images'>
-                    <div className='thumbnails'>
+        <div className="product-container">
+            <div className="product-main">
+                <div className="product-images">
+                    <div className="thumbnails">
                         {productData.image.map((item, index) => (
                             <img
                                 src={item}
@@ -102,21 +101,23 @@ export default function Product() {
                         ))}
                     </div>
 
-                    <div className='main-image-container'
+                    <div
+                        className="main-image-container"
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
                         onTouchEnd={handleTouchEnd}
                         onMouseDown={handleTouchStart}
                         onMouseMove={handleTouchMove}
                         onMouseUp={handleTouchEnd}
-                        onMouseLeave={handleTouchEnd}>
-                        
+                        onMouseLeave={handleTouchEnd}
+                    >
                         <div
                             ref={imageTrackRef}
                             className={`image-track ${isSwiping ? 'swiping' : ''}`}
-                            style={{ transform: calculateTransform() }}>
+                            style={{ transform: calculateTransform() }}
+                        >
                             {productData.image.map((img, index) => (
-                                <div key={index} className='image-slide'>
+                                <div key={index} className="image-slide">
                                     <img
                                         src={img}
                                         className={`main-image ${image === img ? 'active' : ''}`}
@@ -139,10 +140,10 @@ export default function Product() {
                     </div>
                 </div>
 
-                <div className='product-details'>
-                    <h1 className='product-name2'>{productData.name}</h1>
+                <div className="product-details">
+                    <h1 className="product-name2">{productData.name}</h1>
 
-                    <div className='product-price'>
+                    <div className="product-price">
                         {productData.sizes && productData.sizes.length > 0 ? (
                             size ? (
                                 <span>{size.price} {currency}</span>
@@ -154,12 +155,12 @@ export default function Product() {
                         )}
                     </div>
 
-                    <p className='product-descriptionn'>{productData.description}</p>
+                    <p className="product-descriptionn">{productData.description}</p>
 
                     {productData.sizes && productData.sizes.length > 0 && (
-                        <div className='product-sizes'>
+                        <div className="product-sizes">
                             <p>Choisissez la taille :</p>
-                            <div className='size-options'>
+                            <div className="size-options">
                                 {productData.sizes.map((item, index) => (
                                     <button
                                         onClick={() => setSize(item)}
@@ -175,7 +176,7 @@ export default function Product() {
 
                     <button
                         onClick={() => addToCart(productData._id, size?.size || 'unique')}
-                        className='add-to-cart'
+                        className="add-to-cart"
                         disabled={productData.sizes?.length > 0 && !size}
                     >
                         {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
