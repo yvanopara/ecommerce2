@@ -14,7 +14,7 @@ export const getFavorites = async (req, res) => {
 };
 
 export const addToFavorites = async (req, res) => {
-  const { userId, productId } = req.params;
+  const { userId, productId } = req.params;   
   try {
     const user = await userModel.findById(userId);
     if (!user) return res.status(404).json({ message: "Utilisateur non trouvé" });
