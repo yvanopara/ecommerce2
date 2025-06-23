@@ -11,9 +11,6 @@ import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 
 
-// Solution pour __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -43,20 +40,12 @@ app.use('/api/order', orderRouter);
 app.get('/ping', (req, res) => res.send('pong'));
 
 // Configuration pour la production
-if (process.env.NODE_ENV === 'production') {
-  // Servir les fichiers statiques de React
-  app.use(express.static(path.join(__dirname, 'build')));
-  
-  // Rediriger toutes les requêtes vers index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
-} else {
+
   // Route de test en développement
   app.get('/', (req, res) => {
     res.send('API IS WORKING (Development Mode)');
   });
-}
+
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
