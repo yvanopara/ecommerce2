@@ -1,89 +1,95 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import './product.css'
 import { useParams } from 'react-router-dom'
-import { ShopContext } from '../../context/shopContext'
-import RelatedProduct from '../../components/relatedProducts/RelatedProduct'
+import { ShopContext } from '../../context/shopContext';
+import { assets } from '../../assets/assets';
+import RelatedProduct from '../../components/relatedProducts/RelatedProduct';
 
 export default function Product() {
-    const { productId } = useParams()
-    const { products, currency, addToCart } = useContext(ShopContext)
-    const [productData, setProductData] = useState(null)
-    const [currentImageIndex, setCurrentImageIndex] = useState(0)
-    const [startX, setStartX] = useState(0)
-    const [currentX, setCurrentX] = useState(0)
-    const [isSwiping, setIsSwiping] = useState(false)
-    const imageTrackRef = useRef(null)
-
-    useEffect(() => {
-        if (products.length > 0) {
-            const product = products.find(item => item._id === productId)
-            if (product) {
-                setProductData(product)
-                setCurrentImageIndex(0)
-            }
-        }
-    }, [products, productId])
+    const { productId } = useParams();
+    const { products, currency, addToCart } = useContext(ShopContext);
+    const [productData, setProductData] = useState(false);
+    const [image, setImage] = useState('');
+    const [size, setSize] = useState(null);
+    const [startX, setStartX] = useState(null);
+    const [currentX, setCurrentX] = useState(null);
+    const [isSwiping, setIsSwiping] = useState(false);
+    const imageRef = useRef(null);
 
     const handleTouchStart = (e) => {
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX
-        setStartX(clientX)
-        setCurrentX(clientX)
-        setIsSwiping(true)
-    }
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        setStartX(clientX);
+        setCurrentX(clientX);
+        setIsSwiping(true);
+        if (imageRef.current) {
+            imageRef.current.style.transition = 'none';
+        }
+    };
 
     const handleTouchMove = (e) => {
-        if (!isSwiping) return
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX
-        setCurrentX(clientX)
-    }
+        if (!isSwiping || startX === null) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        setCurrentX(clientX);
+        
+        if (imageRef.current) {
+            const diff = clientX - startX;
+            imageRef.current.style.transform = `translateX(${diff}px)`;
+        }
+    };
 
     const handleTouchEnd = () => {
-        if (!isSwiping) return
+        if (!isSwiping || startX === null || currentX === null) {
+            setIsSwiping(false);
+            return;
+        }
         
-        const diff = startX - currentX
-        const threshold = window.innerWidth / 4
+        const diff = startX - currentX;
+        const threshold = window.innerWidth / 4;
         
         if (diff > threshold) {
-            // Swipe gauche → image suivante
-            goToNextImage()
+            goToNextImage();
         } else if (diff < -threshold) {
-            // Swipe droite → image précédente
-            goToPrevImage()
+            goToPrevImage();
         }
         
-        setIsSwiping(false)
-    }
+        if (imageRef.current) {
+            imageRef.current.style.transform = 'translateX(0)';
+            imageRef.current.style.transition = 'transform 0.3s ease';
+        }
+        
+        setIsSwiping(false);
+        setStartX(null);
+        setCurrentX(null);
+    };
 
     const goToNextImage = () => {
-        setCurrentImageIndex(prev => 
-            (prev + 1) % productData.image.length
-        )
-    }
+        const currentIndex = productData.image.indexOf(image);
+        const nextIndex = (currentIndex + 1) % productData.image.length;
+        setImage(productData.image[nextIndex]);
+    };
 
     const goToPrevImage = () => {
-        setCurrentImageIndex(prev => 
-            (prev - 1 + productData.image.length) % productData.image.length
-        )
-    }
+        const currentIndex = productData.image.indexOf(image);
+        const prevIndex = (currentIndex - 1 + productData.image.length) % productData.image.length;
+        setImage(productData.image[prevIndex]);
+    };
 
-    const goToImage = (index) => {
-        setCurrentImageIndex(index)
-    }
+    const fetchProductData = () => {
+        products.map((item) => {
+            if (item._id === productId) {
+                setProductData(item);
+                setImage(item.image[0]);
+                return null;
+            }
+        });
+    };
 
-    const calculateTransform = () => {
-        if (!isSwiping) {
-            return `translateX(-${currentImageIndex * 100}%)`
-        }
-        
-        const diff = currentX - startX
-        return `translateX(calc(-${currentImageIndex * 100}% + ${diff}px))`
-    }
+    useEffect(() => {
+        fetchProductData();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [products, productId]);
 
-    if (!productData) {
-        return <div className="loading">Chargement...</div>
-    }
-
-    return (
+    return productData ? (
         <div className='product-container'>
             <div className='product-main'>
                 <div className='product-images'>
@@ -91,15 +97,13 @@ export default function Product() {
                         {productData.image.map((item, index) => (
                             <img
                                 src={item}
-                                onClick={() => goToImage(index)}
+                                onClick={() => setImage(item)}
                                 key={index}
-                                className={`thumbnail ${index === currentImageIndex ? 'active-thumbnail' : ''}`}
-                                alt={`Miniature ${index + 1}`}
+                                className={`thumbnail ${item === image ? 'active-thumbnail' : ''}`}
                             />
                         ))}
                     </div>
-
-                    <div className='main-image-container'
+                    <div className='main-image-box'
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
                         onTouchEnd={handleTouchEnd}
@@ -107,57 +111,42 @@ export default function Product() {
                         onMouseMove={handleTouchMove}
                         onMouseUp={handleTouchEnd}
                         onMouseLeave={handleTouchEnd}>
-                        
-                        <div 
-                            ref={imageTrackRef}
-                            className={`image-track ${isSwiping ? 'swiping' : ''}`}
-                            style={{ transform: calculateTransform() }}>
-                            
-                            {productData.image.map((img, index) => (
-                                <div key={index} className='image-slide'>
-                                    <img
-                                        src={img}
-                                        className='main-image'
-                                        alt={`Produit ${index + 1}`}
-                                        draggable="false"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="image-nav-dots">
-                            {productData.image.map((_, index) => (
-                                <div 
-                                    key={index}
-                                    className={`nav-dot ${currentImageIndex === index ? 'active-dot' : ''}`}
-                                    onClick={() => goToImage(index)}
-                                />
-                            ))}
-                        </div>
+                        <img
+                            ref={imageRef}
+                            className='main-image'
+                            src={image}
+                            alt="Produit"
+                            style={{ cursor: 'grab' }}
+                        />
                     </div>
                 </div>
 
                 <div className='product-details'>
-                    <h1 className='product-name'>{productData.name}</h1>
-                    
+                    <h1 className='product-name2'>{productData.name}</h1>
+
                     <div className='product-price'>
-                        {productData.sizes?.length > 0 ? (
-                            <span>À partir de {productData.sizes[0].price} {currency}</span>
+                        {productData.sizes && productData.sizes.length > 0 ? (
+                            size ? (
+                                <span>{size.price} {currency}</span>
+                            ) : (
+                                <span>À partir de {productData.sizes[0].price} {currency}</span>
+                            )
                         ) : (
-                            <span>{productData.price} {currency}</span>
+                            <span>{productData.price || 'Prix non défini'} {currency}</span>
                         )}
                     </div>
 
-                    <p className='product-description'>{productData.description}</p>
+                    <p className='product-descriptionn'>{productData.description}</p>
 
-                    {productData.sizes?.length > 0 && (
+                    {productData.sizes && productData.sizes.length > 0 && (
                         <div className='product-sizes'>
                             <p>Choisissez la taille :</p>
                             <div className='size-options'>
                                 {productData.sizes.map((item, index) => (
                                     <button
+                                        onClick={() => setSize(item)}
+                                        className={`size-button ${size?.size === item.size ? 'active-size' : ''}`}
                                         key={index}
-                                        className='size-button'
                                     >
                                         {item.size}
                                     </button>
@@ -166,16 +155,17 @@ export default function Product() {
                         </div>
                     )}
 
-                    <button className='add-to-cart'>
-                        Ajouter au panier
+                    <button
+                        onClick={() => addToCart(productData._id, size?.size || 'unique')}
+                        className='add-to-cart'
+                        disabled={productData.sizes?.length > 0 && !size}
+                    >
+                        {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
                     </button>
                 </div>
             </div>
 
-            <RelatedProduct 
-                category={productData.category} 
-                subCategory={productData.subCategory} 
-            />
+            <RelatedProduct category={productData.category} subCategory={productData.subCategory} />
         </div>
-    )
+    ) : <div style={{ opacity: '0' }}></div>;
 }
