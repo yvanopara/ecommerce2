@@ -184,8 +184,16 @@
     border-color: #ff6600;
 }
 
-.add-to-cart {
+/* Conteneur pour aligner les boutons "Ajouter au panier" et WhatsApp */
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     margin-top: 1rem;
+    align-items: center;
+}
+
+.add-to-cart {
     padding: 0.9rem 2rem;
     background-color: #000;
     color: white;
@@ -208,4 +216,28 @@
 
 .main-image {
     animation: smoothAppear 0.3s ease-out;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #25D366;
+    color: white;
+    font-weight: 600;
+    padding: 0.9rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.whatsapp-button:hover {
+    background-color: #1ebe5d;
+}
+
+.whatsapp-icon {
+    width: 20px;
+    height: 20px;
 }

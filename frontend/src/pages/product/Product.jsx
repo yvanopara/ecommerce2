@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import './product.css';
 import { useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shopContext';
-import { assets } from '../../assets/assets';
 import RelatedProduct from '../../components/relatedProducts/RelatedProduct';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Product() {
     const { productId } = useParams();
@@ -174,13 +174,28 @@ export default function Product() {
                         </div>
                     )}
 
-                    <button
-                        onClick={() => addToCart(productData._id, size?.size || 'unique')}
-                        className="add-to-cart"
-                        disabled={productData.sizes?.length > 0 && !size}
-                    >
-                        {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
-                    </button>
+                    {/* Boutons côte à côte */}
+                    <div className="action-buttons">
+                        <button
+                            onClick={() => addToCart(productData._id, size?.size || 'unique')}
+                            className="add-to-cart"
+                            disabled={productData.sizes?.length > 0 && !size}
+                        >
+                            {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
+                        </button>
+
+                        <a
+                            className="whatsapp-button"
+                            href={`https://wa.me/237693800251?text=${encodeURIComponent(
+                                `Bonjour, je suis intéressé par *${productData.name}* à *${size?.price || productData.price} ${currency}*. Pouvez-vous me donner plus d'infos ?`
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <FaWhatsapp className="whatsapp-icon" />
+                            WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
 
