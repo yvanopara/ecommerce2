@@ -6,11 +6,16 @@ import { Link } from 'react-router-dom'
 export default function ProductItems({ id, name, image, price }) {
     const { currency } = useContext(ShopContext)
 
+    // 🧠 Gérer les 2 formats possibles de image : tableau ou string
+    const imageUrl = Array.isArray(image) ? image[0] : image;
+
+    if (!id || !imageUrl) return null; // protection anti-crash
+
     return (
         <Link to={`/product/${id}`} className='product-item'>
             <div className='image-wrapper'>
                 <img 
-                    src={image[0]} 
+                    src={imageUrl} 
                     alt={name}
                     loading='lazy'
                 />
