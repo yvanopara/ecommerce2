@@ -8,9 +8,11 @@
   z-index: 1;
 }
 .logoNamee {
+  display: flex;
     color: tomato;
     font-size: 20px;
     font-weight: 300;
+    top: -2px;
     margin-left:-13px ;
     font-family: 'Saira Stencil One', sans-serif;
 }
