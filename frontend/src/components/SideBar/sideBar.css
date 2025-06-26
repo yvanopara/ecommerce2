@@ -1,76 +1,95 @@
+/* Sidebar container */
 .sidebar {
   position: fixed;
-  background-color: white;
+  background: linear-gradient(to bottom, #ffffff, #f5f5f5);
   top: 0;
   left: 0;
-  width: 250px;
+  width: 260px;
   height: 100vh;
-  padding: 60px 20px 10px 20px;
+  padding: 130px 20px 20px;
   z-index: 999;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
   transform: translateX(-100%);
-  animation: sidebarOpen 0.3s ease-out forwards;
-  text-align: left; /* Assure l'alignement à gauche */
-}
-.sidebar p{
-  margin-bottom: -20px;
+  animation: sidebarOpen 0.4s ease forwards;
+  overflow-y: auto;
 }
 
+/* Animation */
 @keyframes sidebarOpen {
   to {
     transform: translateX(0);
   }
 }
 
-.sidebar nav {
+.category-menu {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding-top: 30px;
+  gap: 1rem;
 }
 
-/* Catégories plus grosses */
+.category-block {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+/* Catégorie principale */
 .category-title {
-  font-size: 1.8rem; /* plus gros */
-  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #222;
   cursor: pointer;
-  color: black;
-  margin: 1rem 0 0.5rem 0;
+  transition: color 0.3s ease;
+  margin-bottom: 0.3rem;
 }
 
-/* Sous-catégories avec léger décalage à droite */
-.subcategory-list {
+.category-title:hover {
+  color: #ff6600;
+}
 
+/* Sous-catégories */
+.subcategory-list {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.4s ease;
-  padding-left: 20px; /* décalage à droite */
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+  padding-left: 30px; /* décalage vers la droite */
 }
 
-/* Classe open pour afficher sous-catégories avec animation */
+/* Ouverture animée */
 .subcategory-list.open {
-  max-height: 500px; /* assez grand pour contenir les sous-catégories */
+  max-height: 300px;
   opacity: 1;
+  transform: translateY(0);
 }
 
-/* Style liens sous-catégories */
+/* Liens sous-catégories */
 .subcategory-list a {
   display: block;
-  margin-top: 20px;
-  padding: -2px 10px;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  color: black;
+  font-size: 1.05rem;
+  padding: 10px 0;
+  color: #444;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #e0e0e0; /* ligne entre sous-catégories */
 }
 
+/* Dernier lien sans bordure */
+.subcategory-list a:last-child {
+  border-bottom: none;
+}
+
+/* Hover */
 .subcategory-list a:hover {
-  color: #f55;
+  color: #ff6600;
+  padding-left: 5px;
 }
 
-/* Style liens catégories au survol */
-.category-title:hover {
-  color: #007bff;
+/* Lien actif */
+.subcategory-list a.active {
+  color: tomato;
+  font-weight: bold;
 }

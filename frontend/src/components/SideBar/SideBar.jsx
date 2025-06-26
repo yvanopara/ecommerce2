@@ -1,20 +1,12 @@
-import './sideBar.css'
+import './sideBar.css';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const categories = [
-  {
-    name: 'Vêtements',
-    subcategories: ['Homme', 'Femme', 'Enfant'],
-  },
-  {
-    name: 'Électronique',
-    subcategories: ['Téléphones', 'Ordinateurs', 'Accessoires'],
-  },
-  {
-    name: 'Chaussures',
-    subcategories: ['Sport', 'Ville', 'Sandales'],
-  },
+  { name: 'Vêtements', subcategories: ['Homme', 'Femme', 'Enfant'] },
+  { name: 'Électronique', subcategories: ['Téléphones', 'Ordinateurs', 'Accessoires'] },
+  { name: 'Chaussures', subcategories: ['Sport', 'Ville', 'Sandales'] },
 ];
 
 export default function Sidebar({ setOuvert }) {
@@ -22,31 +14,27 @@ export default function Sidebar({ setOuvert }) {
 
   return (
     <div className="sidebar">
-      <nav className="category-menu"> 
+      <nav className="category-menu">
         {categories.map((cat, index) => (
-          <div key={index}>
-            <p
+          <div key={index} className="category-block">
+            <div
               className="category-title"
-              style={{fontSize:'20px'}}
               onClick={() => setVisible(visible === index ? null : index)}
             >
-              {cat.name}
-            </p>
+              <span>{cat.name}</span>
+              {visible === index ? <FaChevronUp size={16} /> : <FaChevronDown size={16} />}
+            </div>
 
-            <div
-              className={`subcategory-list ${visible === index ? 'open' : ''}`}
-            >
-              {visible === index &&
-                cat.subcategories.map((sub, subIndex) => (
-                  <NavLink
-                    key={subIndex}
-                    to={`/collection/${sub.toLowerCase()}`}
-                    onClick={() => setOuvert(false)}
-                  >
-                    {sub}
-                  </NavLink>
-                ))
-              }
+            <div className={`subcategory-list ${visible === index ? 'open' : ''}`}>
+              {cat.subcategories.map((sub, subIndex) => (
+                <NavLink
+                  key={subIndex}
+                  to={`/collection/${sub.toLowerCase()}`}
+                  onClick={() => setOuvert(false)}
+                >
+                  {sub}
+                </NavLink>
+              ))}
             </div>
           </div>
         ))}

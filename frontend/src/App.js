@@ -19,8 +19,8 @@ import Login  from './pages/login/Login';
 import Category from './pages/category/Category';
 
 
- // export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
-      export const backendUrl = 'http://localhost:5000'
+ export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
+    //   export const backendUrl = 'http://localhost:5000'
 
 
 function App() {
