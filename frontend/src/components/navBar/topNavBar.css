@@ -7,7 +7,32 @@
   position: relative;
   z-index: 1;
 }
-
+.logoNamee {
+    color: tomato;
+    font-size: 20px;
+    font-weight: 300;
+    font-family: 'Saira Stencil One', sans-serif;
+}
+.rotatink-k {
+  display: inline-block;
+    transform-origin: center; /* Keep rotation centered */
+    animation: rotate 3s linear infinite; /* Rotate continuously */
+    padding:0.1px 10px;
+    
+    border: 1px solid tomato;
+    
+    border-radius: 50%;
+  
+}
+/* Animation de rotation */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .left-side {
   display: flex;
   align-items: center;

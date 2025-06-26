@@ -39,7 +39,8 @@ export default function TopNavBar() {
           {ouvert ? <FaTimes /> : <FaBars />}
         </button>
 
-        <img onClick={() => navigate('/')} className='logo-image' src={assets.logo} alt='logo' />
+        {/* <img onClick={() => navigate('/')} className='logo-image' src={assets.logo} alt='logo' /> */}
+        <p onClick={() => navigate('/')} className='logoNamee' ><span className='rotatink-k'>k</span>-MySore</p>
       </div>
 
       {ouvert && (
