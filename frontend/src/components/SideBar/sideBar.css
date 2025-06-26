@@ -1,31 +1,76 @@
 .sidebar {
-  background: white;
   position: fixed;
+  background-color: white;
   top: 0;
   left: 0;
-  width: 260px;
+  width: 250px;
   height: 100vh;
-  padding: 2rem;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  z-index: 1000;
+  padding: 60px 20px 10px 20px;
+  z-index: 999;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+  transform: translateX(-100%);
+  animation: sidebarOpen 0.3s ease-out forwards;
+  text-align: left; /* Assure l'alignement à gauche */
+}
+.sidebar p{
+  margin-bottom: -20px;
 }
 
+@keyframes sidebarOpen {
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 30px;
+}
+
+/* Catégories plus grosses */
 .category-title {
-  font-weight: bold;
+  font-size: 1.8rem; /* plus gros */
+  font-weight: 700;
   cursor: pointer;
   color: black;
-  margin: 1rem 0 0.5rem;
+  margin: 1rem 0 0.5rem 0;
 }
 
+/* Sous-catégories avec léger décalage à droite */
+.subcategory-list {
+
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  padding-left: 20px; /* décalage à droite */
+}
+
+/* Classe open pour afficher sous-catégories avec animation */
+.subcategory-list.open {
+  max-height: 500px; /* assez grand pour contenir les sous-catégories */
+  opacity: 1;
+}
+
+/* Style liens sous-catégories */
 .subcategory-list a {
   display: block;
-  padding-left: 1rem;
+  margin-top: 20px;
+  padding: -2px 10px;
   margin-bottom: 0.5rem;
+  font-size: 1rem;
   color: black;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .subcategory-list a:hover {
   color: #f55;
+}
+
+/* Style liens catégories au survol */
+.category-title:hover {
+  color: #007bff;
 }

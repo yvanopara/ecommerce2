@@ -44,7 +44,8 @@ export default function TopNavBar() {
 
       {ouvert && (
         <div>
-          <Sidebar />
+          <Sidebar setOuvert={setOuvert} />
+ 
         </div>
         
       )}

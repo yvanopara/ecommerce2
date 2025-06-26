@@ -22,29 +22,32 @@ export default function Sidebar({ setOuvert }) {
 
   return (
     <div className="sidebar">
-      <nav className="category-menu">
+      <nav className="category-menu"> 
         {categories.map((cat, index) => (
           <div key={index}>
             <p
               className="category-title"
+              style={{fontSize:'20px'}}
               onClick={() => setVisible(visible === index ? null : index)}
             >
               {cat.name}
             </p>
 
-            {visible === index && (
-              <div className="subcategory-list">
-                {cat.subcategories.map((sub, subIndex) => (
+            <div
+              className={`subcategory-list ${visible === index ? 'open' : ''}`}
+            >
+              {visible === index &&
+                cat.subcategories.map((sub, subIndex) => (
                   <NavLink
                     key={subIndex}
-                    to={`/collection/${cat.name.toLowerCase()}/${sub.toLowerCase()}`}
+                    to={`/collection/${sub.toLowerCase()}`}
                     onClick={() => setOuvert(false)}
                   >
                     {sub}
                   </NavLink>
-                ))}
-              </div>
-            )}
+                ))
+              }
+            </div>
           </div>
         ))}
       </nav>
