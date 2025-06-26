@@ -13,7 +13,7 @@ export default function Add({ token }) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('') // Prix global (optionnel si sizes définies)
-  const [category, setCategory] = useState('Men')
+  const [category, setCategory] = useState('femme')
   const [subCategory, setSubCategory] = useState('Topwear')
   const [bestseller, setBestseller] = useState(false)
   const [sizes, setSizes] = useState([]) // tableau d'objets {size, price}
