@@ -25,6 +25,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://admin2-1hs9.onrender.com',
   'http://localhost:5173',
+  'https://k-mystore.com/'
 ];
 
 app.use(cors({
