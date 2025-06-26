@@ -16,7 +16,7 @@ export default function LatestCollections() {
 
   return (
     <div className="latest-collections-container">
-      <div className="title-wrapper">
+      <div  className="title-wrapper">
         <Title text1={'LATEST'} text2={'COLLECTION'} />
       </div>
 

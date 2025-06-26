@@ -8,8 +8,13 @@
 }
 
 .title-wrapper {
+  display: flex;                /* Active Flexbox */
+  justify-content: center;      /* Centre horizontalement */
+  align-items: center;  
   padding: 1.5rem 0;
+  height: 12px;
   text-align: center;
+
 }
 
 .products-container {
