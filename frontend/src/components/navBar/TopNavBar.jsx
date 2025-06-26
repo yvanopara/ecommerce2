@@ -4,6 +4,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './topNavBar.css';
 import { ShopContext } from '../../context/shopContext';
+import Sidebar from '../SideBar/SideBar';
 
 export default function TopNavBar() {
   const [visible, setVisible] = useState(false);
@@ -42,13 +43,10 @@ export default function TopNavBar() {
       </div>
 
       {ouvert && (
-        <div className="sidebar">
-          <nav style={{ display: 'flex', flexDirection: 'column' }}>
-            <NavLink onClick={() => setOuvert(false)} to='/collection'>collections</NavLink>
-            <NavLink onClick={() => setOuvert(false)} to='/about'>about</NavLink>
-            <NavLink onClick={() => setOuvert(false)} to='/Paramètres'>Paramètres</NavLink>
-          </nav>
+        <div>
+          <Sidebar />
         </div>
+        
       )}
 
       <ul className='navbar-menu'>

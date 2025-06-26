@@ -16,10 +16,11 @@ import PlaceOrder from './pages/plcaeOrder/PlaceOrder';
 import Profil from './pages/profil/Profil';
 import Order from './pages/order/Order';
 import Login  from './pages/login/Login';
+import Category from './pages/category/Category';
 
 
-  export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
-   //   export const backendUrl = 'http://localhost:5000'
+ // export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
+      export const backendUrl = 'http://localhost:5000'
 
 
 function App() {
@@ -38,6 +39,8 @@ function App() {
         <Route path="/profil" element={<Profil/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/collection" element={<Collection />} />
+
+        <Route path="/collection/:category" element={<Category />} />
 
       </Routes>
       <Footer/>

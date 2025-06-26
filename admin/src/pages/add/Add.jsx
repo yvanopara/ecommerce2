@@ -211,9 +211,13 @@ export default function Add({ token }) {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="Men">Homme</option>
-            <option value="Women">Femme</option>
-            <option value="Kids">Enfants</option>
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+            <option value="enfant">Enfant</option>
+            <option value="electronic">Electronic</option>
+            <option value="informatique">Informatique</option>
+            <option value="maison">Maison</option>
+            <option value="bijoux">Bijoux</option>
           </select>
         </div>
 

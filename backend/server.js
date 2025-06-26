@@ -23,7 +23,8 @@ connectCloudinary();
 const allowedOrigins = [
   'https://frontendv-wnur.onrender.com',
   'http://localhost:3000',
-  'https://admin2-1hs9.onrender.com'
+  'https://admin2-1hs9.onrender.com',
+  'http://localhost:5173',
 ];
 
 app.use(cors({
