@@ -1,62 +1,49 @@
-/* latestCollection.css - Version optimisée */
-
 .latest-collections-container {
   margin: 0.3rem auto;
-  max-width: 14 00px;
+  max-width: 1400px;
   padding: 0 1rem;
-
+  position: relative; /* Pour les boutons de navigation si besoin */
 }
 
 .title-wrapper {
-  display: flex;                /* Active Flexbox */
-  justify-content: center;      /* Centre horizontalement */
-  align-items: center;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 1.5rem 0;
-  height: 12px;
   text-align: center;
-
 }
 
 .products-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.1rem;
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  white-space: nowrap; /* Empêche le retour à la ligne */
+  flex-wrap: nowrap; /* Important : désactive le retour à la ligne */
+}
 
+.products-container::-webkit-scrollbar {
+  display: none;
 }
 
 .product-item-wrapper {
+  flex: 0 0 auto; /* Nécessaire */
+  width: 200px; /* Largeur fixe */
+  scroll-snap-align: start;
   background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
-
-  
+  transition: transform 0.3s ease;
+  display: inline-block; /* Alternative pour certains navigateurs */
 }
 
-/* Points de rupture responsive */
-@media (min-width: 640px) {
-  .products-container {
-    gap: 0.2rem;
-  }
-}
-
+/* Pour les écrans plus larges */
 @media (min-width: 768px) {
-  .products-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .products-container {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .products-container {
-    grid-template-columns: repeat(5, 1fr);
+  .product-item-wrapper {
+    width: 220px;
   }
 }
