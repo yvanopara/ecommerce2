@@ -11,6 +11,7 @@
     color: tomato;
     font-size: 20px;
     font-weight: 300;
+    margin-bottom: 27px;
     margin-left:-13px ;
     font-family: 'Saira Stencil One', sans-serif;
 }
@@ -82,7 +83,7 @@
   top: 5px;
   width: 18px;
   height: 18px;
-  background-color: black;
+  background-color: rgba(255, 99, 71, 0.89);
   color: white;
   border-radius: 50%;
   font-size: 8px;
