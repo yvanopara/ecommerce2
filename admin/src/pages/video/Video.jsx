@@ -35,7 +35,7 @@ export default function AdminVideos() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/video/upload", formData, {
+      await axios.post(backendUrl+"/api/video/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setFile(null);
@@ -52,7 +52,7 @@ export default function AdminVideos() {
     if (!window.confirm("Confirmer la suppression ?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/video/delete/${id}`);
+      await axios.delete(`${backendUrl}/api/video/delete/${id}`);
       fetchVideos();
       toast.success("✅ Vidéo supprimée avec succès !");
     } catch (err) {
