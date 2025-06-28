@@ -3,7 +3,7 @@ import './navBar.css';
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { FaHome } from "react-icons/fa";
-import { Home, LayoutDashboard, Landmark, MapPin } from "lucide-react";
+import { Home,Play  , LayoutDashboard, Landmark, MapPin } from "lucide-react";
 import { assets } from '../../assets/assets';
 import { ShopContext } from '../../context/shopContext';
 
@@ -28,6 +28,16 @@ export default function NavBar() {
           >
             <Home className="icon" />
             <span>Accueil</span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink 
+            to="/video" 
+            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+          >
+            <Play   className="icon" />
+            <span>Shorts</span>
           </NavLink>
         </li>
 

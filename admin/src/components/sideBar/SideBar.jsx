@@ -1,5 +1,6 @@
 import './sideBar.css'
 import {assets} from '../../assets/assets'
+import {  Play } from "lucide-react";
 
 import React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -21,6 +22,11 @@ export default function SideBar() {
             <NavLink to="/orders" className="sideBar-option">
                 <img src={assets.order_icon} alt="bag_icon" />
                 <p>Orders</p>
+            </NavLink>
+
+            <NavLink to="/video" className="sideBar-option">
+                <Play/>
+                <p>video</p>
             </NavLink>
         </div>
       

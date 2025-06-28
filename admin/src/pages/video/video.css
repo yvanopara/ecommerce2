@@ -1,0 +1,51 @@
+.admin-videos {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.upload-form {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.upload-form input[type="file"] {
+  flex: 1;
+}
+
+.upload-form button {
+  background: tomato;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.video-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.video-item {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.video-item video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.video-item button {
+  margin-top: 0.5rem;
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}

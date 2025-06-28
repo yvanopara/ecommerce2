@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavBar from './components/navBar/NavBar'
 import SideBar from './components/sideBar/SideBar'
 import Add from './pages/add/Add'
+import Video from './pages/video/Video'
 import Order from './pages/order/Order'
 
 import { Routes,Route } from 'react-router-dom'
@@ -10,8 +11,8 @@ import List from './pages/list/List'
 import Login from './components/login/Login'
 import { ToastContainer, toast } from 'react-toastify';
 
- export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
- //  export const backendUrl = 'http://localhost:5000'
+  export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
+//  export const backendUrl = 'http://localhost:5000'
 export const currency = "FCFA"
 export default function App() {
   const [token,setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):'')
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/add" element={<Add token={token} url={url}/>}/>
           <Route path="/list" element={<List token={token} url={url}/>}/>
           <Route path="/orders" element={<Order token={token} url={url}/>}/>
+          <Route path="/video" element={<Video token={token} />}/>
                     
         </Routes>
       </div>

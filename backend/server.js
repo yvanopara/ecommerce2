@@ -4,11 +4,13 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import { connectDB } from './config/db.js';
-import connectCloudinary from './config/cloudinary.js';
+
 import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import routerVideo from './routes/videoRoutes.js';
+import connectCloudinary from './config/cloudinary.js';
 
 
 
@@ -61,6 +63,9 @@ app.get('/ping', (req, res) => res.send('pong'));
     res.send('API IS WORKING (Development Mode)');
   });
 
+
+ // Ta route pour uploader une vidéo :
+app.use("/api/video", routerVideo); 
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
