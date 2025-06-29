@@ -19,10 +19,11 @@ import Login  from './pages/login/Login';
 import Category from './pages/category/Category';
 import HomePageCategory from './pages/homePageCategory/HomePageCategory';
 import Video from './pages/video/Video';
+import Favorites from './pages/favorite/Favorites';
 
 
- export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
-  //     export const backendUrl = 'http://localhost:5000'
+// export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app'
+       export const backendUrl = 'http://localhost:5000'
 function App() {
   return (
     <div className="App">
@@ -40,6 +41,7 @@ function App() {
         <Route path="/video" element={<Video/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/collection" element={<Collection />} />
+        <Route path="/favory" element={<Favorites/>} />
 
          <Route path="/collection" element={<HomePageCategory />} />
         <Route path="/collection/:category" element={<Category />}  />

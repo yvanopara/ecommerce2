@@ -11,6 +11,7 @@ import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import routerVideo from './routes/videoRoutes.js';
 import connectCloudinary from './config/cloudinary.js';
+import favoritesRoutes from './routes/favoritesRoutes.js';
 
 
 
@@ -51,7 +52,7 @@ app.use('/api/product', productRouter);
 app.use('/api/user', userRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
-
+app.use("/api/user/favorites", favoritesRoutes);
 
 // Health Check
 app.get('/ping', (req, res) => res.send('pong'));

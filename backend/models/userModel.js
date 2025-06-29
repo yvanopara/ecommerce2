@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const useerSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -14,11 +14,15 @@ const useerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    cartData:{
+    cartData: {
         type: Object,
         default: {},
-    }
-},{minimize: false},
-)
-const userModel = mongoose.models.user || mongoose.model('user', useerSchema);
-export default userModel; 
+    },
+    favorites: {
+        type: [String], // Liste d’ID de produits
+        default: [],
+    },
+}, { minimize: false });
+
+const userModel = mongoose.models.user || mongoose.model('user', userSchema);
+export default userModel;

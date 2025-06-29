@@ -241,3 +241,14 @@
     width: 20px;
     height: 20px;
 }
+.favorite-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.favorite-btn.favorited {
+  color: red;
+}

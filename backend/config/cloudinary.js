@@ -19,11 +19,12 @@ export default connectCloudinary;
  * Contient les infos de ton deuxième compte Cloudinary
  */
 const cloudinaryVideos = {
-  cloud_name: "dqf7pgghp",           // TON COMPTE VIDEO
-  api_key: "732168348248279",
-  api_secret: "C4c_qrkgMcU3YeAViIOSosAAs7I",
+  cloud_name: "dju6uqxky",  
+     // TON COMPTE VIDEO
+  api_key: "294828395788637",
+  api_secret: "7vaVBa4gj5YyGoV6IqLTnww968A",
 };
-
+  console.log('dju6uqxky')   
 /**
  * === Fonction pour uploader une VIDEO ===
  * ⚠️ Change la config Cloudinary pour le COMPTE VIDEO juste avant l'upload

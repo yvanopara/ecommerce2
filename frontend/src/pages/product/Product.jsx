@@ -7,7 +7,7 @@ import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Product() {
     const { productId } = useParams();
-    const { products, currency, addToCart } = useContext(ShopContext);
+    const { products, currency, addToCart, favorites, addToFavorites, removeFromFavorites } = useContext(ShopContext);
     const [productData, setProductData] = useState(null);
     const [image, setImage] = useState('');
     const [size, setSize] = useState(null);
@@ -84,6 +84,15 @@ export default function Product() {
     if (!productData) {
         return <div style={{ padding: '4rem', textAlign: 'center' }}>Chargement...</div>;
     }
+    const isFavorite = favorites.includes(productId);
+
+    const toggleFavorite = () => {
+        if (isFavorite) {
+            removeFromFavorites(productId);
+        } else {
+            addToFavorites(productId);
+        }
+    };
 
     return (
         <div className="product-container">
@@ -182,6 +191,10 @@ export default function Product() {
                             disabled={productData.sizes?.length > 0 && !size}
                         >
                             {productData.sizes?.length > 0 && !size ? 'Choisissez une taille' : 'Ajouter au panier'}
+                        </button>
+
+                        <button className={`favorite-btn ${isFavorite ? 'favorited' : ''}`} onClick={toggleFavorite}>
+                            {isFavorite ? '💖 Retirer des favoris' : '🤍 Ajouter aux favoris'}
                         </button>
 
                         <a

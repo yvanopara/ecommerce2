@@ -32,26 +32,32 @@ export const uploadVideoController = async (req, res) => {
 export const deleteVideoController = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("ID reçu pour suppression:", id);
 
-    // Cherche la vidéo en base
     const video = await Video.findById(id);
-    if (!video) return res.status(404).json({ error: "Vidéo non trouvée" });
+    if (!video) {
+      console.log("Vidéo non trouvée pour ID:", id);
+      return res.status(404).json({ error: "Vidéo non trouvée" });
+    }
 
-    // Supprime sur Cloudinary
+    console.log("Suppression Cloudinary pour:", video.public_id);
     const result = await deleteVideo(video.public_id);
+    console.log("Résultat suppression Cloudinary:", result);
+
     if (result.result !== "ok") {
       return res.status(400).json({ error: "Erreur lors de la suppression sur Cloudinary" });
     }
 
-    // Supprime en base
     await Video.findByIdAndDelete(id);
+    console.log("Vidéo supprimée de la base:", id);
 
     res.status(200).json({ message: "Vidéo supprimée avec succès" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erreur lors de la suppression de la vidéo" });
+    console.error("Erreur dans deleteVideoController:", error);
+    res.status(500).json({ error: "Erreur lors de la suppression de la vidéo", details: error.message });
   }
 };
+
 export const getAllVideosController = async (req, res) => {
   try {
     const videos = await Video.find().sort({ createdAt: -1 }); // les plus récentes d'abord
