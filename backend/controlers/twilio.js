@@ -15,7 +15,7 @@ const sendTwilioMessage = async (req, res) => {  // Renamed the function
         .create({
             body: message,  // Message to send
             from: 'whatsapp:+14155238886',  // Replace with your Twilio number
-            to: 'whatsapp:+23793800251'     // Replace with recipient's number
+            to: 'whatsapp:+237693800251'     // Replace with recipient's number
         })
         .then(() => {
             console.log('Notification sent successfully!');
