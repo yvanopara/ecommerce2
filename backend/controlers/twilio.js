@@ -10,7 +10,7 @@ const sendTwilioMessage = async (req, res) => {  // Renamed the function
     const { message } = req.body;  // Extract message from the body
 
 
-    // Send the message via Twilio
+    // Send the message via Twilio ggfgfsgf
     client.messages
         .create({
             body: message,  // Message to send
