@@ -35,6 +35,12 @@ const categories = [
       { value: 'maisons', label: 'Voir plus' },
     ]
   },
+  {
+    name: 'Services',
+    subcategories: [
+      { value: 'patisserie', label: 'Pâtisserie ' },
+    ]
+  },
   // {
   //   name: 'Informatique',
   //   subcategories: [

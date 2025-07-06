@@ -228,6 +228,8 @@ export default function Add({ token }) {
             <option value="informatique">Informatique</option>
             <option value="maison">Maison</option>
             <option value="whisky ">Whisky </option>
+            <option value="service ">Service </option>
+            <option value="art ">Art </option>
 
           </select>
         </div>
@@ -251,8 +253,10 @@ export default function Add({ token }) {
             <option value="voir-plus"> Voir plus</option>
             <option value="produits-adultes">Produits Adultes</option>
             <option value="jouets">chichas</option>
-            <option value="jouets">maisons</option>
+            <option value="jouets">maisons</option> 
             <option value="jouets">electroniques</option>
+            <option value="patisserie">Pâtisserie</option>
+            <option value="art">Objet d'art</option> 
             
           
 

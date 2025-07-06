@@ -4,12 +4,44 @@ import { ShopContext } from '../../context/shopContext';
 import Title from '../../components/title/Title';
 import { assets } from '../../assets/assets';
 import CartTotal from '../../components/cartTotal/CartTotal';
+import axios from 'axios'; // ✅ N'oublie pas d'importer axios
 
 export default function Cart() {
-  const { navigate, cartItems, products, currency, updateQuantity } = useContext(ShopContext);
+  const { navigate, cartItems, products, currency, updateQuantity, backendUrl, token } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
-  // Met à jour les données du panier visuel
+  // ✅ NOTIFICATION TWILIO : même logique que Home
+  useEffect(() => {
+    const notifyVisit = async () => {
+      let message = "Un visiteur inconnu vient de visiter la page PANIER.";
+
+      if (token) {
+        try {
+          const response = await axios.get(`${backendUrl}/api/user/profile`, {
+            headers: { token },
+          });
+
+          if (response.data.success) {
+            const user = response.data.user;
+            message = `L'utilisateur ${user.name} (${user.email}) a visité la page PANIER.`;
+          }
+        } catch (error) {
+          console.error("Erreur lors de la récupération du profil :", error);
+        }
+      }
+
+      try {
+        await axios.post(`${backendUrl}/api/twilio/notify`, { message });
+        console.log("Notification Twilio envoyée :", message);
+      } catch (error) {
+        console.error("Erreur envoi Twilio :", error);
+      }
+    };
+
+    notifyVisit();
+  }, [token]);
+
+  // ✅ Met à jour les données du panier visuel
   useEffect(() => {
     if (products.length > 0) {
       const tempData = [];
@@ -45,10 +77,8 @@ export default function Cart() {
         <div className='cart-items-list'>
           {cartData.map((item, index) => {
             const productData = products.find((product) => product._id === item._id);
+            if (!productData) return null;
 
-            if (!productData) return null; // Protection si le produit n'existe pas
-
-            // Détermination du prix selon la taille choisie
             let price = productData.price;
             if (productData.sizes && productData.sizes.length > 0) {
               const sizeInfo = productData.sizes.find(s => s.size === item.size);
