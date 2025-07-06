@@ -1,0 +1,282 @@
+.product-container {
+    padding: 0.2rem;
+    border-top: 2px solid #eee;
+    animation: fadeIn 0.6s ease-in;
+    max-width: 1200px;
+    margin: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.product-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .product-main {
+        flex-direction: row;
+        gap: 3rem;
+    }
+}
+
+.product-images {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+    margin-bottom: -30px;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+    cursor: pointer;
+}
+
+.active-thumbnail {
+    border-color: #ff6600;
+}
+
+.main-image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1rem;
+    touch-action: pan-y;
+}
+
+.image-track {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.image-track.swiping {
+    transition: none;
+}
+
+.image-slide {
+    min-width: 100%;
+    position: relative;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.main-image.active {
+    display: block;
+}
+
+.image-nav-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+.nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-dot.active-dot {
+    background-color: #ff6600;
+    transform: scale(1.3);
+}
+
+.product-details {
+    flex: 1;
+    background-color: #fff;
+    padding: 0.01rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.product-name2 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: -15px;
+    color: #ff4c00;
+}
+
+.product-descriptionn {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-top: -5px;
+}
+
+.product-sizes p {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.size-button {
+    padding: 0.6rem 1.2rem;
+    border: 5px;
+    border-radius: 0.5rem;
+    background-color: #c0bdbdc7;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.size-button:hover {
+    border-color: #888;
+
+}
+
+.active-size {
+    background-color: #ff6600;
+    color: rgb(255, 255, 255);
+    border-color: #ff6600;
+}
+
+/* Conteneur pour aligner les boutons "Ajouter au panier" et WhatsApp */
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.add-to-cart {
+    padding: 0.9rem 2rem;
+    background-color: rgba(255, 99, 71, 0.767);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: tomato;
+}
+
+@keyframes smoothAppear {
+    from { opacity: 0.8; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.main-image {
+    animation: smoothAppear 0.3s ease-out;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #25D366;
+    color: white;
+    font-weight: 600;
+    padding: 0.9rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.whatsapp-button:hover {
+    background-color: #1ebe5d;
+}
+
+.whatsapp-icon {
+    width: 20px;
+    height: 20px;
+}
+.favorite-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.favorite-btn.favorited {
+  color: red;
+}
+.favorite-icon {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background-color: rgba(255, 255, 255, 0.048);
+  border: none;
+  border-radius: 50%;
+  padding: 0.7rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.377);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+
+  /* Nouveau : centre l’icône à l’intérieur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favorite-icon:hover {
+  transform: scale(0.9);
+  background: #ffeaea1c;
+}
+
+.favorite-icon.favorited {
+  color: red; /* Coeur rouge plein si favori */
+}

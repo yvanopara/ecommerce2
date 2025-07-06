@@ -1,0 +1,42 @@
+/* Conteneur principal */
+.related-section {
+  padding: 2rem 1rem;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+}
+
+/* Titre */
+.related-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Scroll horizontal */
+.related-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Carte contenant chaque produit */
+.related-product-card {
+  min-width: 190px;
+  max-width: 190px;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Appliquer à l’image dans ProductItems */
+.product-item-image {
+  width: 190px;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+.related-section .product-price {
+  font-size: 0.7rem; /* Taille spécifique uniquement ici */
+}

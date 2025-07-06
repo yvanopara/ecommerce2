@@ -1,0 +1,62 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 384px; /* sm:max-w-96 = 24rem = 384px */
+    margin: 3.5rem auto 0; /* nt-14 approximé */
+    color: #2d2d2d; /* gris foncé */
+    font-family: sans-serif;
+}
+
+.login-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+    margin-top: 2.5rem;
+}
+
+.login-heading {
+    font-size: 1.875rem; /* text-3xl ≈ 30px */
+    font-family: 'Prata', serif; /* Si tu veux garder la police "prata-regular" */
+}
+
+.login-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #2d2d2d;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.login-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-top: 8px;
+}
+
+.login-link {
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.login-link:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.login-button {
+    background-color: black;
+    color: white;
+    font-weight: 300;
+    padding: 0.5rem 2rem;
+    margin-top: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}

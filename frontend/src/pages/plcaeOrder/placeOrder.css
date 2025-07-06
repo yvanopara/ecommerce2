@@ -1,0 +1,118 @@
+.place-order-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    border-top: 1px solid #e5e5e5;
+    min-height: 80vh;
+  }
+  
+  /* Desktop: 2 colonnes */
+  @media (min-width: 768px) {
+    .place-order-container {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 280px;
+    max-width: 480px;
+  }
+  
+  .title-wrapper {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+  
+  .input-group {
+    display: flex;
+    gap: 0.1rem;
+  }
+  
+  .input-field {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: border 0.2s;
+  }
+  
+  .input-field:focus {
+    border-color: #333;
+    outline: none;
+  }
+  
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 280px;
+    max-width: 480px;
+  }
+  
+  .cart-wrapper {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+  }
+  
+  .button-wrapper {
+    margin-top: 2rem;
+    text-align: right;
+  }
+  
+  .order-button {
+    background-color: #111;
+    color: #fff;
+    padding: 0.8rem 3rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .textarea-field {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    width: 90%;
+    font-size: 1rem;
+    height: 100px; /* ✅ hauteur pour le rectangle */
+    resize: vertical; /* autorise redimensionnement vertical */
+    transition: border 0.2s;
+  }
+  
+  .textarea-field:focus {
+    border-color: #333;
+    outline: none;
+  }
+  
+  
+  .order-button:hover {
+    background-color: #333;
+  }
+  
+  /* Mobile: input group en colonne */
+  @media (max-width: 767px) {
+    .input-group {
+      flex-direction: row;
+    }
+  
+    .button-wrapper {
+      text-align: center;
+    }
+  
+    .order-button {
+      width: 100%;
+    }
+  }
+  

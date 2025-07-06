@@ -1,0 +1,161 @@
+.topNavBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 1rem;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+.logoNamee {
+    color: tomato;
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 27px;
+    margin-left:-13px ;
+    font-family: 'Saira Stencil One', sans-serif;
+}
+.rotatink-k {
+  display: inline-block;
+    transform-origin: center; /* Keep rotation centered */
+    animation: rotate 3s linear infinite; /* Rotate continuously */
+    padding:0.1px 10px;
+    
+    border: 1px solid tomato;
+    
+    border-radius: 50%;
+  
+}
+/* Animation de rotation */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.left-side {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-image {
+  width: 100px;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  color: rgba(174, 129, 216, 0.411);
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.navbar-menu .active {
+  border-bottom: 2px solid rgb(191, 204, 9);
+}
+
+.right-div {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.search-image,
+.profile-icon,
+.cart-icon,
+.menu-icon {
+  width: 20px;
+  cursor: pointer;
+}
+
+.cart-link {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-count {
+  position: absolute;
+  right: -5px;
+  top: 5px;
+  width: 18px;
+  height: 18px;
+  background-color: rgba(255, 99, 71, 0.89);
+  color: white;
+  border-radius: 50%;
+  font-size: 8px;
+  text-align: center;
+  line-height: 22px;
+}
+
+.profile-component {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 100;
+}
+
+.profile-component:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu p {
+  margin: 0;
+  padding: 8px 12px;
+  color: black;
+  cursor: pointer;
+}
+
+.dropdown-menu p:hover {
+  background-color: #f0f0f0;
+}
+
+.bouton-toggle {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+.nav-link {
+  -webkit-tap-highlight-color: transparent; /* désactive le flash bleu sur mobile */
+}
+
+
+
+
+/* Responsive mobile */
+@media (min-width: 640px) {
+  .menu-icon {
+    display: none;
+   
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-menu {
+    display: none;
+  }
+
+  /* Cacher le panier et le profil en mobile */
+  .cart-link,
+  .profile-component {
+    display: none;
+  }
+}

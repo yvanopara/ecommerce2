@@ -1,0 +1,90 @@
+/* header.css */
+.header-container {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Hauteur fixe */
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slides-container {
+  display: flex;
+  height: 100%;
+  transition: transform 800ms ease-in-out; /* Vitesse de défilement réduite */
+}
+
+.slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garantit que l'image couvre tout l'espace */
+  object-position: center;
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  transition: all 300ms ease;
+  z-index: 10;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chevron:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.chev-left {
+  left: 15px;
+}
+
+.chev-right {
+  right: 15px;
+}
+
+/* Animation pour le slide actif */
+@keyframes fadeIn {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+.slide.active {
+  animation: fadeIn 800ms ease-in-out;
+}
+/* Désactiver la sélection de texte pendant le swipe */
+.header-container {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Empêcher le "pull-to-refresh" sur mobile */
+.slides-container {
+  overscroll-behavior-x: contain;
+}
+
+.slide img {
+  pointer-events: none; /* Améliore le swipe sur mobile */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-container {
+    height: 400px;
+  }
+  
+  .chevron {
+    padding: 4px;
+    width: 20px;
+    height: 20px;
+  }
+}
