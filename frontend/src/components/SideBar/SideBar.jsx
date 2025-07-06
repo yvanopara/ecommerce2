@@ -66,6 +66,7 @@ export default function Sidebar({ setOuvert }) {
 
   return (
     <div className="sidebar">
+      <div className="sidebar-content">
       <nav className="category-menu">
         {categories.map((cat, index) => (
           <div key={index} className="category-block">
@@ -95,6 +96,7 @@ export default function Sidebar({ setOuvert }) {
           </div>
         ))}
       </nav>
+      </div>
     </div>
   );
 }
