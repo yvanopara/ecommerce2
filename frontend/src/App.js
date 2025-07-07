@@ -24,8 +24,8 @@ import SubCategory from './pages/subCategory/SubCategory';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 
 
-     export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app' 
-   //   export const backendUrl = 'http://localhost:5000'
+   //    export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app' 
+    export const backendUrl = 'http://localhost:5000'
 //git push --force origin main
 
 function App() {
@@ -51,7 +51,8 @@ function App() {
          <Route path="/collection" element={<HomePageCategory />} />
         <Route path="/collection/:category" element={<Category />}  />
         
-        <Route path="/subcategory/:subcategory" element={<SubCategory />} />
+        <Route path="/category/:category/subcategory/:subcategory" element={<SubCategory />} />
+
 
       </Routes>
       <Footer/>

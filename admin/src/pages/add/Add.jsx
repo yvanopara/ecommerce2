@@ -254,7 +254,7 @@ export default function Add({ token }) {
             <option value="produits-adultes">Produits Adultes</option>
             <option value="jouets">chichas</option>
             <option value="jouets">maisons</option> 
-            <option value="jouets">electroniques</option>
+            <option value="electromenagers">Electroménager</option>
             <option value="patisserie">Pâtisserie</option>
             <option value="art">Objet d'art</option> 
             

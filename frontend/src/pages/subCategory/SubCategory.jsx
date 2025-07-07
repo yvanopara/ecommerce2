@@ -6,7 +6,7 @@ import ProductItems from '../../components/productItems/ProductItems';
 import Title from '../../components/title/Title';
 
 export default function SubCategory() {
-  const { subcategory } = useParams();
+  const {category, subcategory } = useParams();
   const { products } = useContext(ShopContext);
 
   // ✅ Utilise bien 'subCategory' avec un C majuscule

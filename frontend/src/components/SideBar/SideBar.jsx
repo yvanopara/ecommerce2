@@ -26,7 +26,8 @@ const categories = [
   {
     name: 'Electronique',
     subcategories: [
-     { value: 'electroniques', label: 'Voir plus' },
+      { value: 'electromenagers', label: 'Électroménager' },
+     { value: 'voir-plus', label: 'Voir plus' },
     ]
   },
   {
@@ -86,7 +87,9 @@ export default function Sidebar({ setOuvert }) {
               {cat.subcategories.map((sub, subIndex) => (
                 <NavLink
                   key={subIndex}
-                  to={`/subcategory/${sub.value}`} // ✅ URL clean : /subcategory/produit-de-beaute
+                  to={`/category/${cat.name.toLowerCase().replace(/\s+/g, '-')}/subcategory/${sub.value}`}
+
+
                   onClick={() => setOuvert(false)}
                 >
                   {sub.label}

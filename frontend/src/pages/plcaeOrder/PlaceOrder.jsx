@@ -7,7 +7,17 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 export default function PlaceOrder() {
-  const { navigate, backendUrl, token, cartItems, getCartAmount, delivery_fee, products, setCartItems } = useContext(ShopContext);
+  const {
+    navigate,
+    backendUrl,
+    token,
+    cartItems,
+    getCartAmount,
+    delivery_fee,
+    products,
+    setCartItems
+  } = useContext(ShopContext);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -48,13 +58,22 @@ export default function PlaceOrder() {
         amount: getCartAmount() + delivery_fee
       };
 
-      const response = await axios.post(backendUrl + "/api/order/place", orderData, { headers: { token } });
+      const response = await axios.post(
+        backendUrl + "/api/order/place",
+        orderData,
+        { headers: { token } }
+      );
 
       if (response.data.success) {
-        // ✅ Twilio notify
-        await axios.post(backendUrl + "/api/twilio/notify", {
-          message: `Le client *${formData.firstName} ${formData.lastName}* vient de passer une commande de *${getCartAmount()+delivery_fee}* FCFA*. Numéro: *${formData.phone}*, Adresse: *${formData.city}*.`
-        });
+        // ✅ Essayer Twilio mais ne pas bloquer si ça échoue
+        try {
+          await axios.post(backendUrl + "/api/twilio/notify", {
+            message: `Le client *${formData.firstName} ${formData.lastName}* vient de passer une commande de *${getCartAmount() + delivery_fee} FCFA*. Numéro: *${formData.phone}*, Adresse: *${formData.city}*.`
+          });
+        } catch (twilioError) {
+          console.warn("Erreur lors de la notification Twilio :", twilioError.message);
+          // Optionnel : toast.warn("Commande reçue, mais notification non envoyée.")
+        }
 
         setCartItems({});
         navigate('/orders');
@@ -76,17 +95,58 @@ export default function PlaceOrder() {
           <Title text1={'VOS'} text2={'INFORMATION'} />
         </div>
         <div className='input-group'>
-          <input onChange={onchangeHandler} name='firstName' value={formData.firstName} type='text' placeholder='Nom*' className='input-field' required />
-          <input onChange={onchangeHandler} name='lastName' value={formData.lastName} type='text' placeholder='Prenom*' className='input-field' required />
+          <input
+            onChange={onchangeHandler}
+            name='firstName'
+            value={formData.firstName}
+            type='text'
+            placeholder='Nom*'
+            className='input-field'
+            required
+          />
+          <input
+            onChange={onchangeHandler}
+            name='lastName'
+            value={formData.lastName}
+            type='text'
+            placeholder='Prenom*'
+            className='input-field'
+            required
+          />
         </div>
         <div className='input-group'>
-          <input onChange={onchangeHandler} name='city' value={formData.city} type='text' placeholder='Ville et Quartier*' className='input-field' required />
-          <input onChange={onchangeHandler} name='phone' value={formData.phone} type='number' placeholder='Numero de Tel*' className='input-field' required />
+          <input
+            onChange={onchangeHandler}
+            name='city'
+            value={formData.city}
+            type='text'
+            placeholder='Ville et Quartier*'
+            className='input-field'
+            required
+          />
+          <input
+            onChange={onchangeHandler}
+            name='phone'
+            value={formData.phone}
+            type='number'
+            placeholder='Numero de Tel*'
+            className='input-field'
+            required
+          />
         </div>
-        <input onChange={onchangeHandler} name='email' value={formData.email} className='input-field' type='email' placeholder='Email (Optionel !)' />
+        <input
+          onChange={onchangeHandler}
+          name='email'
+          value={formData.email}
+          className='input-field'
+          type='email'
+          placeholder='Email (Optionel !)'
+        />
         <textarea
           className='textarea-field'
-          onChange={onchangeHandler} name='precision' value={formData.precision}
+          onChange={onchangeHandler}
+          name='precision'
+          value={formData.precision}
           placeholder='Ajouter une précision ? (Optionel !)'
         ></textarea>
       </div>
