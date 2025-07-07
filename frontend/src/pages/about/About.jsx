@@ -1,5 +1,4 @@
 import React from 'react';
-// import { profile } from '../../assets/asset';
 
 
 import './about.css';
@@ -10,11 +9,7 @@ export default function About() {
     <div className="about-container">
       <div className="about-card">
         <div className="profile-image-container">
-          {/* <img 
-            src={profile} 
-            alt="Profile" 
-            className="profile-image"
-          /> */}
+          
         </div>
         <div className="about-content">
           <div className="about-subtitle">À propos de moi</div>
