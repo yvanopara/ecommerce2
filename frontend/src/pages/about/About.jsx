@@ -1,6 +1,7 @@
 import React from 'react';
 // import { profile } from '../../assets/asset';
 
+
 import './about.css';
 
 
