@@ -10,7 +10,16 @@ const categories = [
     subcategories: [
       { value: 'produit-de-beaute', label: 'Produit de beauté' },
       { value: 'sac-a-main', label: 'Sac à main' },
+      { value: 'mode', label: 'Mode' },
       { value: 'bijoux', label: 'Bijoux' },
+      { value: 'voir-plus', label: 'Voir plus' },
+      
+    ]
+  },
+  {
+    name: 'Enfant',
+    subcategories: [
+      { value: 'jouets', label: 'Jouets' },
       { value: 'voir-plus', label: 'Voir plus' },
       
     ]
