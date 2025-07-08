@@ -21,7 +21,7 @@ export default function Add({ token }) {
   // --- Définition des groupes de tailles ---
   const SIZE_GROUPS = [
     { label: "Vêtements", sizes: ['S', 'M', 'L', 'XL', 'XXL'] },
-    { label: "Enfants", sizes: ['48 PCS','', '100 PCS'] },
+    { label: "Enfants", sizes: ['48 PCS','150 PCS', '100 PCS'] },
     { label: "Frigos", sizes: ['246L', '160L', '150L','130L'] },
     { label: "Longueurs (mètres)", sizes: ['1M', '2M', '3M', '4M', '5M', '10M', '15M', '20M', '25M', '30M'] },
     { label: "Volumes (litres)", sizes: ['0.5L', '1L', '2L', '5L', '10L', '20L'] },
