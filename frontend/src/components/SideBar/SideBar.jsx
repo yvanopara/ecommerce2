@@ -39,6 +39,12 @@ const categories = [
      { value: 'voir-plus', label: 'Voir plus' },
     ]
   },
+{
+    name: 'Arts',
+    subcategories: [
+      { value: 'passion', label: 'Crayon & Passion' },
+    ]
+  },
   {
     name: 'Maison',
     subcategories: [
