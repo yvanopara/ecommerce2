@@ -22,7 +22,7 @@ export default function Add({ token }) {
   const SIZE_GROUPS = [
     { label: "Vêtements", sizes: ['S', 'M', 'L', 'XL', 'XXL'] },
 
-{ label: "Christian", sizes: ['25*25*12', '25*25*15', '25*15*20', '25*25*25', '25*25*30','30*30*30'] },
+{ label: "Christian", sizes: ['25*25*12', '25*25*15 cm', '25*15*20 cm', '25*25*25 cm', '25*25*30 cm','30*30*30 cm'] },
     { label: "Enfants", sizes: ['48 PCS','150 PCS', '100 PCS'] },
 
 { label: "audrey", sizes: ['10 Crayons','12 Crayons', '22 Crayons','36 Crayons','50 Crayons'] },
