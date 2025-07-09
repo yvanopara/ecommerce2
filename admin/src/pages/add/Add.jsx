@@ -259,7 +259,8 @@ export default function Add({ token }) {
             <option value="electromenagers">Electromenagers</option>
             <option value="patisserie">Pâtisserie</option>
             <option value="art">Objet d'art</option> 
-            <option value="mode">Mode </option> 
+            <option value="mode">Mode</option> 
+            <option value="passion">Passion</option> 
 
             
           
