@@ -25,7 +25,7 @@ export default function Add({ token }) {
 { label: "Christian", sizes: ['25*25*12 cm', '25*25*15 cm', '25*15*20 cm', '25*25*25 cm', '25*25*30 cm','30*30*30 cm'] },
     { label: "Enfants", sizes: ['48 PCS','150 PCS', '100 PCS'] },
 
-{ label: "audrey", sizes: ['10 Crayons','12 Crayons ', '22 Crayons','36 Crayons','50 Crayons','54 Crayons','83 Crayons','90 Crayons'] },
+{ label: "audrey", sizes: ['1 Pièce','3 Pièces','10 Pièces','12 Pièces ', '22 Pièces','36 Pièces','39 Pièces','50 Pièces','54 Pièces','83 Pièces','90 Pièces'] },
 
     { label: "Frigos", sizes: ['246L', '160L', '150L','130L'] },
     { label: "Longueurs (mètres)", sizes: ['1M', '2M', '3M', '4M', '5M', '10M', '15M', '20M', '25M', '30M'] },
@@ -257,7 +257,6 @@ export default function Add({ token }) {
             <option value="bijoux">Bijoux</option>
             <option value="chaussures">Chaussures</option>
             <option value="jouets">Jouets</option>
-            <option value="voir-plus"> Voir plus</option>
             <option value="produits-adultes">Produits Adultes</option>
             <option value="chichas">chichas</option>
             <option value="maisons">maisons</option> 
@@ -266,7 +265,11 @@ export default function Add({ token }) {
             <option value="mode">Mode</option> 
             <option value="passion">Passion</option> 
 
-            
+            <option value="voir-plus"> Voir plus</option>
+<option value="voir-plus-enfantd"> Voir plus Enfants</option>
+<option value="voir-plus-maisons"> Voir plus Maisons</option>
+<option value="voir-plus-femmes"> Voir plus Femmes</option>
+<option value="voir-plus-chichas"> Voir plus Chicha</option>
           
 
 
