@@ -257,7 +257,6 @@ export default function Add({ token }) {
             <option value="bijoux">Bijoux</option>
             <option value="chaussures">Chaussures</option>
             <option value="jouets">Jouets</option>
-            <option value="voir-plus"> Voir plus</option>
             <option value="produits-adultes">Produits Adultes</option>
             <option value="chichas">chichas</option>
             <option value="maisons">maisons</option> 
@@ -266,7 +265,11 @@ export default function Add({ token }) {
             <option value="mode">Mode</option> 
             <option value="passion">Passion</option> 
 
-            
+            <option value="voir-plus"> Voir plus</option>
+<option value="voir-plus-enfantd"> Voir plus Enfants</option>
+<option value="voir-plus-maisons"> Voir plus Maisons</option>
+<option value="voir-plus-femmes"> Voir plus Femmes</option>
+<option value="voir-plus-chichas"> Voir plus Chicha</option>
           
 
 
