@@ -1,51 +1,245 @@
-.admin-videos {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1rem;
+:root {
+  --primary-color: #ff6b4a;
+  --primary-hover: #e04a2f;
+  --text-color: #222;
+  --light-text: #666;
+  --background-light: #f9f9f9;
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.upload-form {
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+/* Reset et styles de base */
+.video-page {
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  color: var(--text-color);
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #fff 0%, var(--background-light) 100%);
+  padding: 4rem 2rem;
+  text-align: center;
   margin-bottom: 2rem;
-  display: flex;
-  gap: 1rem;
 }
 
-.upload-form input[type="file"] {
-  flex: 1;
+.intro-title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  letter-spacing: -0.5px;
 }
 
-.upload-form button {
-  background: tomato;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
+.intro-subtitle {
+  font-size: 1.2rem;
+  color: var(--light-text);
+  margin-bottom: 0;
+  font-weight: 400;
 }
 
-.video-list {
+/* Section Tutoriels */
+.tutorials-section {
+  padding: 0 2rem 4rem;
+}
+
+/* Grille de vidéos */
+.video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
-.video-item {
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  border-radius: 8px;
+/* Carte vidéo */
+.video-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
 }
 
-.video-item video {
+.video-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* Miniature vidéo */
+.video-thumbnail {
+  position: relative;
+  padding-top: 56.25%;
+  background: #000;
+}
+
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  border-radius: 8px;
+  height: 100%;
+  object-fit: cover;
+  border: none;
 }
 
-.video-item button {
-  margin-top: 0.5rem;
-  background: #d32f2f;
+/* Infos vidéo */
+.video-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-info h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #111;
+  letter-spacing: -0.2px;
+  font-family: 'Manrope', sans-serif;
+}
+
+.video-duration {
+  font-size: 0.85rem;
+  color: var(--light-text);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* Lien produit */
+.product-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 10px 16px;
+  background-color: rgba(255, 107, 74, 0.1);
+  color: var(--primary-color);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: var(--transition);
+  width: fit-content;
+}
+
+.product-link:hover {
+  background-color: rgba(255, 107, 74, 0.2);
+  color: var(--primary-hover);
+}
+
+.product-link svg {
+  transition: transform 0.3s ease;
+}
+
+.product-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* Bouton Voir plus */
+.see-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2rem auto 0;
+  background: var(--primary-color);
   color: #fff;
   border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.see-more-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.3);
+}
+
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.see-more-btn:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 107, 74, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .intro-title {
+    font-size: 2rem;
+  }
+  
+  .intro-subtitle {
+    font-size: 1rem;
+  }
+  
+  .tutorials-section {
+    padding: 0 1.5rem 3rem;
+  }
+  
+  .video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .video-info h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+  
+  .intro-title {
+    font-size: 1.8rem;
+  }
+  
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-link {
+    padding: 8px 12px;
+  }
+
+  .see-more-btn {
+    padding: 10px 20px;
+  }
 }
