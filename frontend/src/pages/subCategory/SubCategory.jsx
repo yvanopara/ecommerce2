@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shopContext';
 
@@ -6,18 +6,18 @@ import ProductItems from '../../components/productItems/ProductItems';
 import Title from '../../components/title/Title';
 
 export default function SubCategory() {
-  const {category, subcategory } = useParams();
+  const { category, subcategory } = useParams();
   const { products } = useContext(ShopContext);
 
-  // ✅ Utilise bien 'subCategory' avec un C majuscule
-  const filteredProducts = Array.isArray(products)
-    ? products.filter(
-        (product) =>
-          product.subCategory?.toLowerCase() === subcategory?.toLowerCase()
-          // Si jamais c'est un tableau :
-          // product.subCategories?.includes(subcategory)
-      )
-    : [];
+  // ✅ Filtre + mélange une seule fois grâce à useMemo
+  const filteredProducts = useMemo(() => {
+    if (!Array.isArray(products)) return [];
+    const filtered = products.filter(
+      (product) =>
+        product.subCategory?.toLowerCase() === subcategory?.toLowerCase()
+    );
+    return filtered.sort(() => Math.random() - 0.5);
+  }, [products, subcategory]);
 
   return (
     <div className="category-page-container">
