@@ -4,17 +4,9 @@ import "./video.css";
 import { backendUrl } from "../../App";
 
 export default function VideoPage() {
-  const frenchVideoUrl = "https://res.cloudinary.com/.../video/upload/...fr.mp4";
-  const englishVideoUrl = "https://res.cloudinary.com/.../video/upload/...en.mp4";
-
-  const [mainVideo, setMainVideo] = useState(frenchVideoUrl);
   const [videos, setVideos] = useState([]);
   const [visibleCount, setVisibleCount] = useState(5);
   const [loading, setLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  // ✅ Récupère le token localStorage (si tu l'utilises pareil ailleurs)
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -31,109 +23,24 @@ export default function VideoPage() {
     fetchVideos();
   }, []);
 
-  useEffect(() => {
-    const notifyTwilio = async () => {
-      let message = "Un visiteur inconnu a visité la page Vidéo.";
-
-      if (token) {
-        try {
-          const res = await axios.get(`${backendUrl}/api/user/profile`, {
-            headers: { token },
-          });
-
-          if (res.data.success && res.data.user) {
-            const user = res.data.user;
-            message = `L'utilisateur ${user.name} (${user.email}) a visité la page Vidéo.`;
-          }
-        } catch (error) {
-          console.error("Erreur profil Twilio:", error);
-        }
-      }
-
-      try {
-        await axios.post(`${backendUrl}/api/twilio/notify`, { message });
-        console.log("Twilio notification envoyée:", message);
-      } catch (err) {
-        console.error("Erreur envoi Twilio:", err);
-      }
-    };
-
-    notifyTwilio();
-  }, [token]);
-
   const handleSeeMore = () => {
     setVisibleCount((prev) => Math.min(prev + 5, videos.length));
-  };
-
-  const handleVideoToggle = () => {
-    setIsPlaying(!isPlaying);
   };
 
   return (
     <div className="video-page">
       <div className="hero-section">
-        <div className="intro-video-container">
-          <h1 className="intro-title">Découvrez nos tutoriels vidéo</h1>
-          <p className="intro-subtitle">Apprenez à utiliser notre site comme des experts</p>
-
-          <div className="video-wrapper">
-            <video
-              src={mainVideo}
-              controls
-              className="intro-video"
-              onClick={handleVideoToggle}
-            />
-            <div className="video-overlay" style={{ display: isPlaying ? "none" : "flex" }}>
-              <button className="play-button">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M8 5V19L19 12L8 5Z" fill="white" />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <button
-            className="switch-lang-btn"
-            onClick={() =>
-              setMainVideo(mainVideo === frenchVideoUrl ? englishVideoUrl : frenchVideoUrl)
-            }
-          >
-            {mainVideo === frenchVideoUrl ? "English Version" : "Version Française"}
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="lang-icon"
-            >
-              <path
-                d="M12.87 15.07L10.33 12.56L10.36 12.53C12.1 10.59 13.34 8.36 14.07 6H17V4H10V2H8V4H1V6H12.17C11.5 7.92 10.44 9.75 9 11.35C8.07 10.32 7.3 9.19 6.69 8H4.69C5.42 9.63 6.42 11.17 7.67 12.56L2.58 17.58L4 19L9 14L12.11 17.11L12.87 15.07ZM18.5 10H16.5L12 22H14L15.12 19H19.87L21 22H23L18.5 10ZM15.88 17L17.5 12.67L19.12 17H15.88Z"
-                fill="currentColor"
-              />
-            </svg>
-          </button>
-        </div>
+        <h1 className="intro-title">Tutoriels Produits</h1>
+        <p className="intro-subtitle">
+          Découvrez nos guides vidéo pour mieux utiliser nos produits
+        </p>
       </div>
 
       <div className="tutorials-section">
-        <div className="section-header">
-          <h2 className="section-title">Tutoriels produits</h2>
-          <p className="section-description">
-            Parcourez notre bibliothèque de guides pratiques
-          </p>
-        </div>
-
         {loading ? (
           <div className="loading-spinner">
             <div className="spinner"></div>
-            <p>Chargement des tutoriels...</p>
+            <p>Chargement des vidéos...</p>
           </div>
         ) : (
           <>
@@ -141,14 +48,32 @@ export default function VideoPage() {
               {videos.slice(0, visibleCount).map((video) => (
                 <div key={video._id} className="video-card">
                   <div className="video-thumbnail">
-                    <video src={video.url} controls className="video-player" />
+                    <video 
+                      src={video.url} 
+                      controls 
+                      className="video-player" 
+                      poster={video.thumbnailUrl}
+                    />
                   </div>
                   <div className="video-info">
-                    <h3 className="video-title">
-                      {video.title || "Tutoriel produit"}
-                    </h3>
+                    <h3>{video.title}</h3>
                     {video.duration && (
                       <span className="video-duration">{video.duration}</span>
+                    )}
+                    {video.redirectUrl && (
+                      <a
+                        href={video.redirectUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="product-link"
+                      >
+                        <span>Voir le produit</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M10 6H6V18H18V14" stroke="currentColor" strokeWidth="2"/>
+                          <path d="M14 4H20V10" stroke="currentColor" strokeWidth="2"/>
+                          <path d="M20 4L10 14" stroke="currentColor" strokeWidth="2"/>
+                        </svg>
+                      </a>
                     )}
                   </div>
                 </div>
@@ -157,19 +82,9 @@ export default function VideoPage() {
 
             {visibleCount < videos.length && (
               <button className="see-more-btn" onClick={handleSeeMore}>
-                Voir plus de vidéos
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="arrow-icon"
-                >
-                  <path
-                    d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z"
-                    fill="currentColor"
-                  />
+                Voir plus de tutoriels
+                <svg className="arrow-icon" width="18" height="18" viewBox="0 0 24 24">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2"/>
                 </svg>
               </button>
             )}

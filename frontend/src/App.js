@@ -25,7 +25,7 @@ import ScrollToTop from './components/scrollToTop/ScrollToTop';
 
 
        export const backendUrl = 'https://ecommerce2-production-a5f7.up.railway.app' 
-   // export const backendUrl = 'http://localhost:5000'
+  //  export const backendUrl = 'http://localhost:5000'
 //git push --force origin main
 
 function App() {
