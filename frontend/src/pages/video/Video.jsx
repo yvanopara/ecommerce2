@@ -15,10 +15,19 @@ export default function VideoPage() {
 
   const token = localStorage.getItem("token");
 
+  // Fonction pour formater les URLs
+  const formatRedirectUrl = (url) => {
+    if (!url) return "#";
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    }
+    return `https://${url}`;
+  };
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(backendUrl + "/api/video");
+        const response = await axios.get(`${backendUrl}/api/video`);
         setVideos(response.data);
       } catch (err) {
         console.error("Error fetching videos:", err);
@@ -68,15 +77,6 @@ export default function VideoPage() {
     setIsPlaying(!isPlaying);
   };
 
-  // Petit helper pour forcer le protocole https si besoin
-  const formatRedirectUrl = (url) => {
-    if (!url) return "#";
-    if (url.startsWith("http://") || url.startsWith("https://")) {
-      return url;
-    }
-    return "https://" + url;
-  };
-
   return (
     <div className="video-page">
       <div className="hero-section">
@@ -92,7 +92,7 @@ export default function VideoPage() {
               onClick={handleVideoToggle}
             />
             <div className="video-overlay" style={{ display: isPlaying ? "none" : "flex" }}>
-              <button className="play-button">
+              <button className="play-button" type="button">
                 <svg
                   width="24"
                   height="24"
@@ -108,6 +108,7 @@ export default function VideoPage() {
 
           <button
             className="switch-lang-btn"
+            type="button"
             onClick={() =>
               setMainVideo(mainVideo === frenchVideoUrl ? englishVideoUrl : frenchVideoUrl)
             }
@@ -146,25 +147,29 @@ export default function VideoPage() {
         ) : (
           <>
             <div className="video-grid">
-              {videos.slice(0, visibleCount).map((video) => (
-                <div key={video._id} className="video-card">
+              {videos.slice(0, visibleCount).map((videoItem) => (
+                <div key={videoItem._id} className="video-card">
                   <div className="video-thumbnail">
-                    <video src={video.url} controls className="video-player" />
+                    <video src={videoItem.url} controls className="video-player" />
                   </div>
                   <div className="video-info">
                     <h3 className="video-title">
-                      {video.title || "Tutoriel produit"}
+                      {videoItem.title || "Tutoriel produit"}
                     </h3>
-
-                    {/* Ajout bouton de redirection */}
-                    {video.redirectUrl && (
+                    {videoItem.redirectUrl && (
                       <a
-                        href={formatRedirectUrl(video.redirectUrl)}
+                        href={formatRedirectUrl(videoItem.redirectUrl)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="video-redirect-btn"
+                        className="product-link"
                       >
-                        Voir le produit
+                        <span>Voir le produit</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13 3H21V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                          <path d="M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                          <path d="M16 3H21V8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                          <path d="M21 13V21H3V3H11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        </svg>
                       </a>
                     )}
                   </div>
@@ -173,7 +178,7 @@ export default function VideoPage() {
             </div>
 
             {visibleCount < videos.length && (
-              <button className="see-more-btn" onClick={handleSeeMore}>
+              <button className="see-more-btn" type="button" onClick={handleSeeMore}>
                 Voir plus de vidéos
                 <svg
                   width="16"
