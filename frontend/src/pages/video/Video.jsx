@@ -15,7 +15,6 @@ export default function VideoPage() {
 
   const token = localStorage.getItem("token");
 
-  // Fonction pour formater les URLs
   const formatRedirectUrl = (url) => {
     if (!url) return "#";
     if (url.startsWith("http://") || url.startsWith("https://")) {
@@ -40,7 +39,7 @@ export default function VideoPage() {
   }, []);
 
   useEffect(() => {
-    const notifyTwilio = async () => {
+    const notifyVonage = async () => {
       let message = "Un visiteur inconnu a visité la page Vidéo.";
 
       if (token) {
@@ -54,19 +53,19 @@ export default function VideoPage() {
             message = `L'utilisateur ${user.name} (${user.email}) a visité la page Vidéo.`;
           }
         } catch (error) {
-          console.error("Erreur profil Twilio:", error);
+          console.error("Erreur profil utilisateur :", error);
         }
       }
 
       try {
-        await axios.post(`${backendUrl}/api/twilio/notify`, { message });
-        console.log("Twilio notification envoyée:", message);
+        await axios.post(`${backendUrl}/api/notify`, { message });
+        console.log("Notification Vonage envoyée :", message);
       } catch (err) {
-        console.error("Erreur envoi Twilio:", err);
+        console.error("Erreur envoi notification Vonage :", err);
       }
     };
 
-    notifyTwilio();
+    notifyVonage();
   }, [token]);
 
   const handleSeeMore = () => {

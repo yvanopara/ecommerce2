@@ -5,6 +5,8 @@ import cors from 'cors';
 import 'dotenv/config';
 import { connectDB } from './config/db.js';
 
+
+
 import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
 import cartRouter from './routes/cartRoute.js';
@@ -13,6 +15,10 @@ import routerVideo from './routes/videoRoutes.js';
 import connectCloudinary from './config/cloudinary.js';
 import favoritesRoutes from './routes/favoritesRoutes.js';
 import twilioRouter from './routes/twilioRoute.js';
+import notifyRoute from './routes/notifyRoute.js';
+
+
+
 
 
 
@@ -55,6 +61,8 @@ app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
 app.use("/api/user/favorites", favoritesRoutes);
 app.use('/api/twilio', twilioRouter);
+app.use(notifyRoute);
+
 
 // Health Check
 app.get('/ping', (req, res) => res.send('pong'));

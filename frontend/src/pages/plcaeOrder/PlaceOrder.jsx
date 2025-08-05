@@ -65,14 +65,13 @@ export default function PlaceOrder() {
       );
 
       if (response.data.success) {
-        // ✅ Essayer Twilio mais ne pas bloquer si ça échoue
+        // ✅ Notification via Vodage (Vonage)
         try {
-          await axios.post(backendUrl + "/api/twilio/notify", {
-            message: `Le client *${formData.firstName} ${formData.lastName}* vient de passer une commande de *${getCartAmount() + delivery_fee} FCFA*. Numéro: *${formData.phone}*, Adresse: *${formData.city}*.`
+          await axios.post(backendUrl + "/api/notify", {
+            message: `Le client *${formData.firstName} ${formData.lastName}* vient de passer une commande de *${getCartAmount() + delivery_fee} FCFA*.\nNuméro: *${formData.phone}*\nAdresse: *${formData.city}*`
           });
-        } catch (twilioError) {
-          console.warn("Erreur lors de la notification Twilio :", twilioError.message);
-          // Optionnel : toast.warn("Commande reçue, mais notification non envoyée.")
+        } catch (vodageError) {
+          console.warn("Erreur lors de la notification Vodage :", vodageError.message);
         }
 
         setCartItems({});

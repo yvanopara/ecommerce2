@@ -4,13 +4,13 @@ import { ShopContext } from '../../context/shopContext';
 import Title from '../../components/title/Title';
 import { assets } from '../../assets/assets';
 import CartTotal from '../../components/cartTotal/CartTotal';
-import axios from 'axios'; // ✅ N'oublie pas d'importer axios
+import axios from 'axios';
 
 export default function Cart() {
   const { navigate, cartItems, products, currency, updateQuantity, backendUrl, token } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
-  // ✅ NOTIFICATION TWILIO : même logique que Home
+  // ✅ NOTIFICATION VODAGE
   useEffect(() => {
     const notifyVisit = async () => {
       let message = "Un visiteur inconnu vient de visiter la page PANIER.";
@@ -23,7 +23,7 @@ export default function Cart() {
 
           if (response.data.success) {
             const user = response.data.user;
-            message = `L'utilisateur ${user.name} (${user.email}) a visité la page PANIER.`;
+            message = `L'utilisateur ${user.name} (${user.email}) vien de visité la page *PANIER*.`;
           }
         } catch (error) {
           console.error("Erreur lors de la récupération du profil :", error);
@@ -31,10 +31,10 @@ export default function Cart() {
       }
 
       try {
-        await axios.post(`${backendUrl}/api/twilio/notify`, { message });
-        console.log("Notification Twilio envoyée :", message);
+        await axios.post(`${backendUrl}/api/notify`, { message });
+        console.log("Notification Vodage envoyée :", message);
       } catch (error) {
-        console.error("Erreur envoi Twilio :", error);
+        console.error("Erreur lors de la notification Vodage :", error);
       }
     };
 
