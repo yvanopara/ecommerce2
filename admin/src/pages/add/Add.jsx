@@ -25,7 +25,7 @@ export default function Add({ token }) {
 { label: "Christian", sizes: ['25*25*12 cm', '25*25*15 cm', '25*15*20 cm', '25*25*25 cm', '25*25*30 cm','30*30*30 cm'] },
     { label: "Enfants", sizes: ['48 PCS','150 PCS', '100 PCS'] },
 
-{ label: "audrey", sizes: ['1 Pièce','3 Pièces','10 Pièces','12 Pièces ', '22 Pièces','36 Pièces','39 Pièces','50 Pièces','54 Pièces','83 Pièces','90 Pièces'] },
+{ label: "audrey", sizes: ['1 Pièce','3 Pièces','10 Pièces','12 Pièces ', '22 Pièces','36 Pièces','39 Pièces','50 Pièces','54 Pièces','83 Pièces','90 Pièces','1 boîte','2 boîtes'] },
 
     { label: "Frigos", sizes: ['246L', '160L', '150L','130L'] },
     { label: "Longueurs (mètres)", sizes: ['1M', '2M', '3M', '4M', '5M', '10M', '15M', '20M', '25M', '30M','90mm','85mm','70mm'] },
@@ -237,7 +237,7 @@ export default function Add({ token }) {
             <option value="whisky">Whisky </option>
             <option value="service">Service</option>
             <option value="art">Art</option>
-
+             
           </select>
         </div>
 
@@ -263,7 +263,9 @@ export default function Add({ token }) {
             <option value="electromenagers">Electromenagers</option>
             <option value="patisserie">Pâtisserie</option> 
             <option value="mode">Mode</option> 
-            <option value="passion">Passion</option> 
+            <option value="passion">Passion</option>
+            <option value="lingeries">Lingeries</option>
+ 
 
             <option value="voir-plus"> Voir plus</option>
 <option value="voir-plus-enfantd"> Voir plus Enfants</option>
