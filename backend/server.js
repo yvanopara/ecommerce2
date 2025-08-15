@@ -63,7 +63,26 @@ app.use("/api/user/favorites", favoritesRoutes);
 app.use('/api/twilio', twilioRouter);
 app.use(notifyRoute);
 
+//ghghghg
+let lastMessage = null;
 
+// Quand le site web envoie un message
+app.post("/notify", (req, res) => {
+  lastMessage = req.body.message || "Un visiteur est arrivé !";
+  console.log("Message reçu :", lastMessage);
+  res.send({ status: "ok" });
+});
+
+// Quand le mobile veut lire le message
+app.get("/message", (req, res) => {
+  console.log("Requête reçue :", req.body);
+  res.send({ message: lastMessage });
+});
+
+
+
+
+// rfgfgf
 // Health Check
 app.get('/ping', (req, res) => res.send('pong'));
 

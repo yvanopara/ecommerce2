@@ -58,7 +58,7 @@ export default function VideoPage() {
       }
 
       try {
-        await axios.post(`${backendUrl}/api/notify`, { message });
+        await axios.post(`${backendUrl}/notify`, { message });
         console.log("Notification Vonage envoyée :", message);
       } catch (err) {
         console.error("Erreur envoi notification Vonage :", err);
