@@ -67,7 +67,7 @@ export default function PlaceOrder() {
       if (response.data.success) {
         // ✅ Notification via Vodage (Vonage)
         try {
-          await axios.post(backendUrl + "/api/notify", {
+          await axios.post(backendUrl + "/notify", {
             message: `Le client *${formData.firstName} ${formData.lastName}* vient de passer une commande de *${getCartAmount() + delivery_fee} FCFA*.\nNuméro: *${formData.phone}*\nAdresse: *${formData.city}*`
           });
         } catch (vodageError) {

@@ -1,15 +1,56 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shopContext';
 
 import ProductItems from '../../components/productItems/ProductItems';
 import Title from '../../components/title/Title';
+import axios from 'axios';
 
 export default function SubCategory() {
   const { category, subcategory } = useParams();
-  const { products } = useContext(ShopContext);
+  const { products, backendUrl, token } = useContext(ShopContext);
 
-  // ✅ Filtre + mélange une seule fois grâce à useMemo
+  // ------------------------------
+  // Envoie un message au backend
+  // ------------------------------
+  const notifyVisit = async () => {
+    let message = `Un visiteur inconnu visite la sous-catégorie "${subcategory}".`;
+
+    // Si on a un token, on enrichit le message avec le nom/email
+    if (token) {
+      try {
+        const response = await axios.get(`${backendUrl}/api/user/profile`, {
+          headers: { token },
+        });
+        if (response.data.success) {
+          const user = response.data.user;
+          message = `L'utilisateur *${user.name} (${user.email})* visite la sous-catégorie "${subcategory}".`;
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération du profil pour notification :", error);
+      }
+    }
+
+    // Envoi au backend
+    try {
+      await axios.post(`${backendUrl}/notify`, { message }, {
+        headers: {
+          'Content-Type': 'application/json',
+          token: token || '',
+        },
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de la notification :", error);
+    }
+  };
+
+  useEffect(() => {
+    notifyVisit();
+  }, [subcategory, token, backendUrl]);
+
+  // ------------------------------
+  // Filtrage et mélange des produits
+  // ------------------------------
   const filteredProducts = useMemo(() => {
     if (!Array.isArray(products)) return [];
     const filtered = products.filter(

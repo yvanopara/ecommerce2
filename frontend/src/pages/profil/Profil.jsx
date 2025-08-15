@@ -17,10 +17,13 @@ export default function Profil() {
   const { backendUrl, token, setToken } = useContext(ShopContext);
   const [userData, setUserData] = useState({ name: '', email: '' });
 
+  // ------------------------------
+  // Charge les informations de l'utilisateur
+  // ------------------------------
   const loadUserData = async () => {
     if (!token) return;
     try {
-      const response = await axios.get(backendUrl + '/api/user/profile', {
+      const response = await axios.get(`${backendUrl}/api/user/profile`, {
         headers: { token },
       });
 
@@ -31,20 +34,62 @@ export default function Profil() {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.error("Erreur récupération profil :", error);
     }
   };
 
+  // ------------------------------
+  // Déconnexion
+  // ------------------------------
   const handleLogout = () => {
     setToken(null);
     localStorage.removeItem('token');
     window.location.href = '/';
   };
 
+  // ------------------------------
+  // Envoie un message au backend
+  // ------------------------------
+  const notifyVisit = async () => {
+    let message = "Un visiteur inconnu est sur la page Profil.";
+
+    if (token) {
+      try {
+        const response = await axios.get(`${backendUrl}/api/user/profile`, {
+          headers: { token },
+        });
+        if (response.data.success) {
+          const user = response.data.user;
+          message = `L'utilisateur *${user.name} (${user.email})* est en train de visiter la page Profil.`;
+        }
+      } catch (error) {
+        console.error("Erreur récupération profil pour notification :", error);
+      }
+    }
+
+    try {
+      await axios.post("http://localhost:5000/notify", { message }, {
+        headers: {
+          'Content-Type': 'application/json',
+          token: token || '',
+        },
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de la notification :", error);
+    }
+  };
+
+  // ------------------------------
+  // useEffect principal
+  // ------------------------------
   useEffect(() => {
     loadUserData();
-  }, [token]);
+    notifyVisit();
+  }, [token, backendUrl]);
 
+  // ------------------------------
+  // Cartes du profil
+  // ------------------------------
   const cardItems = [
     {
       icon: <FaBoxOpen className="profil-card-icon" />,
@@ -85,18 +130,20 @@ export default function Profil() {
 
   return (
     <div className="profil-container">
+      {/* Header Profil */}
       <div className="profil-header">
         <div className="profil-avatar">
           <FaUserCircle className="profil-icon" />
           <FaCheckCircle className="profil-status" title="Connecté" />
         </div>
-        
+
         <div className="profil-info">
           <h2>{userData.name || 'Utilisateur'}</h2>
           <p>{userData.email || 'Email inconnu'}</p>
         </div>
       </div>
 
+      {/* Actions / Cartes */}
       <div className="profil-actions">
         {cardItems.map((item, index) => (
           <div

@@ -31,7 +31,7 @@ export default function Cart() {
       }
 
       try {
-        await axios.post(`${backendUrl}/api/notify`, { message });
+        await axios.post(`${backendUrl}/notify`, { message });
         console.log("Notification Vodage envoyée :", message);
       } catch (error) {
         console.error("Erreur lors de la notification Vodage :", error);
