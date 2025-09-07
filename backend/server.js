@@ -32,6 +32,7 @@ connectCloudinary();
 // Middlewares
 const allowedOrigins = [
   'https://frontendv-wnur.onrender.com',
+  'https://backend2-58eq.onrender.com',
   'http://localhost:3000',
   'https://admin2-1hs9.onrender.com',
   'http://localhost:5173',
@@ -62,6 +63,7 @@ app.use('/api/order', orderRouter);
 app.use("/api/user/favorites", favoritesRoutes);
 app.use('/api/twilio', twilioRouter);
 app.use(notifyRoute);
+
 
 //ghghghg
 let lastMessage = null;

@@ -24,8 +24,8 @@ import SubCategory from './pages/subCategory/SubCategory';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 
 
-      export const backendUrl = 'https://ecommerce2-production-2186.up.railway.app' 
-   //  export const backendUrl = 'http://localhost:5000'
+   //   export const backendUrl = 'https://ecommerce2-production-2186.up.railway.app' 
+     export const backendUrl = 'http://localhost:5000'
 //git push --force origin main
 
 function App() {

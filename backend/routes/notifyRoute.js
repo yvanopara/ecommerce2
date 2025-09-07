@@ -4,7 +4,9 @@ import axios from "axios";
 const router = express.Router();
 
 let expoTokens = [];
+let lastMessage = null;
 
+// Enregistrer un token Expo
 router.post("/register-token", (req, res) => {
   const { token } = req.body;
   if (token && !expoTokens.includes(token)) {
@@ -14,21 +16,19 @@ router.post("/register-token", (req, res) => {
   res.json({ success: true });
 });
 
-router.post("/send-notification", async (req, res) => {
-  const { title, body } = req.body;
+// Fonction pour envoyer une notification à tous les tokens
+async function sendPushNotificationToAll(message) {
+  if (expoTokens.length === 0) return;
 
-  if (expoTokens.length === 0) {
-    return res.json({ success: false, message: "Aucun token enregistré" });
-  }
+  const messages = expoTokens.map((token) => ({
+    to: token,
+    sound: "default",
+    title: "Nouveau visiteur",
+    body: message,
+    data: { message },
+  }));
 
   try {
-    const messages = expoTokens.map(token => ({
-      to: token,
-      sound: "default",
-      title,
-      body,
-    }));
-
     const response = await axios.post(
       "https://exp.host/--/api/v2/push/send",
       messages,
@@ -40,13 +40,27 @@ router.post("/send-notification", async (req, res) => {
         },
       }
     );
-
-    console.log("📩 Réponse Expo :", response.data);
-    res.json({ success: true, data: response.data });
+    console.log("📩 Notifications envoyées :", response.data);
   } catch (error) {
     console.error("Erreur envoi notification :", error.response?.data || error.message);
-    res.status(500).json({ success: false, error: error.message });
   }
+}
+
+// Quand le site web envoie un message
+router.post("/notify", async (req, res) => {
+  const message = req.body.message || "Un visiteur est arrivé !";
+  lastMessage = message;
+  console.log("Message reçu :", message);
+
+  // Envoi notification push
+  await sendPushNotificationToAll(message);
+
+  res.send({ status: "ok" });
+});
+
+// Quand le mobile veut lire le message (optionnel)
+router.get("/message", (req, res) => {
+  res.send({ message: lastMessage });
 });
 
 export default router;
