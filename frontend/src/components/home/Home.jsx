@@ -11,10 +11,8 @@ export default function Home() {
 
   useEffect(() => {
     const notifyVisit = async () => {
-      // Message par défaut
       let message = "Un visiteur inconnu vient de visiter la page d'accueil.";
 
-      // Si on a un token, on essaie d'enrichir le message
       if (token) {
         try {
           const response = await axios.get(`${backendUrl}/api/user/profile`, {
@@ -30,10 +28,10 @@ export default function Home() {
         }
       }
 
-      // On envoie le message au backend ou au mini serveur
       try {
-        await axios.post("http://localhost:5000/notify", 
-          { message }, 
+        await axios.post(
+          `${backendUrl}/notify`, // ✅ envoie directement vers Render
+          { message },
           {
             headers: {
               'Content-Type': 'application/json',

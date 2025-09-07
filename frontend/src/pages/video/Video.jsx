@@ -23,13 +23,14 @@ export default function VideoPage() {
     return `https://${url}`;
   };
 
+  // 🔹 Récupération des vidéos
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         const response = await axios.get(`${backendUrl}/api/video`);
         setVideos(response.data);
       } catch (err) {
-        console.error("Error fetching videos:", err);
+        console.error("Erreur récupération vidéos :", err);
       } finally {
         setLoading(false);
       }
@@ -38,8 +39,9 @@ export default function VideoPage() {
     fetchVideos();
   }, []);
 
+  // 🔹 Notification au backend Render
   useEffect(() => {
-    const notifyVonage = async () => {
+    const notifyVisit = async () => {
       let message = "Un visiteur inconnu a visité la page Vidéo.";
 
       if (token) {
@@ -50,7 +52,7 @@ export default function VideoPage() {
 
           if (res.data.success && res.data.user) {
             const user = res.data.user;
-            message = `L'utilisateur ${user.name} (${user.email}) a visité la page Vidéo.`;
+            message = `L'utilisateur *${user.name} (${user.email})* a visité la page Vidéo.`;
           }
         } catch (error) {
           console.error("Erreur profil utilisateur :", error);
@@ -58,14 +60,23 @@ export default function VideoPage() {
       }
 
       try {
-        await axios.post(`${backendUrl}/notify`, { message });
-        console.log("Notification Vonage envoyée :", message);
+        await axios.post(
+          `${backendUrl}/notify`,
+          { message },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token || "",
+            },
+          }
+        );
+        console.log("Notification envoyée :", message);
       } catch (err) {
-        console.error("Erreur envoi notification Vonage :", err);
+        console.error("Erreur envoi notification :", err);
       }
     };
 
-    notifyVonage();
+    notifyVisit();
   }, [token]);
 
   const handleSeeMore = () => {
@@ -92,15 +103,7 @@ export default function VideoPage() {
             />
             <div className="video-overlay" style={{ display: isPlaying ? "none" : "flex" }}>
               <button className="play-button" type="button">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M8 5V19L19 12L8 5Z" fill="white" />
-                </svg>
+                ▶
               </button>
             </div>
           </div>
@@ -113,19 +116,6 @@ export default function VideoPage() {
             }
           >
             {mainVideo === frenchVideoUrl ? "English Version" : "Version Française"}
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="lang-icon"
-            >
-              <path
-                d="M12.87 15.07L10.33 12.56L10.36 12.53C12.1 10.59 13.34 8.36 14.07 6H17V4H10V2H8V4H1V6H12.17C11.5 7.92 10.44 9.75 9 11.35C8.07 10.32 7.3 9.19 6.69 8H4.69C5.42 9.63 6.42 11.17 7.67 12.56L2.58 17.58L4 19L9 14L12.11 17.11L12.87 15.07ZM18.5 10H16.5L12 22H14L15.12 19H19.87L21 22H23L18.5 10ZM15.88 17L17.5 12.67L19.12 17H15.88Z"
-                fill="currentColor"
-              />
-            </svg>
           </button>
         </div>
       </div>
@@ -162,13 +152,7 @@ export default function VideoPage() {
                         rel="noopener noreferrer"
                         className="product-link"
                       >
-                        <span>Voir le produit</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M13 3H21V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M16 3H21V8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M21 13V21H3V3H11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
+                        Voir le produit →
                       </a>
                     )}
                   </div>
@@ -178,20 +162,7 @@ export default function VideoPage() {
 
             {visibleCount < videos.length && (
               <button className="see-more-btn" type="button" onClick={handleSeeMore}>
-                Voir plus de vidéos
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="arrow-icon"
-                >
-                  <path
-                    d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z"
-                    fill="currentColor"
-                  />
-                </svg>
+                Voir plus de vidéos →
               </button>
             )}
           </>
