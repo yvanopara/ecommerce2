@@ -16,7 +16,7 @@ router.post("/register-token", (req, res) => {
   res.json({ success: true });
 });
 
-// Fonction pour envoyer une notification à tous les tokens
+// Envoyer une notification à tous les tokens
 async function sendPushNotificationToAll(message) {
   if (expoTokens.length === 0) return;
 
