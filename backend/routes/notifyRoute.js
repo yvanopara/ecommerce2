@@ -1,66 +1,35 @@
 import express from "express";
-import axios from "axios";
+import TelegramBot from "node-telegram-bot-api";
 
 const router = express.Router();
 
-let expoTokens = [];
+// Telegram Bot
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: false });
+
+// Stocker le dernier message (optionnel)
 let lastMessage = null;
 
-// Enregistrer un token Expo
-router.post("/register-token", (req, res) => {
-  const { token } = req.body;
-  if (token && !expoTokens.includes(token)) {
-    expoTokens.push(token);
-    console.log("📲 Token enregistré :", token);
-  }
-  res.json({ success: true });
-});
-
-// Envoyer une notification à tous les tokens
-async function sendPushNotificationToAll(message) {
-  if (expoTokens.length === 0) return;
-
-  const messages = expoTokens.map((token) => ({
-    to: token,
-    sound: "default",
-    title: "Nouveau visiteur",
-    body: message,
-    data: { message },
-  }));
-
-  try {
-    const response = await axios.post(
-      "https://exp.host/--/api/v2/push/send",
-      messages,
-      {
-        headers: {
-          "Accept": "application/json",
-          "Accept-encoding": "gzip, deflate",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log("📩 Notifications envoyées :", response.data);
-  } catch (error) {
-    console.error("Erreur envoi notification :", error.response?.data || error.message);
-  }
-}
-
-// Quand le site web envoie un message
+// Endpoint pour recevoir un message depuis le front-end et l'envoyer sur Telegram
 router.post("/notify", async (req, res) => {
-  const message = req.body.message || "Un visiteur est arrivé !";
-  lastMessage = message;
-  console.log("Message reçu :", message);
+  try {
+    const message = req.body.message || "Un visiteur est arrivé !";
+    lastMessage = message;
 
-  // Envoi notification push
-  await sendPushNotificationToAll(message);
+    // Envoi du message sur Telegram
+    await bot.sendMessage(process.env.TELEGRAM_CHAT_ID, message);
 
-  res.send({ status: "ok" });
+    console.log("📩 Message envoyé sur Telegram :", message);
+
+    res.json({ status: "ok" });
+  } catch (error) {
+    console.error("❌ Erreur en envoyant le message Telegram :", error);
+    res.status(500).json({ status: "error", error: error.message });
+  }
 });
 
-// Quand le mobile veut lire le message (optionnel)
+// Endpoint pour récupérer le dernier message (optionnel, mobile)
 router.get("/message", (req, res) => {
-  res.send({ message: lastMessage });
+  res.json({ message: lastMessage });
 });
 
 export default router;

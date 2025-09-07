@@ -24,8 +24,8 @@ import SubCategory from './pages/subCategory/SubCategory';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 
 
-     export const backendUrl = 'https://backend2-58eq.onrender.com' 
-   //   export const backendUrl = 'http://localhost:5000'
+    export const backendUrl = 'https://backend2-58eq.onrender.com' 
+    //   export const backendUrl = 'http://localhost:5000'
 //git push --force origin main
 
 function App() {
