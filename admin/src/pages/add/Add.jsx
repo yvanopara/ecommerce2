@@ -29,7 +29,7 @@ export default function Add({ token }) {
 
     { label: "Frigos", sizes: ['246L', '160L', '150L','130L'] },
     { label: "Longueurs (mètres)", sizes: ['1M', '2M', '3M', '4M', '5M', '10M', '15M', '20M', '25M', '30M','90mm','85mm','70mm'] },
-    { label: "Volumes (litres)", sizes: ['0.5L', '1L', '2L', '5L', '10L', '20L'] },
+    { label: "Volumes (litres)", sizes: ['30ML', '100ML', '2L', '5L', '10L', '20L'] },
     { label: "Écrans (pouces)", sizes: ['24"', '32"', '40"', '43"', '50"', '55"', '65"', '75"'] },
     { label: "Pointures chaussures", sizes: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46'] },
   ];
