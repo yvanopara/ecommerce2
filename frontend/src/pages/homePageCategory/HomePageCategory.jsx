@@ -32,7 +32,7 @@ export default function HomePage() {
     <div className="home-page-container">
       {Object.entries(shuffledByCategory)
         .filter(([category]) => {
-          const allowed = ['femme', 'parfum', 'electronic', 'maison','art'];
+          const allowed = ['femme', 'parfum', 'electronic','enfant','maison','art];
           return allowed.includes(category.trim().toLowerCase());
         })
         .map(([category, items]) => (

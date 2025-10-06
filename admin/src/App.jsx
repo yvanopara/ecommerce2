@@ -11,8 +11,10 @@ import List from './pages/list/List'
 import Login from './components/login/Login'
 import { ToastContainer, toast } from 'react-toastify';
 
- export const backendUrl = 'https://ecommerce2-production-2186.up.railway.app'
  //   export const backendUrl = 'http://localhost:5000'
+
+   export const backendUrl = 'https://backend2-58eq.onrender.com' 
+
 export const currency = "FCFA"
 export default function App() {
   const [token,setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):'')
