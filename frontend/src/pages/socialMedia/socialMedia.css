@@ -1,0 +1,278 @@
+/* KMyStoreLinks.css */
+.kmystore-links-container {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.kmystore-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 50px 40px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.kmystore-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b6b, #ff8e53, #25D366, #128C7E);
+}
+
+.kmystore-header {
+  margin-bottom: 50px;
+}
+
+.kmystore-logo {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+}
+
+.kmystore-logo-icon {
+  font-size: 2rem;
+  color: white;
+}
+
+.kmystore-title {
+  color: tomato;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #2d3748, #4a5568);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.kmystore-subtitle {
+  color: #718096;
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.kmystore-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.kmystore-btn {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.kmystore-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transition: left 0.6s;
+}
+
+.kmystore-btn:hover::before {
+  left: 100%;
+}
+
+.kmystore-btn:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.kmystore-btn-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.kmystore-btn-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+  min-width: 24px;
+}
+
+.kmystore-btn:hover .kmystore-btn-icon {
+  transform: scale(1.1);
+}
+
+.kmystore-btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kmystore-btn-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  transition: color 0.3s ease;
+}
+
+.kmystore-btn-desc {
+  font-size: 0.9rem;
+  color: #718096;
+  transition: color 0.3s ease;
+}
+
+.kmystore-btn-arrow {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #cbd5e0;
+  transition: all 0.3s ease;
+}
+
+.kmystore-btn:hover .kmystore-btn-arrow {
+  color: inherit;
+  transform: translateX(5px);
+}
+
+/* Bouton Principal - Tomato */
+.kmystore-btn-primary {
+  border-color: #ff6b6b;
+}
+
+.kmystore-btn-primary:hover {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+}
+
+.kmystore-btn-primary:hover .kmystore-btn-title,
+.kmystore-btn-primary:hover .kmystore-btn-desc,
+.kmystore-btn-primary:hover .kmystore-btn-icon {
+  color: white;
+}
+
+/* Bouton Groupe - Vert WhatsApp */
+.kmystore-btn-success {
+  border-color: #25D366;
+}
+
+.kmystore-btn-success:hover {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+}
+
+.kmystore-btn-success:hover .kmystore-btn-title,
+.kmystore-btn-success:hover .kmystore-btn-desc,
+.kmystore-btn-success:hover .kmystore-btn-icon {
+  color: white;
+}
+
+/* Bouton Contact - Vert WhatsApp foncé */
+.kmystore-btn-whatsapp {
+  border-color: #128C7E;
+}
+
+.kmystore-btn-whatsapp:hover {
+  background: linear-gradient(135deg, #128C7E, #075E54);
+}
+
+.kmystore-btn-whatsapp:hover .kmystore-btn-title,
+.kmystore-btn-whatsapp:hover .kmystore-btn-desc,
+.kmystore-btn-whatsapp:hover .kmystore-btn-icon {
+  color: white;
+}
+
+.kmystore-footer {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 24px;
+}
+
+.kmystore-footer-text {
+  color: #a0aec0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Animations */
+@keyframes kmystore-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kmystore-card {
+  animation: kmystore-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kmystore-btn {
+  animation: kmystore-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kmystore-btn:nth-child(1) { animation-delay: 0.1s; }
+.kmystore-btn:nth-child(2) { animation-delay: 0.2s; }
+.kmystore-btn:nth-child(3) { animation-delay: 0.3s; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .kmystore-links-container {
+    padding: 15px;
+  }
+  
+  .kmystore-card {
+    padding: 40px 25px;
+    border-radius: 20px;
+  }
+  
+  .kmystore-title {
+    font-size: 2rem;
+  }
+  
+  .kmystore-btn {
+    padding: 18px 20px;
+  }
+  
+  .kmystore-btn-content {
+    gap: 12px;
+  }
+  
+  .kmystore-btn-title {
+    font-size: 1rem;
+  }
+  
+  .kmystore-btn-desc {
+    font-size: 0.85rem;
+  }
+}

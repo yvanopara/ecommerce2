@@ -22,6 +22,7 @@ import Video from './pages/video/Video';
 import Favorites from './pages/favorite/Favorites';
 import SubCategory from './pages/subCategory/SubCategory';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
+import SocialMedia from './pages/socialMedia/SocialMedia';
 
 
    export const backendUrl = 'https://backend2-58eq.onrender.com' 
@@ -52,6 +53,9 @@ function App() {
         <Route path="/collection/:category" element={<Category />}  />
         
         <Route path="/category/:category/subcategory/:subcategory" element={<SubCategory />} />
+
+        <Route path="/nos-sites" element={<SocialMedia/>} />
+
 
 
       </Routes>
