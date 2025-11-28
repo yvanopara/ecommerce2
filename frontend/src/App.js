@@ -24,9 +24,10 @@ import SubCategory from './pages/subCategory/SubCategory';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import SocialMedia from './pages/socialMedia/SocialMedia';
 
+     //     export const backendUrl = 'http://localhost:5000'
+   //export const backendUrl = 'https://backend2-58eq.onrender.com' 
+   export const backendUrl = 'https://ecommerce2-4jwd.onrender.com' 
 
-   export const backendUrl = 'https://backend2-58eq.onrender.com' 
-   //     export const backendUrl = 'http://localhost:5000'
 //git push --force origin main
 
 function App() {
