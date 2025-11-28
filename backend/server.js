@@ -27,6 +27,7 @@ connectCloudinary();
 const allowedOrigins = [
   'https://frontendv-wnur.onrender.com',
   'https://backend2-58eq.onrender.com',
+  'https://ecommerce2-4jwd.onrender.com' ,
   'http://localhost:3000',
   'https://admin2-1hs9.onrender.com',
   'http://localhost:5173',
