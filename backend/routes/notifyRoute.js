@@ -4,7 +4,7 @@ import TelegramBot from "node-telegram-bot-api";
 const router = express.Router();
 
 // Init Telegram Bot
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: false });
 
 // Stocker le dernier message (optionnel)
 let lastMessage = null;
