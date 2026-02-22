@@ -4,7 +4,7 @@ import TelegramBot from "node-telegram-bot-api";
 const router = express.Router();
 
 // Init Telegram Bot
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: false });
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
 
 // Stocker le dernier message (optionnel)
 let lastMessage = null;
@@ -26,7 +26,13 @@ router.post("/notify", async (req, res) => {
     res.status(500).json({ status: "error", error: error.message });
   }
 });
+bot.on('message', (msg) => {
+  console.log('Message reçu :', msg.text);
+  console.log('Chat ID :', msg.chat.id);
 
+  // Répond automatiquement pour test
+  bot.sendMessage(msg.chat.id, "✅ Message reçu par le bot !");
+});
 // Endpoint pour récupérer le dernier message
 router.get("/message", (req, res) => {
   res.json({ message: lastMessage });

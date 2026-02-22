@@ -1,6 +1,7 @@
 import productModel from "../models/productModel.js";
 import { v2 as cloudinary } from 'cloudinary';
 import path from 'path';
+  
 
 // Add product item
 
