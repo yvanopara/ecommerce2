@@ -53,7 +53,7 @@ export default function Category() {
           })
         ) : (
           <p style={{ textAlign: 'center' }}>
-            Aucun produit trouvé dans cette catégorie.
+            Chargement des Produits.
           </p>
         )}
       </div>
