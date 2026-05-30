@@ -28,6 +28,11 @@ export default function SideBar() {
                 <Play/>
                 <p>video</p>
             </NavLink>
+
+            <NavLink to="/message" className="sideBar-option">
+                <Play/>
+                <p>Message</p>
+            </NavLink>
         </div>
       
     </div>

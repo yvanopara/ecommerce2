@@ -1,147 +1,248 @@
+
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import validator from "validator";
-import { adminEmail, adminPassword } from "../config/adminkeys.js";
+
+// JWT SECRET depuis .env
+export const JWT_SECRET = process.env.JWT_SECRET;
 
 
-//Route for login user
-const loginUser = async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const user = await userModel.findOne({ email });
-        if (!user) {
-            return res.json({ success: false, message: 'user not found' });
-        }
-
-        // Compare plain-text passwords directly
-        if (password !== user.password) {
-            return res.json({ success: false, message: 'invalid credentials' });
-        }
-
-        const token = createToken(user._id);
-        res.json({ success: true, message: 'login success', token });
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: 'error' });
-    }
-};
-
-//jwt token
-const JWT_SECRET = "random#Secret";
+// JWT TOKEN
 const createToken = (id) => {
     return jwt.sign({ id }, JWT_SECRET);
 };
 
-//Route for register user
-const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
-    console.log(req.body);
+
+// LOGIN USER
+const loginUser = async (req, res) => {
+
+    const { email, password } = req.body;
+
     try {
-        // checking if the user already exists
+
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            return res.json({
+                success: false,
+                message: "user not found"
+            });
+        }
+
+        // comparaison mot de passe simple
+        if (password !== user.password) {
+            return res.json({
+                success: false,
+                message: "invalid credentials"
+            });
+        }
+
+        const token = createToken(user._id);
+
+        res.json({
+            success: true,
+            message: "login success",
+            token
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.json({
+            success: false,
+            message: "error"
+        });
+    }
+};
+
+
+// REGISTER USER
+const registerUser = async (req, res) => {
+
+    const { name, email, password } = req.body;
+
+    try {
+
+        // vérifier si user existe déjà
         const exist = await userModel.findOne({ email });
+
         if (exist) {
-            return res.json({ success: false, message: 'user already exists' });
+            return res.json({
+                success: false,
+                message: "user already exists"
+            });
         }
 
-        // Validation email and password
+        // validation email
         if (!validator.isEmail(email)) {
-            return res.json({ success: false, message: 'Enter a valid email' });
-        }
-        if (password.length < 8) {
-            return res.json({ success: false, message: 'password is not strong' });
-        }
-        if (!name || name.trim().length < 2) {
-            return res.json({ success: false, message: 'Name is required' });
+            return res.json({
+                success: false,
+                message: "Enter a valid email"
+            });
         }
 
+        // validation password
+        if (password.length < 8) {
+            return res.json({
+                success: false,
+                message: "password is not strong"
+            });
+        }
+
+        // validation name
+        if (!name || name.trim().length < 2) {
+            return res.json({
+                success: false,
+                message: "Name is required"
+            });
+        }
 
         const newUser = new userModel({
-            name: name,
-            email: email,
-            password: password, // Store plain-text password directly
+            name,
+            email,
+            password
         });
 
         const user = await newUser.save();
+
         const token = createToken(user._id);
-        res.json({ success: true, message: 'user registered', token: token });
+
+        res.json({
+            success: true,
+            message: "user registered",
+            token
+        });
+
     } catch (error) {
+
         console.log(error);
-        res.json({ success: false, message: 'error user not registered' });
+
+        res.json({
+            success: false,
+            message: "error user not registered"
+        });
     }
 };
 
-// Ajoute dans userController.js
 
-export const getProfile = async (req, res) => {
+// GET PROFILE
+const getProfile = async (req, res) => {
+
     try {
+
         const token = req.headers.token;
-        if (!token) return res.json({ success: false, message: "No token" });
+
+        if (!token) {
+            return res.json({
+                success: false,
+                message: "No token"
+            });
+        }
 
         const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await userModel.findById(decoded.id).select("name email");
-        if (!user) return res.json({ success: false, message: "User not found" });
 
-        res.json({ success: true, user });
+        const user = await userModel
+            .findById(decoded.id)
+            .select("name email");
+
+        if (!user) {
+            return res.json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        res.json({
+            success: true,
+            user
+        });
+
     } catch (error) {
+
         console.log(error);
-        res.json({ success: false, message: "Invalid token" });
+
+        res.json({
+            success: false,
+            message: "Invalid token"
+        });
     }
 };
 
 
-export const google = async (req, res) => {
+// GOOGLE LOGIN
+const google = async (req, res) => {
+
     const { name, email } = req.body;
 
     try {
+
         let user = await userModel.findOne({ email });
 
         if (user) {
-            const token = jwt.sign({ id: user._id }, JWT_SECRET);
+
+            const token = jwt.sign(
+                { id: user._id },
+                JWT_SECRET
+            );
+
             const { password, ...rest } = user._doc;
-            return res.status(200).cookie("access_token", token, {
-                httpOnly: true,
-            }).json(rest);
-        } else {
-            // Generate a random password (not hashed)
-            const generatedPassword = Math.random().toString(36).slice(-8);
 
-            const newUser = new userModel({
-                name: name.toLowerCase().replace(/\s+/g, "") + Math.floor(Math.random() * 10000),
-                email,
-                password: generatedPassword, // Storing plain text password
-            });
-
-            await newUser.save();
-
-            const token = jwt.sign({ id: newUser._id }, JWT_SECRET);
-            const { password, ...rest } = newUser._doc;
-
-            return res.status(200).cookie("access_token", token, {
-                httpOnly: true
-            }).json(rest);
+            return res
+                .status(200)
+                .cookie("access_token", token, {
+                    httpOnly: true
+                })
+                .json(rest);
         }
+
+        // création nouvel utilisateur google
+        const generatedPassword = Math.random()
+            .toString(36)
+            .slice(-8);
+
+        const newUser = new userModel({
+            name:
+                name.toLowerCase().replace(/\s+/g, "") +
+                Math.floor(Math.random() * 10000),
+
+            email,
+            password: generatedPassword
+        });
+
+        await newUser.save();
+
+        const token = jwt.sign(
+            { id: newUser._id },
+            JWT_SECRET
+        );
+
+        const { password, ...rest } = newUser._doc;
+
+        return res
+            .status(200)
+            .cookie("access_token", token, {
+                httpOnly: true
+            })
+            .json(rest);
+
     } catch (error) {
-        console.error("Google Auth Error:", error);
-        res.status(500).json({ message: "Internal server error" });
+
+        console.error(
+            "Google Auth Error:",
+            error
+        );
+
+        res.status(500).json({
+            message: "Internal server error"
+        });
     }
 };
 
-//Route fro admin Login
 
-const adminLogin = async (req, res) => {
-    try {
-
-        const { email, password } = req.body
-        if (email === adminEmail && password === adminPassword) {
-            const token = jwt.sign(email + password, JWT_SECRET);
-            res.json({ success: true, token });
-        }
-        else {
-            res.json({ success: false, message: 'invalid credentials' })
-        }
-    } catch (error) {
-        res.json({ success: false, message: error.message })
-    }
-}
-export { loginUser, registerUser, adminLogin, JWT_SECRET };
-
+export {
+    loginUser,
+    registerUser,
+    getProfile,
+    google
+};

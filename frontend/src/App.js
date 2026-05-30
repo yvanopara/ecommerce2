@@ -23,10 +23,11 @@ import Favorites from './pages/favorite/Favorites';
 import SubCategory from './pages/subCategory/SubCategory';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import SocialMedia from './pages/socialMedia/SocialMedia';
+import Message from './pages/message/Message';
 
      //     export const backendUrl = 'http://localhost:5000'
    //export const backendUrl = 'https://backend2-58eq.onrender.com' 
-   export const backendUrl = 'https://ecommerce2-4jwd.onrender.com' 
+     export const backendUrl = 'https://ecommerce2-4jwd.onrender.com' 
 
 //git push --force origin main
 
@@ -45,6 +46,7 @@ function App() {
         <Route path="/placeorder" element={<PlaceOrder/>} />
         <Route path="/orders" element={<Order/>} />
         <Route path="/profil" element={<Profil/>} />
+        <Route path="/assistance" element={<Message/>} />
         <Route path="/video" element={<Video/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/collection" element={<Collection />} />
