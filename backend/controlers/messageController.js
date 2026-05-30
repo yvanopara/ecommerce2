@@ -46,7 +46,7 @@ export const sendMessage = async (
 try {
 
   await axios.post(
-    "http://localhost:5000/notify","https://ecommerce2-4jwd.onrender.com/notify",
+    "https://ecommerce2-4jwd.onrender.com/notify",
     {
       message:
         `💬 Nouveau message client:\n\n${text}`
