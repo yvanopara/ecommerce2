@@ -1,8 +1,17 @@
 
 import './App.css';
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes
+} from "react-router-dom";
+
+import {
+  GoogleOAuthProvider
+} from "@react-oauth/google";
+
 import NavBar from './components/navBar/NavBar';
 import TopNavBar from './components/navBar/TopNavBar';
+
 import About from './pages/about/About';
 import Home from './components/home/Home';
 import Footer from './components/footer/Footer';
@@ -11,11 +20,14 @@ import Search from './components/search/Search';
 import Product from './pages/product/Product';
 import Cart from './pages/cart/Cart';
 
-import { ToastContainer, toast } from 'react-toastify';
+import {
+  ToastContainer
+} from 'react-toastify';
+
 import PlaceOrder from './pages/plcaeOrder/PlaceOrder';
 import Profil from './pages/profil/Profil';
 import Order from './pages/order/Order';
-import Login  from './pages/login/Login';
+import Login from './pages/login/Login';
 import Category from './pages/category/Category';
 import HomePageCategory from './pages/homePageCategory/HomePageCategory';
 import Video from './pages/video/Video';
@@ -25,47 +37,133 @@ import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import SocialMedia from './pages/socialMedia/SocialMedia';
 import Message from './pages/message/Message';
 
-     //     export const backendUrl = 'http://localhost:5000'
-   //export const backendUrl = 'https://backend2-58eq.onrender.com' 
-   export const backendUrl = 'https://ecommerce2-4jwd.onrender.com' 
 
-//git push --force origin main
+// export const backendUrl = 'http://localhost:5000'
+
+
+//export const backendUrl ='https://ecommerce2-4jwd.onrender.com';
+
+ export const backendUrl = 'https://backend2-58eq.onrender.com'
 
 function App() {
-return (
-    <div className="App">
-    <ToastContainer/>
-      <TopNavBar />
-      <ScrollToTop />
-      <Search/>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/product/:productId" element={<Product />}/>
-        <Route path="/cart" element={<Cart/>} />
-        <Route path="/placeorder" element={<PlaceOrder/>} />
-        <Route path="/orders" element={<Order/>} />
-        <Route path="/profil" element={<Profil/>} />
-        <Route path="/assistance" element={<Message/>} />
-        <Route path="/video" element={<Video/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/collection" element={<Collection />} />
-        <Route path="/favorites" element={<Favorites/>} />
 
-         <Route path="/collection" element={<HomePageCategory />} />
-        <Route path="/collection/:category" element={<Category />}  />
-        
-        <Route path="/category/:category/subcategory/:subcategory" element={<SubCategory />} />
+  return (
 
-        <Route path="/nos-sites" element={<SocialMedia/>} />
+    <GoogleOAuthProvider
+      clientId="242570790563-no0fguencfhn43euu64bsgetcepng53k.apps.googleusercontent.com"
+    >
 
+      <div className="App">
 
+        <ToastContainer />
 
-      </Routes>
-      <Footer/>
-      <NavBar />
-    </div>
+        <TopNavBar />
+
+        <ScrollToTop />
+
+        <Search />
+
+        <Routes>
+
+          <Route
+            path="/"
+            element={<Home />}
+          />
+
+          <Route
+            path="/about"
+            element={<About />}
+          />
+
+          <Route
+            path="/product/:productId"
+            element={<Product />}
+          />
+
+          <Route
+            path="/cart"
+            element={<Cart />}
+          />
+
+          <Route
+            path="/placeorder"
+            element={<PlaceOrder />}
+          />
+
+          <Route
+            path="/orders"
+            element={<Order />}
+          />
+
+          <Route
+            path="/profil"
+            element={<Profil />}
+          />
+
+          <Route
+            path="/assistance"
+            element={<Message />}
+          />
+
+          <Route
+            path="/video"
+            element={<Video />}
+          />
+
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+
+          <Route
+            path="/collection"
+            element={<Collection />}
+          />
+
+          <Route
+            path="/favorites"
+            element={<Favorites />}
+          />
+
+          <Route
+            path="/collection"
+            element={
+              <HomePageCategory />
+            }
+          />
+
+          <Route
+            path="/collection/:category"
+            element={
+              <Category />
+            }
+          />
+
+          <Route
+            path="/category/:category/subcategory/:subcategory"
+            element={
+              <SubCategory />
+            }
+          />
+
+          <Route
+            path="/nos-sites"
+            element={
+              <SocialMedia />
+            }
+          />
+
+        </Routes>
+
+        <Footer />
+
+        <NavBar />
+
+      </div>
+
+    </GoogleOAuthProvider>
   );
 }
 
 export default App;
+

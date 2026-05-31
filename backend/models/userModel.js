@@ -1,49 +1,59 @@
+
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true
-    },
+const userSchema =
+  new mongoose.Schema(
+    {
+      name: {
+        type: String,
+        required: true
+      },
 
-    email: {
-      type: String,
-      unique: true,
-      required: true
-    },
+      email: {
+        type: String,
+        unique: true,
+        required: true
+      },
 
-    password: {
-      type: String,
-      required: true
-    },
+      password: {
+        type: String,
+        required: true
+      },
 
-    cartData: {
-      type: Object,
-      default: {}
-    },
+      // optionnel
+      phone: {
+        type: String,
+        default: ""
+      },
 
-    favorites: {
-      type: [String],
-      default: []
-    },
+      // image cloudinary OU image google
+      profileImage: {
+        type: String,
+        default: ""
+      },
 
-    messages: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Message"
+      cartData: {
+        type: Object,
+        default: {}
+      },
+
+      favorites: {
+        type: [String],
+        default: []
       }
-    ]
-  },
-  {
-    minimize: false,
-    timestamps: true
-  }
-);
+    },
+    {
+      minimize: false,
+      timestamps: true
+    }
+  );
 
 const userModel =
   mongoose.models.user ||
-  mongoose.model("user", userSchema);
+  mongoose.model(
+    "user",
+    userSchema
+  );
 
 export default userModel;
 

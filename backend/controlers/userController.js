@@ -2,247 +2,379 @@
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import { v2 as cloudinary } from "cloudinary";
+import { OAuth2Client } from "google-auth-library";
 
-// JWT SECRET depuis .env
-export const JWT_SECRET = process.env.JWT_SECRET;
+export const JWT_SECRET =
+  process.env.JWT_SECRET;
+
+const GOOGLE_CLIENT_ID =
+  "242570790563-no0fguencfhn43euu64bsgetcepng53k.apps.googleusercontent.com";
+
+const client =
+  new OAuth2Client(
+    GOOGLE_CLIENT_ID
+  );
 
 
-// JWT TOKEN
-const createToken = (id) => {
-    return jwt.sign({ id }, JWT_SECRET);
+
+// TOKEN
+const createToken = (
+  id
+) => {
+  return jwt.sign(
+    { id },
+    JWT_SECRET
+  );
 };
+
 
 
 // LOGIN USER
-const loginUser = async (req, res) => {
+const loginUser =
+  async (req, res) => {
 
-    const { email, password } = req.body;
+    const {
+      email,
+      password
+    } = req.body;
 
     try {
 
-        const user = await userModel.findOne({ email });
+      const user =
+        await userModel.findOne(
+          { email }
+        );
 
-        if (!user) {
-            return res.json({
-                success: false,
-                message: "user not found"
-            });
-        }
-
-        // comparaison mot de passe simple
-        if (password !== user.password) {
-            return res.json({
-                success: false,
-                message: "invalid credentials"
-            });
-        }
-
-        const token = createToken(user._id);
-
-        res.json({
-            success: true,
-            message: "login success",
-            token
+      if (!user) {
+        return res.json({
+          success: false,
+          message:
+            "Utilisateur introuvable"
         });
+      }
+
+      if (
+        password !==
+        user.password
+      ) {
+        return res.json({
+          success: false,
+          message:
+            "Mot de passe incorrect"
+        });
+      }
+
+      const token =
+        createToken(
+          user._id
+        );
+
+      res.json({
+        success: true,
+        token,
+        user
+      });
 
     } catch (error) {
 
-        console.log(error);
+      console.log(
+        error
+      );
 
-        res.json({
-            success: false,
-            message: "error"
-        });
+      res.json({
+        success: false,
+        message:
+          "Erreur login"
+      });
     }
-};
+  };
+
 
 
 // REGISTER USER
-const registerUser = async (req, res) => {
-
-    const { name, email, password } = req.body;
+const registerUser =
+  async (req, res) => {
 
     try {
 
-        // vérifier si user existe déjà
-        const exist = await userModel.findOne({ email });
+      const {
+        name,
+        email,
+        password,
+        phone
+      } = req.body;
 
-        if (exist) {
-            return res.json({
-                success: false,
-                message: "user already exists"
-            });
-        }
+      const exist =
+        await userModel.findOne(
+          { email }
+        );
 
-        // validation email
-        if (!validator.isEmail(email)) {
-            return res.json({
-                success: false,
-                message: "Enter a valid email"
-            });
-        }
+      if (exist) {
+        return res.json({
+          success: false,
+          message:
+            "Utilisateur existe déjà"
+        });
+      }
 
-        // validation password
-        if (password.length < 8) {
-            return res.json({
-                success: false,
-                message: "password is not strong"
-            });
-        }
+      if (
+        !validator.isEmail(
+          email
+        )
+      ) {
+        return res.json({
+          success: false,
+          message:
+            "Email invalide"
+        });
+      }
 
-        // validation name
-        if (!name || name.trim().length < 2) {
-            return res.json({
-                success: false,
-                message: "Name is required"
-            });
-        }
+      if (
+        password.length <
+        8
+      ) {
+        return res.json({
+          success: false,
+          message:
+            "Mot de passe trop court"
+        });
+      }
 
-        const newUser = new userModel({
+      let imageUrl =
+        "";
+
+      // PHOTO OPTIONNELLE
+      if (
+        req.file
+      ) {
+
+        const result =
+          await cloudinary.uploader.upload(
+            req.file
+              .path,
+            {
+              resource_type:
+                "image"
+            }
+          );
+
+        imageUrl =
+          result.secure_url;
+      }
+
+      const newUser =
+        new userModel(
+          {
             name,
             email,
-            password
-        });
+            password,
 
-        const user = await newUser.save();
+            phone:
+              phone ||
+              "",
 
-        const token = createToken(user._id);
+            profileImage:
+              imageUrl
+          }
+        );
 
-        res.json({
-            success: true,
-            message: "user registered",
-            token
-        });
+      const user =
+        await newUser.save();
+
+      const token =
+        createToken(
+          user._id
+        );
+
+      res.json({
+        success: true,
+        token,
+        user
+      });
 
     } catch (error) {
 
-        console.log(error);
+      console.log(
+        error
+      );
 
-        res.json({
-            success: false,
-            message: "error user not registered"
-        });
+      res.json({
+        success: false,
+        message:
+          "Erreur register"
+      });
     }
-};
+  };
+
 
 
 // GET PROFILE
-const getProfile = async (req, res) => {
+const getProfile =
+  async (req, res) => {
 
     try {
 
-        const token = req.headers.token;
+      const token =
+        req.headers
+          .token;
 
-        if (!token) {
-            return res.json({
-                success: false,
-                message: "No token"
-            });
-        }
-
-        const decoded = jwt.verify(token, JWT_SECRET);
-
-        const user = await userModel
-            .findById(decoded.id)
-            .select("name email");
-
-        if (!user) {
-            return res.json({
-                success: false,
-                message: "User not found"
-            });
-        }
-
-        res.json({
-            success: true,
-            user
+      if (!token) {
+        return res.json({
+          success: false,
+          message:
+            "No token"
         });
+      }
+
+      const decoded =
+        jwt.verify(
+          token,
+          JWT_SECRET
+        );
+
+      const user =
+        await userModel.findById(
+          decoded.id
+        );
+
+      if (!user) {
+        return res.json({
+          success: false,
+          message:
+            "User not found"
+        });
+      }
+
+      res.json({
+        success: true,
+        user
+      });
 
     } catch (error) {
 
-        console.log(error);
+      console.log(
+        error
+      );
 
-        res.json({
-            success: false,
-            message: "Invalid token"
-        });
+      res.json({
+        success: false,
+        message:
+          "Invalid token"
+      });
     }
-};
+  };
+
 
 
 // GOOGLE LOGIN
-const google = async (req, res) => {
-
-    const { name, email } = req.body;
+const google =
+  async (req, res) => {
 
     try {
 
-        let user = await userModel.findOne({ email });
+      const {
+        credential
+      } = req.body;
 
-        if (user) {
-
-            const token = jwt.sign(
-                { id: user._id },
-                JWT_SECRET
-            );
-
-            const { password, ...rest } = user._doc;
-
-            return res
-                .status(200)
-                .cookie("access_token", token, {
-                    httpOnly: true
-                })
-                .json(rest);
-        }
-
-        // création nouvel utilisateur google
-        const generatedPassword = Math.random()
-            .toString(36)
-            .slice(-8);
-
-        const newUser = new userModel({
-            name:
-                name.toLowerCase().replace(/\s+/g, "") +
-                Math.floor(Math.random() * 10000),
-
-            email,
-            password: generatedPassword
-        });
-
-        await newUser.save();
-
-        const token = jwt.sign(
-            { id: newUser._id },
-            JWT_SECRET
+      const ticket =
+        await client.verifyIdToken(
+          {
+            idToken:
+              credential,
+            audience:
+              GOOGLE_CLIENT_ID
+          }
         );
 
-        const { password, ...rest } = newUser._doc;
+      const payload =
+        ticket.getPayload();
 
-        return res
-            .status(200)
-            .cookie("access_token", token, {
-                httpOnly: true
-            })
-            .json(rest);
+      const {
+        email,
+        name,
+        picture
+      } = payload;
+
+      let user =
+        await userModel.findOne(
+          {
+            email
+          }
+        );
+
+      // LOGIN
+      if (user) {
+
+        const token =
+          createToken(
+            user._id
+          );
+
+        return res.json({
+          success: true,
+          token,
+          user
+        });
+      }
+
+      // REGISTER
+      const generatedPassword =
+        Math.random()
+          .toString(36)
+          .slice(-8);
+
+      user =
+        await userModel.create(
+          {
+            name,
+            email,
+            password:
+              generatedPassword,
+
+            phone:
+              "",
+
+            // PHOTO GOOGLE
+            profileImage:
+              picture ||
+              ""
+          }
+        );
+
+      const token =
+        createToken(
+          user._id
+        );
+
+      res.json({
+        success: true,
+        token,
+        user
+      });
 
     } catch (error) {
 
-        console.error(
-            "Google Auth Error:",
-            error
-        );
+      console.log(
+        "Google error:",
+        error
+      );
 
-        res.status(500).json({
-            message: "Internal server error"
-        });
+      res.status(
+        500
+      ).json({
+        success: false,
+        message:
+          "Erreur Google login"
+      });
     }
-};
+  };
+
 
 
 export {
-    loginUser,
-    registerUser,
-    getProfile,
-    google
+  loginUser,
+  registerUser,
+  getProfile,
+  google
 };
