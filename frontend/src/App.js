@@ -43,7 +43,7 @@ import Message from './pages/message/Message';
 
 // export const backendUrl ='https://ecommerce2-4jwd.onrender.com'; 
 
- export const backendUrl = 'https://backend2-58eq.onrender.com'
+ // export const backendUrl = 'https://backend2-58eq.onrender.com'
 
 function App() {
 
