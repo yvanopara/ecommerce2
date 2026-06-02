@@ -1,4 +1,6 @@
+
 import './App.css';
+
 import {
   Route,
   Routes
@@ -12,41 +14,43 @@ import {
   HelmetProvider
 } from "react-helmet-async";
 
-import NavBar from './components/navBar/NavBar';
-import TopNavBar from './components/navBar/TopNavBar';
-
-import About from './pages/about/About';
-import Home from './components/home/Home';
-import Footer from './components/footer/Footer';
-import Collection from './pages/collection/Collection';
-import Search from './components/search/Search';
-import Product from './pages/product/Product';
-import Cart from './pages/cart/Cart';
-
 import {
   ToastContainer
 } from 'react-toastify';
 
+
+// COMPONENTS
+import NavBar from './components/navBar/NavBar';
+import TopNavBar from './components/navBar/TopNavBar';
+import Footer from './components/footer/Footer';
+import Search from './components/search/Search';
+import ScrollToTop from './components/scrollToTop/ScrollToTop';
+
+
+// HOME
+import Home from './components/home/Home';
+
+
+// PAGES
+import About from './pages/about/About';
+import Collection from './pages/collection/Collection';
+import Product from './pages/product/Product';
+import Cart from './pages/cart/Cart';
 import PlaceOrder from './pages/plcaeOrder/PlaceOrder';
 import Profil from './pages/profil/Profil';
 import Order from './pages/order/Order';
 import Login from './pages/login/Login';
 import Category from './pages/category/Category';
-import HomePageCategory from './pages/homePageCategory/HomePageCategory';
 import Video from './pages/video/Video';
 import Favorites from './pages/favorite/Favorites';
 import SubCategory from './pages/subCategory/SubCategory';
-import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import SocialMedia from './pages/socialMedia/SocialMedia';
 import Message from './pages/message/Message';
 
 
-//export const backendUrl = 'http://localhost:5000'
-// export const backendUrl = 'https://ecommerce2-4jwd.onrender.com';
-
-export const backendUrl ='https://api.k-mystore.com'
-
-// export const backendUrl = 'https://backend2-58eq.onrender.com'
+// BACKEND API
+export const backendUrl =
+  'https://api.k-mystore.com';
 
 
 function App() {
@@ -71,26 +75,49 @@ function App() {
 
           <Routes>
 
+            {/* HOME */}
             <Route
               path="/"
               element={<Home />}
             />
 
+            {/* ABOUT */}
             <Route
               path="/about"
               element={<About />}
             />
 
+            {/* PRODUCT SEO URL */}
             <Route
-              path="/product/:productId"
+              path="/product/:slug"
               element={<Product />}
             />
 
+            {/* COLLECTION */}
+            <Route
+              path="/collection"
+              element={<Collection />}
+            />
+
+            {/* CATEGORY */}
+            <Route
+              path="/collection/:category"
+              element={<Category />}
+            />
+
+            {/* SUB CATEGORY SEO */}
+            <Route
+              path="/category/:category/subcategory/:subcategory"
+              element={<SubCategory />}
+            />
+
+            {/* CART */}
             <Route
               path="/cart"
               element={<Cart />}
             />
 
+            {/* ORDER */}
             <Route
               path="/placeorder"
               element={<PlaceOrder />}
@@ -101,62 +128,40 @@ function App() {
               element={<Order />}
             />
 
+            {/* PROFILE */}
             <Route
               path="/profil"
               element={<Profil />}
             />
 
+            {/* ASSISTANCE */}
             <Route
               path="/assistance"
               element={<Message />}
             />
 
+            {/* VIDEO */}
             <Route
               path="/video"
               element={<Video />}
             />
 
+            {/* LOGIN */}
             <Route
               path="/login"
               element={<Login />}
             />
 
-            <Route
-              path="/collection"
-              element={<Collection />}
-            />
-
+            {/* FAVORITES */}
             <Route
               path="/favorites"
               element={<Favorites />}
             />
 
-            <Route
-              path="/collection"
-              element={
-                <HomePageCategory />
-              }
-            />
-
-            <Route
-              path="/collection/:category"
-              element={
-                <Category />
-              }
-            />
-
-            <Route
-              path="/category/:category/subcategory/:subcategory"
-              element={
-                <SubCategory />
-              }
-            />
-
+            {/* SOCIAL */}
             <Route
               path="/nos-sites"
-              element={
-                <SocialMedia />
-              }
+              element={<SocialMedia />}
             />
 
           </Routes>
@@ -174,4 +179,3 @@ function App() {
 }
 
 export default App;
-
