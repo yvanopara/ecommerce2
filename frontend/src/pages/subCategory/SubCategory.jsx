@@ -88,7 +88,7 @@ export default function SubCategory() {
           })
         ) : (
           <p style={{ textAlign: 'center' }}>
-            Aucun produit trouvé dans cette sous-catégorie.
+            Chargement des Produits Patientez SVP!
           </p>
         )}
       </div>
