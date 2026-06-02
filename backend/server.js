@@ -107,7 +107,7 @@ io.on('connection', (socket) => {
     console.log('❌ Socket déconnecté:', socket.id);
   });
 });
-  
+   
 
 // 🚏 Routes API
 app.use('/api/product', productRouter);

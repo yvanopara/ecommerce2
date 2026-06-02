@@ -1,4 +1,3 @@
-
 import './App.css';
 import {
   Route,
@@ -8,6 +7,10 @@ import {
 import {
   GoogleOAuthProvider
 } from "@react-oauth/google";
+
+import {
+  HelmetProvider
+} from "react-helmet-async";
 
 import NavBar from './components/navBar/NavBar';
 import TopNavBar from './components/navBar/TopNavBar';
@@ -38,130 +41,135 @@ import SocialMedia from './pages/socialMedia/SocialMedia';
 import Message from './pages/message/Message';
 
 
-// export const backendUrl = 'http://localhost:5000'
+//export const backendUrl = 'http://localhost:5000'
+// export const backendUrl = 'https://ecommerce2-4jwd.onrender.com';
 
-
- export const backendUrl ='https://ecommerce2-4jwd.onrender.com'; 
+export const backendUrl ='https://api.k-mystore.com'
 
 // export const backendUrl = 'https://backend2-58eq.onrender.com'
+
 
 function App() {
 
   return (
 
-    <GoogleOAuthProvider
-      clientId="242570790563-no0fguencfhn43euu64bsgetcepng53k.apps.googleusercontent.com"
-    >
+    <HelmetProvider>
 
-      <div className="App">
+      <GoogleOAuthProvider
+        clientId="242570790563-no0fguencfhn43euu64bsgetcepng53k.apps.googleusercontent.com"
+      >
 
-        <ToastContainer />
+        <div className="App">
 
-        <TopNavBar />
+          <ToastContainer />
 
-        <ScrollToTop />
+          <TopNavBar />
 
-        <Search />
+          <ScrollToTop />
 
-        <Routes>
+          <Search />
 
-          <Route
-            path="/"
-            element={<Home />}
-          />
+          <Routes>
 
-          <Route
-            path="/about"
-            element={<About />}
-          />
+            <Route
+              path="/"
+              element={<Home />}
+            />
 
-          <Route
-            path="/product/:productId"
-            element={<Product />}
-          />
+            <Route
+              path="/about"
+              element={<About />}
+            />
 
-          <Route
-            path="/cart"
-            element={<Cart />}
-          />
+            <Route
+              path="/product/:productId"
+              element={<Product />}
+            />
 
-          <Route
-            path="/placeorder"
-            element={<PlaceOrder />}
-          />
+            <Route
+              path="/cart"
+              element={<Cart />}
+            />
 
-          <Route
-            path="/orders"
-            element={<Order />}
-          />
+            <Route
+              path="/placeorder"
+              element={<PlaceOrder />}
+            />
 
-          <Route
-            path="/profil"
-            element={<Profil />}
-          />
+            <Route
+              path="/orders"
+              element={<Order />}
+            />
 
-          <Route
-            path="/assistance"
-            element={<Message />}
-          />
+            <Route
+              path="/profil"
+              element={<Profil />}
+            />
 
-          <Route
-            path="/video"
-            element={<Video />}
-          />
+            <Route
+              path="/assistance"
+              element={<Message />}
+            />
 
-          <Route
-            path="/login"
-            element={<Login />}
-          />
+            <Route
+              path="/video"
+              element={<Video />}
+            />
 
-          <Route
-            path="/collection"
-            element={<Collection />}
-          />
+            <Route
+              path="/login"
+              element={<Login />}
+            />
 
-          <Route
-            path="/favorites"
-            element={<Favorites />}
-          />
+            <Route
+              path="/collection"
+              element={<Collection />}
+            />
 
-          <Route
-            path="/collection"
-            element={
-              <HomePageCategory />
-            }
-          />
+            <Route
+              path="/favorites"
+              element={<Favorites />}
+            />
 
-          <Route
-            path="/collection/:category"
-            element={
-              <Category />
-            }
-          />
+            <Route
+              path="/collection"
+              element={
+                <HomePageCategory />
+              }
+            />
 
-          <Route
-            path="/category/:category/subcategory/:subcategory"
-            element={
-              <SubCategory />
-            }
-          />
+            <Route
+              path="/collection/:category"
+              element={
+                <Category />
+              }
+            />
 
-          <Route
-            path="/nos-sites"
-            element={
-              <SocialMedia />
-            }
-          />
+            <Route
+              path="/category/:category/subcategory/:subcategory"
+              element={
+                <SubCategory />
+              }
+            />
 
-        </Routes>
+            <Route
+              path="/nos-sites"
+              element={
+                <SocialMedia />
+              }
+            />
 
-        <Footer />
+          </Routes>
 
-        <NavBar />
+          <Footer />
 
-      </div>
+          <NavBar />
 
-    </GoogleOAuthProvider>
+        </div>
+
+      </GoogleOAuthProvider>
+
+    </HelmetProvider>
   );
 }
 

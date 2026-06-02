@@ -1,29 +1,76 @@
-import React, { useContext } from 'react'
-import { ShopContext } from '../../context/shopContext'
-import './productItems.css'
-import { Link } from 'react-router-dom'
 
-export default function ProductItems({ id, name, image, price }) {
-    const { currency } = useContext(ShopContext)
+import React, {
+  useContext
+} from 'react';
 
-    // 🧠 Gérer les 2 formats possibles de image : tableau ou string
-    const imageUrl = Array.isArray(image) ? image[0] : image;
+import {
+  ShopContext
+} from '../../context/shopContext';
 
-    if (!id || !imageUrl) return null; // protection anti-crash
+import './productItems.css';
 
-    return (
-        <Link to={`/product/${id}`} className='product-item'>
-            <div className='image-wrapper'>
-                <img 
-                    src={imageUrl} 
-                    alt={name}
-                    loading='lazy'
-                />
-            </div>
-            <div className='product-info'>
-                <p className='product-name'>{name}</p>
-                <p className='product-price'>{price} {currency}</p>
-            </div>
-        </Link>
+import {
+  Link
+} from 'react-router-dom';
+
+
+export default function ProductItems({
+  id,
+  slug,
+  name,
+  image,
+  price
+}) {
+
+  const {
+    currency
+  } = useContext(
+    ShopContext
+  );
+
+  // image tableau/string
+  const imageUrl =
+    Array.isArray(
+      image
     )
+      ? image[0]
+      : image;
+
+  if (
+    !imageUrl
+  ) return null;
+
+
+  return (
+
+    <Link
+      to={`/product/${slug || id}`}
+      className='product-item'
+    >
+
+      <div className='image-wrapper'>
+
+        <img
+          src={imageUrl}
+          alt={name}
+          loading='lazy'
+        />
+
+      </div>
+
+      <div className='product-info'>
+
+        <p className='product-name'>
+          {name}
+        </p>
+
+        <p className='product-price'>
+          {price} {currency}
+        </p>
+
+      </div>
+
+    </Link>
+  );
 }
+
