@@ -1,4 +1,4 @@
-
+<!-- 
 // SITEMAP DYNAMIQUE SEO
 const sitemapProducts =
   async (req, res) => {
@@ -167,4 +167,4 @@ ${productUrls}
           "Erreur sitemap"
         );
     }
-  };
+  }; -->
