@@ -1,4 +1,9 @@
+// ==============================
 // SITEMAP DYNAMIQUE SEO
+// ==============================
+
+import productModel from "../models/productModel.js";
+
 const sitemapProducts = async (req, res) => {
 
   try {
@@ -10,9 +15,9 @@ const sitemapProducts = async (req, res) => {
       "https://k-mystore.com";
 
 
-    // =====================
+    // ==============================
     // PAGES FIXES
-    // =====================
+    // ==============================
     const staticPages =
       [
         "",
@@ -21,29 +26,25 @@ const sitemapProducts = async (req, res) => {
         "video",
         "nos-sites"
       ]
-        .map(
-          (page) => `
+        .map((page) => `
 <url>
   <loc>${baseUrl}/${page}</loc>
   <changefreq>daily</changefreq>
   <priority>0.8</priority>
-</url>`
-        )
+</url>`)
         .join("");
 
 
-    // =====================
-    // CATEGORIES UNIQUES
-    // =====================
+    // ==============================
+    // CATÉGORIES + SOUS-CATÉGORIES
+    // ==============================
     const categoryUrls =
       [
         ...new Set(
           products.map((p) =>
             JSON.stringify({
-              category:
-                p.category,
-              subCategory:
-                p.subCategory
+              category: p.category,
+              subCategory: p.subCategory
             })
           )
         )
@@ -59,6 +60,7 @@ const sitemapProducts = async (req, res) => {
             encodeURIComponent(
               category
                 ?.toLowerCase()
+                .trim()
                 .replace(/\s+/g, "-")
             );
 
@@ -66,6 +68,7 @@ const sitemapProducts = async (req, res) => {
             encodeURIComponent(
               subCategory
                 ?.toLowerCase()
+                .trim()
                 .replace(/\s+/g, "-")
             );
 
@@ -79,30 +82,28 @@ const sitemapProducts = async (req, res) => {
         .join("");
 
 
-    // =====================
+    // ==============================
     // PRODUITS
-    // =====================
+    // ==============================
     const productUrls =
       products
         .filter(
-          (p) =>
-            p.slug
+          (product) =>
+            product.slug
         )
-        .map(
-          (product) => `
+        .map((product) => `
 <url>
   <loc>${baseUrl}/product/${encodeURIComponent(product.slug)}</loc>
   <lastmod>${new Date(product.updatedAt).toISOString()}</lastmod>
   <changefreq>weekly</changefreq>
   <priority>1.0</priority>
-</url>`
-        )
+</url>`)
         .join("");
 
 
-    // =====================
+    // ==============================
     // XML FINAL
-    // =====================
+    // ==============================
     const xml =
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -112,19 +113,27 @@ ${productUrls}
 </urlset>`;
 
 
-    res.header(
+    // ==============================
+    // RESPONSE XML
+    // ==============================
+    res.set(
       "Content-Type",
       "application/xml"
     );
 
-    res.send(xml);
+    res.status(200).send(xml);
 
   } catch (error) {
 
-    console.log(error);
+    console.error(
+      "Erreur sitemap :",
+      error
+    );
 
     res
       .status(500)
       .send("Erreur sitemap");
   }
 };
+
+export default sitemapProducts;
