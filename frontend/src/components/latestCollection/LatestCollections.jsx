@@ -31,7 +31,7 @@ export default function LatestCollections() {
             <div className="product-item-wrapper" key={item._id}>
               <ProductItems
                 name={item.name}
-                id={item._id}
+                slug={item.slug}
                 image={item.image}
                 price={price}
                 className="centered-product-item"

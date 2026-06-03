@@ -52,15 +52,10 @@ export default function HomePage() {
                 const price = Array.isArray(item.sizes) && item.sizes.length > 0
                   ? item.sizes[0].price
                   : item.price;
-
+console.log(products[0]);
                 return (
                   <div className="product-item-wrapper" key={item._id}>
-                    <ProductItems
-                      name={item.name}
-                      id={item._id}
-                      image={item.image}
-                      price={price}
-                    />
+                   <ProductItems slug={item.slug} name={item.name} image={item.image} price={price} />
                   </div>
                 );
               })}

@@ -46,35 +46,67 @@ export default function TopNavBar() {
       {ouvert && (
         <div>
           <Sidebar setOuvert={setOuvert} />
- 
+
         </div>
-        
+
       )}
 
+
       <ul className='navbar-menu'>
-        <Link to='/'><a onClick={() => setMenu('home')} className={menu === 'home' ? 'active' : ''}>HOME</a></Link>
-        <Link to='/collection'><a onClick={() => setMenu('collection')} className={menu === 'collection' ? 'active' : ''}>COLLECTIONS</a></Link>
-        <Link to='/about'><a onClick={() => setMenu('about')} className={menu === 'about' ? 'active' : ''}>ABOUT</a></Link>
-        <Link to='/contact'><a onClick={() => setMenu('contact')} className={menu === 'contact' ? 'active' : ''}>CONTACT</a></Link>
+
+        <Link
+          to='/'
+          onClick={() => setMenu('home')}
+          className={menu === 'home' ? 'active' : ''}
+        >
+          HOME
+        </Link>
+
+        <Link
+          to='/collection'
+          onClick={() => setMenu('collection')}
+          className={menu === 'collection' ? 'active' : ''}
+        >
+          COLLECTIONS
+        </Link>
+
+        <Link
+          to='/about'
+          onClick={() => setMenu('about')}
+          className={menu === 'about' ? 'active' : ''}
+        >
+          ABOUT
+        </Link>
+
+        <Link
+          to='/contact'
+          onClick={() => setMenu('contact')}
+          className={menu === 'contact' ? 'active' : ''}
+        >
+          CONTACT
+        </Link>
+
       </ul>
+
+
 
       <div className='right-div'>
         <img className='search-image' onClick={() => { setShowSearch(true); navigate('/collection') }} src={assets.search_icon} alt='' />
         <div className="profile-component">
-          <img onClick={()=>token? null : navigate('/login')} className="profile-icon" src={assets.profile_icon} alt="" />
+          <img onClick={() => token ? null : navigate('/login')} className="profile-icon" src={assets.profile_icon} alt="" />
           {/* Dropdown Menu */}
           {
-            token && 
+            token &&
             <div className="dropdown-menu">
-            <p onClick={() => navigate('/profil')}>Mon profil</p>
-            <hr />
-            <p onClick={() => navigate('/orders')}>Mes commandes</p>
-            <hr />
-            <p onClick={logOut}>Déconnexion</p>
-          </div>
+              <p onClick={() => navigate('/profil')}>Mon profil</p>
+              <hr />
+              <p onClick={() => navigate('/orders')}>Mes commandes</p>
+              <hr />
+              <p onClick={logOut}>Déconnexion</p>
+            </div>
           }
-          
-          
+
+
         </div>
 
         <Link className='cart-link' to='/cart'>

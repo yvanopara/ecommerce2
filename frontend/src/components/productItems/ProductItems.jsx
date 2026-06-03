@@ -44,7 +44,7 @@ export default function ProductItems({
   return (
 
     <Link
-      to={`/product/${slug || id}`}
+      to={`/product/${slug}`}
       className='product-item'
     >
 

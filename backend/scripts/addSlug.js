@@ -1,74 +1,85 @@
-
 import mongoose from "mongoose";
-import slugify from "slugify";
-
 import productModel from "../models/productModel.js";
+import { connectDB } from "../config/db.js";
 
+function createSlug(name) {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 
-// connexion mongo (comme db.js)
-await mongoose.connect(
-  "mongodb+srv://yvanopara1845:0000000000@cluster0.5wkfb.mongodb.net/project0?retryWrites=true&w=majority&appName=Cluster0"
-);
+const addSlug = async () => {
 
-const addSlug =
-  async () => {
+  try {
 
-    try {
+    await connectDB();
 
-      const products =
-        await productModel.find(
-          {}
-        );
+    const products =
+      await productModel.find({});
 
-      console.log(
-        "PRODUITS TROUVÉS :",
-        products.length
-      );
+    console.log(
+      "PRODUITS TROUVÉS :",
+      products.length
+    );
 
-      for (
-        const product of products
-      ) {
+    for (const product of products) {
 
-        if (
-          !product.slug
+      // seulement ceux sans slug
+      if (!product.slug) {
+
+        let baseSlug =
+          createSlug(product.name);
+
+        let slug =
+          baseSlug;
+
+        let count = 1;
+
+        // éviter doublons
+        while (
+          await productModel.findOne({
+            slug
+          })
         ) {
 
-          product.slug =
-            slugify(
-              product.name,
-              {
-                lower: true,
-                strict: true
-              }
-            );
+          slug =
+            `${baseSlug}-${count}`;
 
-          await product.save();
-
-          console.log(
-            "SLUG AJOUTÉ :",
-            product.slug
-          );
+          count++;
         }
+
+        // update direct Mongo
+        await productModel.updateOne(
+          { _id: product._id },
+          {
+            $set: {
+              slug
+            }
+          }
+        );
+
+        console.log(
+          "SLUG AJOUTÉ :",
+          product.name,
+          "=>",
+          slug
+        );
       }
-
-      console.log(
-        "FINI ✅"
-      );
-
-      process.exit();
-
-    } catch (
-      error
-    ) {
-
-      console.log(
-        error
-      );
-
-      process.exit(
-        1
-      );
     }
-  };
+
+    console.log("FINI ✅");
+
+    process.exit();
+
+  } catch (error) {
+
+    console.log(error);
+
+    process.exit(1);
+  }
+};
 
 addSlug();

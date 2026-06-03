@@ -49,8 +49,9 @@ import Message from './pages/message/Message';
 
 
 // BACKEND API
-export const backendUrl =
-  'https://api.k-mystore.com';
+export const backendUrl = 'https://api.k-mystore.com';
+//  export const backendUrl = 'http://localhost:5000'
+// export const backendUrl = 'https://ecommerce2-4jwd.onrender.com';
 
 
 function App() {

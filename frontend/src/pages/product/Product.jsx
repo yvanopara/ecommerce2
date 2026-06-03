@@ -7,30 +7,12 @@ import React, {
 } from 'react';
 
 import './product.css';
-
-import {
-    useParams
-} from 'react-router-dom';
-
-import {
-    ShopContext
-} from '../../context/shopContext';
-
+import { useParams } from 'react-router-dom';
+import { ShopContext } from '../../context/shopContext';
 import RelatedProduct from '../../components/relatedProducts/RelatedProduct';
-
-import {
-    FaWhatsapp,
-    FaHeart
-} from 'react-icons/fa';
-
-import {
-    ShoppingCart
-} from 'lucide-react';
-
-import {
-    Helmet
-} from 'react-helmet-async';
-
+import { FaWhatsapp, FaHeart } from 'react-icons/fa';
+import { ShoppingCart } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 export default function Product() {
 
@@ -44,255 +26,154 @@ export default function Product() {
         favorites,
         addToFavorites,
         removeFromFavorites,
-    } = useContext(
-        ShopContext
-    );
+    } = useContext(ShopContext);
 
-    const [
-        productData,
-        setProductData
-    ] = useState(null);
+    const [productData, setProductData] = useState(null);
+    const [image, setImage] = useState('');
+    const [size, setSize] = useState(null);
 
-    const [
-        image,
-        setImage
-    ] = useState('');
+    const [startX, setStartX] = useState(0);
+    const [currentX, setCurrentX] = useState(0);
+    const [isSwiping, setIsSwiping] = useState(false);
 
-    const [
-        size,
-        setSize
-    ] = useState(null);
-
-    const [
-        startX,
-        setStartX
-    ] = useState(0);
-
-    const [
-        currentX,
-        setCurrentX
-    ] = useState(0);
-
-    const [
-        isSwiping,
-        setIsSwiping
-    ] = useState(false);
-
-    const imageTrackRef =
-        useRef(null);
-
+    const imageTrackRef = useRef(null);
 
     useEffect(() => {
 
-        if (
-            !slug ||
-            products.length === 0
-        ) return;
+        if (!slug || products.length === 0) return;
 
-        const item =
-            products.find(
-                (item) =>
-                    item.slug === slug
-            );
-
+     const item = products.find(
+    (item) =>
+        item.slug === slug
+);
         if (item) {
 
-            setProductData(
-                item
-            );
+            setProductData(item);
 
             setImage(
-                Array.isArray(
-                    item.image
-                )
+                Array.isArray(item.image)
                     ? item.image[0]
                     : item.image
             );
 
             setSize(null);
-
-            setIsSwiping(
-                false
-            );
+            setIsSwiping(false);
 
             window.scrollTo({
                 top: 0,
-                behavior:
-                    'smooth'
+                behavior: 'smooth'
             });
         }
 
-    }, [
-        products,
-        slug
-    ]);
+    }, [products, slug]);
 
 
-    const handleTouchStart =
-        (e) => {
+    const handleTouchStart = (e) => {
 
-            const clientX =
-                e.touches
-                    ? e.touches[0]
-                        .clientX
-                    : e.clientX;
+        const clientX =
+            e.touches
+                ? e.touches[0].clientX
+                : e.clientX;
 
-            setStartX(
-                clientX
-            );
+        setStartX(clientX);
+        setCurrentX(clientX);
+        setIsSwiping(true);
+    };
 
-            setCurrentX(
-                clientX
-            );
+    const handleTouchMove = (e) => {
 
-            setIsSwiping(
-                true
-            );
-        };
+        if (!isSwiping) return;
 
+        const clientX =
+            e.touches
+                ? e.touches[0].clientX
+                : e.clientX;
 
-    const handleTouchMove =
-        (e) => {
+        setCurrentX(clientX);
+    };
 
-            if (
-                !isSwiping
-            ) return;
+    const handleTouchEnd = () => {
 
-            const clientX =
-                e.touches
-                    ? e.touches[0]
-                        .clientX
-                    : e.clientX;
+        if (!isSwiping) return;
 
-            setCurrentX(
-                clientX
-            );
-        };
+        const diff =
+            startX - currentX;
 
+        const threshold =
+            window.innerWidth / 4;
 
-    const handleTouchEnd =
-        () => {
+        if (diff > threshold) {
 
-            if (
-                !isSwiping
-            ) return;
+            goToNextImage();
 
-            const diff =
-                startX -
-                currentX;
+        } else if (
+            diff < -threshold
+        ) {
 
-            const threshold =
-                window.innerWidth /
-                4;
+            goToPrevImage();
+        }
 
-            if (
-                diff >
-                threshold
-            ) {
+        setIsSwiping(false);
+    };
 
-                goToNextImage();
+    const goToNextImage = () => {
 
-            } else if (
-                diff <
-                -threshold
-            ) {
+        const currentIndex =
+            productData.image.indexOf(image);
 
-                goToPrevImage();
-            }
+        const nextIndex =
+            (currentIndex + 1)
+            % productData.image.length;
 
-            setIsSwiping(
-                false
-            );
-        };
+        setImage(
+            productData.image[nextIndex]
+        );
+    };
 
+    const goToPrevImage = () => {
 
-    const goToNextImage =
-        () => {
+        const currentIndex =
+            productData.image.indexOf(image);
 
-            const currentIndex =
-                productData.image.indexOf(
-                    image
-                );
+        const prevIndex =
+            (
+                currentIndex - 1
+                + productData.image.length
+            )
+            % productData.image.length;
 
-            const nextIndex =
-                (
-                    currentIndex +
-                    1
-                ) %
-                productData.image
-                    .length;
+        setImage(
+            productData.image[prevIndex]
+        );
+    };
 
-            setImage(
-                productData
-                    .image[
-                    nextIndex
-                ]
-            );
-        };
+    const calculateTransform = () => {
 
+        if (
+            !productData ||
+            !productData.image
+        ) {
+            return 'translateX(0%)';
+        }
 
-    const goToPrevImage =
-        () => {
+        if (!isSwiping) {
 
-            const currentIndex =
-                productData.image.indexOf(
-                    image
-                );
+            return `translateX(-${productData.image.indexOf(image) * 100}%)`;
+        }
 
-            const prevIndex =
-                (
-                    currentIndex -
-                    1 +
-                    productData.image
-                        .length
-                ) %
-                productData.image
-                    .length;
+        const diff =
+            currentX - startX;
 
-            setImage(
-                productData
-                    .image[
-                    prevIndex
-                ]
-            );
-        };
-
-
-    const calculateTransform =
-        () => {
-
-            if (
-                !productData ||
-                !productData.image
-            ) {
-
-                return 'translateX(0%)';
-            }
-
-            if (
-                !isSwiping
-            ) {
-
-                return `translateX(-${productData.image.indexOf(image) * 100}%)`;
-            }
-
-            const diff =
-                currentX -
-                startX;
-
-            return `translateX(calc(-${productData.image.indexOf(image) * 100}% + ${diff}px))`;
-        };
-
+        return `translateX(calc(-${productData.image.indexOf(image) * 100}% + ${diff}px))`;
+    };
 
     if (!productData) {
 
         return (
             <div
                 style={{
-                    padding:
-                        '4rem',
-                    textAlign:
-                        'center'
+                    padding: '4rem',
+                    textAlign: 'center'
                 }}
             >
                 Chargement...
@@ -301,31 +182,27 @@ export default function Product() {
     }
 
 
-    // FAVORIS = _id
+    // FAVORIS = _id Mongo (important)
     const isFavorite =
         favorites.includes(
             productData._id
         );
 
-    const toggleFavorite =
-        () => {
+    const toggleFavorite = () => {
 
-            if (
-                isFavorite
-            ) {
+        if (isFavorite) {
 
-                removeFromFavorites(
-                    productData._id
-                );
+            removeFromFavorites(
+                productData._id
+            );
 
-            } else {
+        } else {
 
-                addToFavorites(
-                    productData._id
-                );
-            }
-        };
-
+            addToFavorites(
+                productData._id
+            );
+        }
+    };
 
     return (
         <>
@@ -333,18 +210,12 @@ export default function Product() {
             <Helmet>
 
                 <title>
-                    {
-                        productData.name
-                    } | K-Mystore
+                    {productData.name} | K-Mystore
                 </title>
 
                 <meta
                     name="description"
-                    content={`
-Découvrez ${productData.name} sur K-Mystore.
-${productData.description?.slice(0, 120)}
-Livraison discrète et rapide au Cameroun.
-`}
+                    content={`Découvrez ${productData.name} sur K-Mystore. ${productData.description?.slice(0, 120)} Livraison discrète et rapide au Cameroun.`}
                 />
 
                 <meta
@@ -390,11 +261,215 @@ K-Mystore
 
             <div className="product-container">
 
-                {/* le reste de ton JSX actuel reste identique */}
+                <div className="product-main">
+
+                    <div className="product-images">
+
+                        <div className="thumbnails">
+
+                            {productData.image.map((item, index) => (
+
+                                <img
+                                    src={item}
+                                    onClick={() => setImage(item)}
+                                    key={index}
+                                    className={`thumbnail ${item === image ? 'active-thumbnail' : ''}`}
+                                    alt={`Miniature ${index + 1}`}
+                                />
+
+                            ))}
+
+                        </div>
+
+                        <div
+                            className="main-image-container"
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                            onMouseDown={handleTouchStart}
+                            onMouseMove={handleTouchMove}
+                            onMouseUp={handleTouchEnd}
+                            onMouseLeave={handleTouchEnd}
+                        >
+
+                            <div
+                                ref={imageTrackRef}
+                                className={`image-track ${isSwiping ? 'swiping' : ''}`}
+                                style={{
+                                    transform:
+                                        calculateTransform()
+                                }}
+                            >
+
+                                {productData.image.map((img, index) => (
+
+                                    <div
+                                        key={index}
+                                        className="image-slide"
+                                    >
+
+                                        <img
+                                            src={img}
+                                            className={`main-image ${image === img ? 'active' : ''}`}
+                                            alt={`Produit ${index + 1}`}
+                                            draggable="false"
+                                        />
+
+                                    </div>
+
+                                ))}
+
+                            </div>
+
+                            <button
+                                className={`favorite-icon ${isFavorite ? 'favorited' : ''}`}
+                                onClick={toggleFavorite}
+                            >
+                                <FaHeart />
+                            </button>
+
+                            <div className="image-nav-dots">
+
+                                {productData.image.map((_, index) => (
+
+                                    <div
+                                        key={index}
+                                        className={`nav-dot ${image === productData.image[index] ? 'active-dot' : ''}`}
+                                        onClick={() =>
+                                            setImage(productData.image[index])
+                                        }
+                                    />
+
+                                ))}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className="product-details">
+
+                        <h1 className="product-name2">
+                            {productData.name}
+                        </h1>
+
+                        <div className="product-price">
+
+                            {productData.sizes?.length > 0 ? (
+
+                                size ? (
+                                    <span>
+                                        {size.price} {currency}
+                                    </span>
+                                ) : (
+                                    <span>
+                                        À partir de {productData.sizes[0].price} {currency}
+                                    </span>
+                                )
+
+                            ) : (
+
+                                <span>
+                                    {productData.price} {currency}
+                                </span>
+                            )}
+
+                        </div>
+
+                        <p className="product-descriptionn">
+                            {productData.description}
+                        </p>
+
+                        {productData.sizes?.length > 0 && (
+
+                            <div className="product-sizes">
+
+                                <p>
+                                    Choisissez la taille :
+                                </p>
+
+                                <div className="size-options">
+
+                                    {productData.sizes.map((item, index) => (
+
+                                        <button
+                                            onClick={() => setSize(item)}
+                                            className={`size-button ${size?.size === item.size ? 'active-size' : ''}`}
+                                            key={index}
+                                        >
+                                            {item.size}
+                                        </button>
+
+                                    ))}
+
+                                </div>
+
+                            </div>
+                        )}
+
+                        <div className="action-buttons">
+
+                            <button
+                                onClick={() =>
+                                    addToCart(
+                                        productData._id,
+                                        size?.size || 'unique'
+                                    )
+                                }
+                                className="add-to-cart"
+                                disabled={
+                                    productData.sizes?.length > 0
+                                    && !size
+                                }
+                            >
+
+                                {productData.sizes?.length > 0 && !size
+                                    ? 'Choisissez une taille'
+                                    : <>
+                                        <ShoppingCart
+                                            size={20}
+                                            strokeWidth={2}
+                                            style={{
+                                                marginRight: '8px'
+                                            }}
+                                        />
+                                        Ajouter au panier
+                                    </>
+                                }
+
+                            </button>
+
+                            <a
+                                className="whatsapp-button"
+                                href={`https://wa.me/237693800251?text=${encodeURIComponent(
+                                    `Bonjour, je suis intéressé par *${productData.name}* à *${size?.price || productData.price} ${currency}*.
+Voici le lien du produit : ${window.location.href}
+Pouvez-vous me donner plus d'infos ?`
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+
+                                <FaWhatsapp
+                                    className="whatsapp-icon"
+                                />
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <RelatedProduct
+                    category={productData.category}
+                    subCategory={productData.subCategory}
+                />
 
             </div>
 
         </>
     );
 }
-

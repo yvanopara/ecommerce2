@@ -142,12 +142,13 @@ console.log("🔍 search =", search);
 
   return (
     <div className="product-item-wrapper" key={index}>
-      <ProductItems
-        name={item.name}
-        id={item._id}
-        price={price}
-        image={item.image}
-      />
+     <ProductItems 
+     slug={item.slug}
+      name={item.name} 
+      price={price} 
+      image={item.image
+        
+      } />
     </div>
   );
 })}

@@ -38,12 +38,12 @@ export default function Category() {
               Array.isArray(item.sizes) && item.sizes.length > 0
                 ? item.sizes[0].price
                 : item.price;
-
+ 
             return (
               <div className="product-item-wrapper" key={item._id}>
                 <ProductItems
                   name={item.name}
-                  id={item._id}
+                  slug={item.slug}
                   image={item.image}
                   price={price}
                   className="centered-product-item"

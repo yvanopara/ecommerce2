@@ -36,7 +36,7 @@ export default function RelatedProduct({ category, subCategory }) {
           return (
             <div className="related-product-card" key={index}>
               <ProductItems
-                id={item._id}
+                slug={item.slug}
                 name={item.name}
                 image={item.image}
                 price={`${displayPrice} ${currency}`}

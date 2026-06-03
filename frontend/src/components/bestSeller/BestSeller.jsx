@@ -31,7 +31,7 @@ export default function BestSeller() {
           return (
             <div className="product-item-wrapper" key={item._id}>
               <ProductItems
-                id={item._id}
+                slug={item.slug}
                 name={item.name}
                 image={item.image}
                 price={price}

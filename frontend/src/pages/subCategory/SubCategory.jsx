@@ -69,6 +69,13 @@ export default function SubCategory() {
       <div className="products-container">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((item) => {
+
+          console.log(
+    "SUBCATEGORY PRODUCT",
+    item.name,
+    item.slug
+  );
+  
             const price =
               Array.isArray(item.sizes) && item.sizes.length > 0
                 ? item.sizes[0].price
@@ -76,13 +83,13 @@ export default function SubCategory() {
 
             return (
               <div className="product-item-wrapper" key={item._id}>
-                <ProductItems
-                  name={item.name}
-                  id={item._id}
+                <ProductItems 
+                slug={item.slug}
+                 name={item.name}
                   image={item.image}
-                  price={price}
-                  className="centered-product-item"
-                />
+                   price={price}
+                    className="centered-product-item"
+                     />
               </div>
             );
           })
