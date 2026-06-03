@@ -20,6 +20,7 @@ import twilioRouter from './routes/twilioRoute.js';
 import notifyRoute from './routes/notifyRoute.js';
 import adminRouter from './routes/adminRoute.js';
 import messageRouter from './routes/messageRoute.js';
+import sitemapProducts from './controlers/sitemapController.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -120,6 +121,8 @@ app.use('/api/user/favorites', favoritesRoutes);
 app.use('/api/twilio', twilioRouter);
 app.use('/api/video', routerVideo);
 app.use(notifyRoute);
+app.get('/sitemap.xml', sitemapProducts);
+
 
 
 // 🏥 Health Check

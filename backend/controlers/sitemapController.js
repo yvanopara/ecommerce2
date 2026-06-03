@@ -1,0 +1,139 @@
+import productModel from "../models/productModel.js";
+
+// ==================================
+// SITEMAP DYNAMIQUE SEO
+// ==================================
+const sitemapProducts = async (req, res) => {
+
+  try {
+
+    const products =
+      await productModel.find({});
+
+    const baseUrl =
+      "https://k-mystore.com";
+
+
+    // ==================================
+    // PAGES FIXES
+    // ==================================
+    const staticPages =
+      [
+        "",
+        "collection",
+        "about",
+        "video",
+        "nos-sites"
+      ]
+        .map((page) => `
+<url>
+  <loc>${baseUrl}/${page}</loc>
+  <changefreq>daily</changefreq>
+  <priority>0.8</priority>
+</url>`)
+        .join("");
+
+
+    // ==================================
+    // CATÉGORIES + SOUS-CATÉGORIES
+    // ==================================
+    const categoryUrls =
+      [
+        ...new Set(
+          products.map((p) =>
+            JSON.stringify({
+              category: p.category,
+              subCategory: p.subCategory
+            })
+          )
+        )
+      ]
+        .map((item) => {
+
+          const {
+            category,
+            subCategory
+          } = JSON.parse(item);
+
+          const safeCategory =
+            encodeURIComponent(
+              category
+                ?.toLowerCase()
+                .trim()
+                .replace(/\s+/g, "-")
+            );
+
+          const safeSubCategory =
+            encodeURIComponent(
+              subCategory
+                ?.toLowerCase()
+                .trim()
+                .replace(/\s+/g, "-")
+            );
+
+          return `
+<url>
+  <loc>${baseUrl}/category/${safeCategory}/subcategory/${safeSubCategory}</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>`;
+        })
+        .join("");
+
+
+    // ==================================
+    // PRODUITS
+    // ==================================
+    const productUrls =
+      products
+        .filter(
+          (product) =>
+            product.slug
+        )
+        .map((product) => `
+<url>
+  <loc>${baseUrl}/product/${encodeURIComponent(product.slug)}</loc>
+  <lastmod>${new Date(product.updatedAt).toISOString()}</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>1.0</priority>
+</url>`)
+        .join("");
+
+
+    // ==================================
+    // XML FINAL (SANS BUG)
+    // ==================================
+    const xml =
+      '<?xml version="1.0" encoding="UTF-8"?>' +
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
+      staticPages +
+      categoryUrls +
+      productUrls +
+      '</urlset>';
+
+
+    // ==================================
+    // RESPONSE XML
+    // ==================================
+    res.set(
+      "Content-Type",
+      "application/xml"
+    );
+
+    res.status(200).send(xml);
+
+  } catch (error) {
+
+    console.error(
+      "Erreur sitemap :",
+      error
+    );
+
+    res
+      .status(500)
+      .send("Erreur sitemap");
+  }
+};
+
+export default sitemapProducts;
+
