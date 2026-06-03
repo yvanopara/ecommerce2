@@ -1,9 +1,7 @@
-// ==============================
-// SITEMAP DYNAMIQUE SEO
-// ==============================
-
 import productModel from "../models/productModel.js";
-
+// ==================================
+// SITEMAP DYNAMIQUE SEO
+// ==================================
 const sitemapProducts = async (req, res) => {
 
   try {
@@ -15,9 +13,9 @@ const sitemapProducts = async (req, res) => {
       "https://k-mystore.com";
 
 
-    // ==============================
+    // ==================================
     // PAGES FIXES
-    // ==============================
+    // ==================================
     const staticPages =
       [
         "",
@@ -35,9 +33,9 @@ const sitemapProducts = async (req, res) => {
         .join("");
 
 
-    // ==============================
+    // ==================================
     // CATÉGORIES + SOUS-CATÉGORIES
-    // ==============================
+    // ==================================
     const categoryUrls =
       [
         ...new Set(
@@ -82,9 +80,9 @@ const sitemapProducts = async (req, res) => {
         .join("");
 
 
-    // ==============================
+    // ==================================
     // PRODUITS
-    // ==============================
+    // ==================================
     const productUrls =
       products
         .filter(
@@ -101,21 +99,21 @@ const sitemapProducts = async (req, res) => {
         .join("");
 
 
-    // ==============================
-    // XML FINAL
-    // ==============================
+    // ==================================
+    // XML FINAL (SANS BUG)
+    // ==================================
     const xml =
-`<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${staticPages}
-${categoryUrls}
-${productUrls}
-</urlset>`;
+      '<?xml version="1.0" encoding="UTF-8"?>' +
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
+      staticPages +
+      categoryUrls +
+      productUrls +
+      '</urlset>';
 
 
-    // ==============================
+    // ==================================
     // RESPONSE XML
-    // ==============================
+    // ==================================
     res.set(
       "Content-Type",
       "application/xml"
