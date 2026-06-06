@@ -256,7 +256,45 @@ K-Mystore
                     property="og:url"
                     content={window.location.href}
                 />
+          <script type="application/ld+json">
+  {JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
 
+    name: productData.name,
+
+    image: productData.image,
+
+    description: productData.description,
+
+    sku: productData._id,
+
+    category: productData.category,
+
+    brand: {
+      "@type": "Brand",
+      name: "K-Mystore"
+    },
+
+    offers: {
+      "@type": "Offer",
+
+      url: window.location.href,
+
+      priceCurrency: "XAF",
+
+      price:
+        size?.price ||
+        productData.price,
+
+      availability:
+        "https://schema.org/InStock",
+
+      itemCondition:
+        "https://schema.org/NewCondition"
+    }
+  })}
+</script>
             </Helmet>
 
             <div className="product-container">

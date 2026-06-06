@@ -3,5 +3,5 @@ User-agent: *
 
 Allow: /
 
-Sitemap: https://k-mystore.com/api/product/sitemap.xml
+Sitemap: https://api.k-mystore.com/sitemap.xml
 

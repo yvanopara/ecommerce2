@@ -10,8 +10,23 @@ const sitemapProducts = async (req, res) => {
     const products =
       await productModel.find({});
 
+
     const baseUrl =
       "https://k-mystore.com";
+
+
+    // ==================================
+    // ÉCHAPPER XML
+    // ==================================
+    const escapeXml = (unsafe = "") => {
+
+      return String(unsafe)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+    };
 
 
     // ==================================
@@ -27,7 +42,7 @@ const sitemapProducts = async (req, res) => {
       ]
         .map((page) => `
 <url>
-  <loc>${baseUrl}/${page}</loc>
+  <loc>${escapeXml(baseUrl)}/${escapeXml(page)}</loc>
   <changefreq>daily</changefreq>
   <priority>0.8</priority>
 </url>`)
@@ -42,8 +57,10 @@ const sitemapProducts = async (req, res) => {
         ...new Set(
           products.map((p) =>
             JSON.stringify({
-              category: p.category,
-              subCategory: p.subCategory
+              category:
+                p.category || "",
+              subCategory:
+                p.subCategory || ""
             })
           )
         )
@@ -58,7 +75,7 @@ const sitemapProducts = async (req, res) => {
           const safeCategory =
             encodeURIComponent(
               category
-                ?.toLowerCase()
+                .toLowerCase()
                 .trim()
                 .replace(/\s+/g, "-")
             );
@@ -66,14 +83,14 @@ const sitemapProducts = async (req, res) => {
           const safeSubCategory =
             encodeURIComponent(
               subCategory
-                ?.toLowerCase()
+                .toLowerCase()
                 .trim()
                 .replace(/\s+/g, "-")
             );
 
           return `
 <url>
-  <loc>${baseUrl}/category/${safeCategory}/subcategory/${safeSubCategory}</loc>
+  <loc>${escapeXml(baseUrl)}/category/${escapeXml(safeCategory)}/subcategory/${escapeXml(safeSubCategory)}</loc>
   <changefreq>weekly</changefreq>
   <priority>0.9</priority>
 </url>`;
@@ -90,31 +107,44 @@ const sitemapProducts = async (req, res) => {
           (product) =>
             product.slug
         )
-        .map((product) => `
+        .map((product) => {
+
+          const safeSlug =
+            encodeURIComponent(
+              product.slug
+            );
+
+          const updatedAt =
+            product.updatedAt
+              ? new Date(
+                  product.updatedAt
+                ).toISOString()
+              : new Date()
+                  .toISOString();
+
+          return `
 <url>
-  <loc>${baseUrl}/product/${encodeURIComponent(product.slug)}</loc>
-  <lastmod>${new Date(product.updatedAt).toISOString()}</lastmod>
+  <loc>${escapeXml(baseUrl)}/product/${escapeXml(safeSlug)}</loc>
+  <lastmod>${updatedAt}</lastmod>
   <changefreq>weekly</changefreq>
   <priority>1.0</priority>
-</url>`)
+</url>`;
+        })
         .join("");
 
 
     // ==================================
-    // XML FINAL (SANS BUG)
+    // XML FINAL
     // ==================================
     const xml =
-      '<?xml version="1.0" encoding="UTF-8"?>' +
-      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
-      staticPages +
-      categoryUrls +
-      productUrls +
-      '</urlset>';
+      `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${staticPages}
+${categoryUrls}
+${productUrls}
+</urlset>`;
 
 
-    // ==================================
-    // RESPONSE XML
-    // ==================================
     res.set(
       "Content-Type",
       "application/xml"
@@ -131,9 +161,10 @@ const sitemapProducts = async (req, res) => {
 
     res
       .status(500)
-      .send("Erreur sitemap");
+      .send(
+        "Erreur sitemap"
+      );
   }
 };
 
 export default sitemapProducts;
-
