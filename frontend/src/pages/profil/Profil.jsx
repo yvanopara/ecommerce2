@@ -48,7 +48,7 @@ export default function Profil() {
   };
 
   // ------------------------------
-  // Envoie un message au backend
+// Envoie un message au backendE
   // ------------------------------
   const notifyVisit = async () => {
     let message = "Un visiteur inconnu est sur la page Profil.";
