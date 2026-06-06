@@ -294,7 +294,7 @@ K-Mystore
         "https://schema.org/NewCondition"
     }
   })}
-</script>
+</script> 
             </Helmet>
 
             <div className="product-container">
