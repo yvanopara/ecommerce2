@@ -13,6 +13,7 @@ import RelatedProduct from '../../components/relatedProducts/RelatedProduct';
 import { FaWhatsapp, FaHeart } from 'react-icons/fa';
 import { ShoppingCart } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import ProductTabs from '../../components/productTabs/ProductTabs';
 
 export default function Product() {
 
@@ -42,10 +43,10 @@ export default function Product() {
 
         if (!slug || products.length === 0) return;
 
-     const item = products.find(
-    (item) =>
-        item.slug === slug
-);
+        const item = products.find(
+            (item) =>
+                item.slug === slug
+        );
         if (item) {
 
             setProductData(item);
@@ -256,45 +257,45 @@ K-Mystore
                     property="og:url"
                     content={window.location.href}
                 />
-          <script type="application/ld+json">
-  {JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Product",
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Product",
 
-    name: productData.name,
+                        name: productData.name,
 
-    image: productData.image,
+                        image: productData.image,
 
-    description: productData.description,
+                        description: productData.description,
 
-    sku: productData._id,
+                        sku: productData._id,
 
-    category: productData.category,
+                        category: productData.category,
 
-    brand: {
-      "@type": "Brand",
-      name: "K-Mystore"
-    },
+                        brand: {
+                            "@type": "Brand",
+                            name: "K-Mystore"
+                        },
 
-    offers: {
-      "@type": "Offer",
+                        offers: {
+                            "@type": "Offer",
 
-      url: window.location.href,
+                            url: window.location.href,
 
-      priceCurrency: "XAF",
+                            priceCurrency: "XAF",
 
-      price:
-        size?.price ||
-        productData.price,
+                            price:
+                                size?.price ||
+                                productData.price,
 
-      availability:
-        "https://schema.org/InStock",
+                            availability:
+                                "https://schema.org/InStock",
 
-      itemCondition:
-        "https://schema.org/NewCondition"
-    }
-  })}
-</script> 
+                            itemCondition:
+                                "https://schema.org/NewCondition"
+                        }
+                    })}
+                </script>
             </Helmet>
 
             <div className="product-container">
@@ -415,9 +416,9 @@ K-Mystore
 
                         </div>
 
-                        <p className="product-descriptionn">
+                        {/* <p className="product-descriptionn">
                             {productData.description}
-                        </p>
+                        </p> */}
 
                         {productData.sizes?.length > 0 && (
 
@@ -496,6 +497,7 @@ Pouvez-vous me donner plus d'infos ?`
                             </a>
 
                         </div>
+                        <ProductTabs product={productData} />
 
                     </div>
 

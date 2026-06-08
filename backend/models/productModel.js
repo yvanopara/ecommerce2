@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 import slugify from "slugify";
 
@@ -34,18 +33,27 @@ const productSchema =
         required: true
       },
 
+      // NOUVEAU
+      details: {
+        type: String,
+        default: ""
+      },
+
+      // NOUVEAU
+      utilisation: {
+        type: String,
+        default: ""
+      },
+
       price: {
         type: Number,
 
-        required:
-          function () {
-            return (
-              !this.sizes ||
-              this.sizes
-                .length ===
-                0
-            );
-          }
+        required: function () {
+          return (
+            !this.sizes ||
+            this.sizes.length === 0
+          );
+        }
       },
 
       image: {
@@ -64,9 +72,7 @@ const productSchema =
       },
 
       sizes: {
-        type: [
-          sizeSchema
-        ],
+        type: [sizeSchema],
         default: []
       },
 
@@ -81,8 +87,7 @@ const productSchema =
       }
     },
     {
-      timestamps:
-        true
+      timestamps: true
     }
   );
 
@@ -92,18 +97,14 @@ productSchema.pre(
   "save",
   function (next) {
 
-    if (
-      !this.slug
-    ) {
+    if (!this.slug) {
 
       this.slug =
         slugify(
           this.name,
           {
-            lower:
-              true,
-            strict:
-              true
+            lower: true,
+            strict: true
           }
         );
     }
@@ -113,13 +114,10 @@ productSchema.pre(
 );
 
 const productModel =
-  mongoose.models
-    .product ||
+  mongoose.models.product ||
   mongoose.model(
     "product",
     productSchema
   );
 
-export default
-  productModel;
-
+export default productModel;

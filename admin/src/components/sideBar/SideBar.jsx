@@ -14,6 +14,12 @@ export default function SideBar() {
                 <p>Add Items</p>
             </NavLink>
 
+            <NavLink to="/edit" className="sideBar-option">
+                <img  src={assets.add_icon} alt="" />
+                <p>Edit Product</p>
+            </NavLink>
+
+
             <NavLink to="/list" className="sideBar-option">
                 <img src={assets.order_icon} alt="bag_icon" />
                 <p>List Items</p>

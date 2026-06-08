@@ -12,12 +12,13 @@ import List from './pages/list/List'
 import Login from './components/login/Login'
 import { ToastContainer, toast } from 'react-toastify';
 import Messages from './pages/messages/Messages'
+import EditProduct from './pages/editProduct/EditProduct'
 
 
-  //  export const backendUrl = 'http://localhost:5000'
-
+// export const backendUrl = 'http://localhost:5000'
+ export const backendUrl = 'https://ecommerce2-4jwd.onrender.com' 
   // export const backendUrl = 'https://backend2-58eq.onrender.com' 
-    export const backendUrl = 'https://ecommerce2-4jwd.onrender.com' 
+   
 
 export const currency = "FCFA"
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/orders" element={<Order token={token} url={url}/>}/>
           <Route path="/video" element={<Video token={token} />}/>
            <Route path="/message" element={<Messages token={token} />}/>
+           <Route path="/edit-product/:id" element={<EditProduct token={token} />}/>
          
                     
         </Routes>
