@@ -290,7 +290,7 @@ export default function Product() {
                                 rel="noopener noreferrer"
                             >
                                 <FaWhatsapp className="whatsapp-icon" />
-                                <span className="whatsapp-label">Commandez a WhatsApp</span>
+                                <span className="whatsapp-label">Commandez sur WhatsApp</span>
                             </a>
 
                         </div>
