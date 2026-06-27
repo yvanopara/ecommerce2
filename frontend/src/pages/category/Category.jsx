@@ -46,6 +46,7 @@ export default function Category() {
                   slug={item.slug}
                   image={item.image}
                   price={price}
+                  date={item.date}
                   className="centered-product-item"
                 />
               </div>

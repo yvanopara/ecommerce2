@@ -55,7 +55,13 @@ export default function HomePage() {
 console.log(products[0]);
                 return (
                   <div className="product-item-wrapper" key={item._id}>
-                   <ProductItems slug={item.slug} name={item.name} image={item.image} price={price} />
+                   <ProductItems 
+                   slug={item.slug} 
+                   name={item.name} 
+                   image={item.image}
+                  price={price}
+                   date={item.date}
+                     />
                   </div>
                 );
               })}
