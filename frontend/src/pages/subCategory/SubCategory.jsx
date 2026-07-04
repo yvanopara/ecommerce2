@@ -88,6 +88,7 @@ export default function SubCategory() {
                  name={item.name}
                   image={item.image}
                    price={price}
+                   date={item.date}
                     className="centered-product-item"
                      />
               </div>

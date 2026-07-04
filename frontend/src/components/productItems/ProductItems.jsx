@@ -34,7 +34,7 @@ export default function ProductItems({
 
         {isNew && (
           <span className="new-badge">
-            Nouveau
+           🔥 Nouveau
           </span>
         )}
 

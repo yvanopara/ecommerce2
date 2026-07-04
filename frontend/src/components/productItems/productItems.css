@@ -31,23 +31,44 @@
 }
 
 /* ========================= */
-/* Badge Nouveau */
+/* Badge Nouveau animé */
 /* ========================= */
 
 .new-badge {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #e53935;
+  background: linear-gradient(135deg, #ff2d53b9, #ff6a00);
   color: #fff;
-  padding: 5px 12px;
+  padding: 6px 14px;
   font-size: 11px;
   font-weight: 700;
-  border-radius: 20px;
+  border-radius: 25px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   z-index: 5;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+
+  animation: badgePulse 1.3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255,45,85,.4);
+  }
+
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 18px rgba(255,45,85,.7);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255,45,85,.4);
+  }
+
 }
 
 /* ========================= */
