@@ -19,7 +19,7 @@ export default function Add({ token }) {
   const [sizes, setSizes] = useState([]) // tableau d'objets {size, price}
 
   // --- Définition des groupes de tailles ---
-  const SIZE_GROUPS = [
+  const SIZE_GROUPS = [ { label: "Couleurs", sizes: ['Noir', 'Blanc', 'Rose', 'Violet', 'Bleu','Vert', 'Bordeau','Rouge','Gris'] },
     { label: "Vêtements", sizes: ['S', 'M', 'L', 'XL', 'XXL'] },
 
 { label: "Christian", sizes: ['25*25*12 cm', '25*25*15 cm', '25*15*20 cm', '25*25*25 cm', '25*25*30 cm','30*30*30 cm'] },
