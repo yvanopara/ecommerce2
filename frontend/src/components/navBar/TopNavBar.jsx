@@ -38,25 +38,20 @@ export default function TopNavBar() {
           {ouvert ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* ===== LOGO AVEC BRILLANT ===== */}
+        {/* ===== LOGO SANS BRILLANT ===== */}
         <div 
           className="logo-wrapper" 
           onClick={() => navigate('/')}
           role="button"
           aria-label="Accueil"
         >
-          <div className="logo-container">
-            <img 
-              className="logo-image" 
-              src={assets.logo} 
-              alt="logo" 
-            />
-            {/* Effet de brillant visible sur le logo */}
-            <div className="logo-shine"></div>
-            <div className="logo-shine-2"></div>
-          </div>
+          <img 
+            className="logo-image" 
+            src={assets.logo} 
+            alt="logo" 
+          />
         </div>
-        {/* ===== FIN LOGO AVEC BRILLANT ===== */}
+        {/* ===== FIN LOGO SANS BRILLANT ===== */}
       </div>
 
       {ouvert && (
@@ -129,6 +124,6 @@ export default function TopNavBar() {
           <p className="cart-count">{getCartCount()}</p>
         </Link>
       </div>
-    </div>
+</div>
   );
 }

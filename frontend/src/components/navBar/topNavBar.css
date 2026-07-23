@@ -50,27 +50,15 @@
   transform: scale(0.95);
 }
 
-/* ===== CONTENEUR DU LOGO ===== */
-.logo-container {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  border-radius: 15px;
-  background: white;
-  padding: 5px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
 /* ===== IMAGE DU LOGO ===== */
 .logo-image {
   width: 150px;
   height: 150px;
   object-fit: contain;
   transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: block;
-  position: relative;
-  z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(255, 99, 71, 0.2));
   animation: logoFloat 3s ease-in-out infinite;
+  display: block;
 }
 
 /* Animation de flottement du logo */
@@ -81,155 +69,6 @@
   50% {
     transform: translateY(-8px);
   }
-}
-
-/* ===== BRILLANT PRINCIPAL - Visible sur l'image ===== */
-.logo-shine {
-  position: absolute;
-  top: -10%;
-  left: -100%;
-  width: 40%;
-  height: 120%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.8) 20%,
-    rgba(255, 255, 255, 0.9) 40%,
-    rgba(255, 255, 255, 0.8) 60%,
-    transparent
-  );
-  transform: skewX(-30deg);
-  animation: shineMove 3s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 10;
-  filter: blur(1px);
-}
-
-/* Animation du brillant */
-@keyframes shineMove {
-  0% {
-    left: -100%;
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  50% {
-    left: 150%;
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    left: 200%;
-    opacity: 0;
-  }
-}
-
-/* ===== DEUXIÈME BRILLANT - Effet supplémentaire ===== */
-.logo-shine-2 {
-  position: absolute;
-  top: 10%;
-  left: -150%;
-  width: 30%;
-  height: 80%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5) 20%,
-    rgba(255, 215, 0, 0.3) 50%,
-    rgba(255, 255, 255, 0.5) 80%,
-    transparent
-  );
-  transform: skewX(-15deg);
-  animation: shineMove2 4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 11;
-  filter: blur(2px);
-}
-
-@keyframes shineMove2 {
-  0% {
-    left: -150%;
-    opacity: 0;
-  }
-  15% {
-    opacity: 1;
-  }
-  60% {
-    left: 180%;
-    opacity: 1;
-  }
-  100% {
-    left: 250%;
-    opacity: 0;
-  }
-}
-
-/* ===== AU SURVOL - Brillant plus rapide ===== */
-.logo-wrapper:hover .logo-shine {
-  animation: shineMoveFast 1.5s ease-in-out infinite;
-}
-
-.logo-wrapper:hover .logo-shine-2 {
-  animation: shineMove2Fast 2s ease-in-out infinite;
-}
-
-@keyframes shineMoveFast {
-  0% {
-    left: -100%;
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  60% {
-    left: 150%;
-    opacity: 1;
-  }
-  100% {
-    left: 200%;
-    opacity: 0;
-  }
-}
-
-@keyframes shineMove2Fast {
-  0% {
-    left: -150%;
-    opacity: 0;
-  }
-  15% {
-    opacity: 1;
-  }
-  65% {
-    left: 180%;
-    opacity: 1;
-  }
-  100% {
-    left: 250%;
-    opacity: 0;
-  }
-}
-
-/* ===== EFFET DE REFLET SUR LE LOGO ===== */
-.logo-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    transparent 40%,
-    transparent 60%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  pointer-events: none;
-  z-index: 5;
-  border-radius: 15px;
 }
 
 /* ===== NAVBAR MENU ===== */

@@ -1,4 +1,4 @@
-// Login.jsx - Version améliorée
+// Login.jsx - Version améliorée avec champs responsives
 import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
 import { ShopContext } from "../../context/shopContext";
