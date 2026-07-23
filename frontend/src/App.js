@@ -167,7 +167,7 @@ function App() {
 
           </Routes>
 
-          <Footer />
+          {/* <Footer /> */}
 
           <NavBar />
 

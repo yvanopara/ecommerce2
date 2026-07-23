@@ -369,6 +369,84 @@ const google =
       });
     }
   };
+  // UPDATE PROFILE
+const updateProfile = async (req, res) => {
+
+  try {
+
+    const token = req.headers.token;
+
+    if (!token) {
+      return res.json({
+        success: false,
+        message: "Token manquant"
+      });
+    }
+
+    const decoded = jwt.verify(
+      token,
+      JWT_SECRET
+    );
+
+    const user = await userModel.findById(
+      decoded.id
+    );
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "Utilisateur introuvable"
+      });
+    }
+
+    const {
+      name,
+      phone
+    } = req.body;
+
+    if (name) {
+      user.name = name;
+    }
+
+    if (phone !== undefined) {
+      user.phone = phone;
+    }
+
+    // Nouvelle photo
+    if (req.file) {
+
+      const result =
+        await cloudinary.uploader.upload(
+          req.file.path,
+          {
+            resource_type: "image"
+          }
+        );
+
+      user.profileImage =
+        result.secure_url;
+    }
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Profil mis à jour",
+      user
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: "Erreur lors de la mise à jour"
+    });
+
+  }
+
+};
 
 
 
@@ -376,5 +454,6 @@ export {
   loginUser,
   registerUser,
   getProfile,
-  google
+  google,
+   updateProfile
 };

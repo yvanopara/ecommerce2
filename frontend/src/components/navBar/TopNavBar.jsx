@@ -19,7 +19,6 @@ export default function TopNavBar() {
     navigate('/login')
   }
 
-
   return (
     <div className='topNavBar'>
       <div className="left-side">
@@ -39,21 +38,34 @@ export default function TopNavBar() {
           {ouvert ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* <img onClick={() => navigate('/')} className='logo-image' src={assets.logo} alt='logo' /> */}
-        <p onClick={() => navigate('/')} className='logoNamee' ><span className='rotatink-k'>k</span>-MyStore</p>
+        {/* ===== LOGO AVEC BRILLANT ===== */}
+        <div 
+          className="logo-wrapper" 
+          onClick={() => navigate('/')}
+          role="button"
+          aria-label="Accueil"
+        >
+          <div className="logo-container">
+            <img 
+              className="logo-image" 
+              src={assets.logo} 
+              alt="logo" 
+            />
+            {/* Effet de brillant visible sur le logo */}
+            <div className="logo-shine"></div>
+            <div className="logo-shine-2"></div>
+          </div>
+        </div>
+        {/* ===== FIN LOGO AVEC BRILLANT ===== */}
       </div>
 
       {ouvert && (
         <div>
           <Sidebar setOuvert={setOuvert} />
-
         </div>
-
       )}
 
-
       <ul className='navbar-menu'>
-
         <Link
           to='/'
           onClick={() => setMenu('home')}
@@ -85,18 +97,23 @@ export default function TopNavBar() {
         >
           CONTACT
         </Link>
-
       </ul>
 
-
-
       <div className='right-div'>
-        <img className='search-image' onClick={() => { setShowSearch(true); navigate('/collection') }} src={assets.search_icon} alt='' />
+        <img 
+          className='search-image' 
+          onClick={() => { setShowSearch(true); navigate('/collection') }} 
+          src={assets.search_icon} 
+          alt='Rechercher' 
+        />
         <div className="profile-component">
-          <img onClick={() => token ? null : navigate('/login')} className="profile-icon" src={assets.profile_icon} alt="" />
-          {/* Dropdown Menu */}
-          {
-            token &&
+          <img 
+            onClick={() => token ? null : navigate('/login')} 
+            className="profile-icon" 
+            src={assets.profile_icon} 
+            alt="Profil" 
+          />
+          {token && (
             <div className="dropdown-menu">
               <p onClick={() => navigate('/profil')}>Mon profil</p>
               <hr />
@@ -104,16 +121,13 @@ export default function TopNavBar() {
               <hr />
               <p onClick={logOut}>Déconnexion</p>
             </div>
-          }
-
-
+          )}
         </div>
 
         <Link className='cart-link' to='/cart'>
-          <img className="cart-icon" src={assets.cart_icon} alt='' />
+          <img className="cart-icon" src={assets.cart_icon} alt='Panier' />
           <p className="cart-count">{getCartCount()}</p>
         </Link>
-
       </div>
     </div>
   );
