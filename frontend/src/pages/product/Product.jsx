@@ -283,7 +283,7 @@ export default function Product() {
 
                             <a
                                 className="whatsapp-button"
-                                href={`https://wa.me/237693800251?text=${encodeURIComponent(
+                                href={`https://wa.me/237680639659?text=${encodeURIComponent(
                                     `Bonjour, je suis intéressé par *${productData.name}* à *${size?.price || productData.price} ${currency}*.\nVoici le lien du produit : ${window.location.href}\nPouvez-vous me donner plus d'infos ?`
                                 )}`}
                                 target="_blank"
